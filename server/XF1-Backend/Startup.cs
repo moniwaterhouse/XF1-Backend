@@ -28,7 +28,8 @@ namespace XF1_Backend
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<CompetenciasDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("XF1-BackendConectionString")));
+            services.AddDbContext<CompetenciaDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("XF1-BackendConectionString")));
+            services.AddDbContext<CarreraDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("XF1-BackendConectionString")));
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {

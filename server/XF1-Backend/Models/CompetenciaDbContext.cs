@@ -6,16 +6,16 @@ using Microsoft.EntityFrameworkCore;
 
 namespace XF1_Backend.Models
 {
-    public class CompetenciasDbContext : DbContext
+    public class CompetenciaDbContext : DbContext
     {
-        public DbSet<Competencias> Competencias { get; set; }
-        public CompetenciasDbContext(DbContextOptions<CompetenciasDbContext> options) : base(options)
+        public DbSet<Competencia> Competencia { get; set; }
+        public CompetenciaDbContext(DbContextOptions<CompetenciaDbContext> options) : base(options)
         {
 
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Competencias>().ToTable("Competencias");
+            modelBuilder.Entity<Competencia>().ToTable("Competencia");
         }
     }
 }

@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace XF1_Backend.Models
 {
-    public class Competencias
+    public class Competencia
     {
         public int Id { get; set; }
         public string Nombre { get; set; }
