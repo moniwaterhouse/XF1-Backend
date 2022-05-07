@@ -107,7 +107,7 @@ namespace XF1_Backend.Controllers
         [HttpGet]
         public async Task<IEnumerable<Campeonato>> GetCampeonatos()
         {
-            return await _context.Campeonato.FromSqlRaw("SELECT * FROM Campeonato").ToListAsync();
+            return await _context.Campeonato.FromSqlRaw("SELECT * FROM CAMPEONATO ORDER BY FechaInicio DESC").ToListAsync();
         }
 
 
