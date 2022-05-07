@@ -21,10 +21,11 @@ namespace XF1_Backend.Controllers
 
         // POST:
         [HttpPost]
-        public async Task<ActionResult<Carrera>> PostCompetencias(Carrera carrera)
+        public async Task<ActionResult<Carrera>> PostCampeonatos(Carrera carrera)
         {
             try
             {
+              
                 _context.Carrera.Add(carrera);
                 await _context.SaveChangesAsync();
 

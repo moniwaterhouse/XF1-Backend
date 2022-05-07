@@ -28,9 +28,13 @@ namespace XF1_Backend
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<CompetenciaDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("XF1-BackendConectionString")));
+            services.AddDbContext<CampeonatoDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("XF1-BackendConectionString")));
             services.AddDbContext<CarreraDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("XF1-BackendConectionString")));
+            services.AddDbContext<LigaDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("XF1-BackendConectionString")));
+            services.AddDbContext<UsuarioDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("XF1-BackendConectionString")));
+            services.AddDbContext<UsuarioXLigaDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("XF1-BackendConectionString")));
             services.AddControllers();
+
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "XF1_Backend", Version = "v1" });
