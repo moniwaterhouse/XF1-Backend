@@ -57,7 +57,7 @@ Observaciones: La información viene ordenada de la mayor a la menor fecha.
 
 Tipo: GET
 
-Descripción: Este request da como resultado cada una de las fechas que están restringidas en todos los campeonatos de forma ascendente.
+Descripción: Este request da como resultado cada uno de los rangos de fechas que componen los campeonatos actuales. La idea es usarlas para restringir esas fechas en la creación de un campeonato.
 
 Url: `/api/Campeonato/Fechas`
 
@@ -66,14 +66,13 @@ Json: El resultado tiene este formato
 ```Json
 [
   {
-    "fecha": "2022-06-15" 
+    "fechaInicio": "2023-02-15T00:00:00",
+    "fechaFin": "2023-05-11T00:00:00"
   },
   {
-    "fecha": "2022-06-16" 
-  },
-  {
-    "fecha": "2022-06-17" 
-  },
+    "fechaInicio": "2022-06-15T00:00:00",
+    "fechaFin": "2022-10-23T00:00:00"
+  }
 ]
 ```
 
@@ -180,27 +179,26 @@ Observaciones: La información viene ordenada de la mayor a la menor fecha.
 
 Tipo: GET
 
-Descripción: Este request da como resultado cada una de las fechas que están habilitadas para hacer una carrera, considerando que solamente pueden estar las habilitadas las del campeonato actual y que no estén restringidas por otra carrera.
+Descripción: Este request da como resultado cada uno de los rangos de fechas que componen las carreras correspondientes al campeonato escogido. La idea es usarlas para restringir esas fechas en la creación de un campeonato.
 
-Url: `/api/Carreras/Fechas/id`
+Url: `/api/Carreras/Fechas/{idCampeonato}` donde idCampeonato corresponde a la llave única del campeonato.
 
 Json: El resultado tiene este formato
 
 ```Json
 [
   {
-    "fecha": "2022-06-15" 
+    "fechaInicio": "2023-02-15T00:00:00",
+    "fechaFin": "2023-05-11T00:00:00"
   },
   {
-    "fecha": "2022-06-16" 
-  },
-  {
-    "fecha": "2022-06-17" 
-  },
+    "fechaInicio": "2022-06-15T00:00:00",
+    "fechaFin": "2022-10-23T00:00:00"
+  }
 ]
 ```
 
-Observaciones: Note que el formato con el que se retornan las fechas es YYYY-MM-DD. También note que las que retorna son las habilitadas y no las deshabilitadas. 
+Observaciones: Note que el formato con el que se retornan las fechas es YYYY-MM-DD
 
 ### CAR-3
 
@@ -222,9 +220,10 @@ Json: El resultado a postear necesita el siguiente formato
     "horaClasificacion": "14:00",
     "fechaCarrera": "2022-05-10",
     "horaCarrera": "13:00",
-    "estado": "Pendiente"
   }
 ```
 
-Observaciones: Note que la fecha tiene que estar en el formato de YYYY-MM-DD y las horas son un string en formato de 24 horas. Además en el campo del idCampeonato se debe poner la llave y no el nombre de este. 
+Observaciones: No hay necesidad de especificar el id porque el sistema le da uno calculado de forma que no coincida. Tampoco se debe especificar el estado porque este va a ser "pendiente" por default.
+
+Note que la fecha tiene que estar en el formato de YYYY-MM-DD y las horas son un string en formato de 24 horas. Además en el campo del idCampeonato se debe poner la llave y no el nombre de este. 
 
