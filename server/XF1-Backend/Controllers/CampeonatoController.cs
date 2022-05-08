@@ -38,7 +38,7 @@ namespace XF1_Backend.Controllers
         }
 
         private static bool RevisarFechas(DateTime fechaInicio, DateTime fechaFinal, IEnumerable<Fechas> fechas)
-        { 
+        {
 
             foreach (var fecha in fechas)
             {
@@ -82,7 +82,7 @@ namespace XF1_Backend.Controllers
 
                 // revision de choque de fechas
                 IEnumerable<Fechas> fechas;
-                fechas = await _context.Fechas.FromSqlRaw("SELECT * FROM CAMPEONATO").ToListAsync();
+                fechas = await _context.Fechas.FromSqlRaw("SELECT * FROM FECHAS").ToListAsync();
                 bool permitido = RevisarFechas(campeonato.FechaInicio, campeonato.FechaFin, fechas);
                 if (permitido == false) return Conflict("Existe un conflicto de fechas con otro campeonato");
 
@@ -98,7 +98,7 @@ namespace XF1_Backend.Controllers
             }
 
             // validacion de la extension del nombre
-            else return Conflict("No se pudo agregar campeonato, hay valores nulos en campos requeridos.");            
+            else return Conflict("No se pudo agregar campeonato, hay valores nulos en campos requeridos.");
 
 
         }
@@ -108,6 +108,20 @@ namespace XF1_Backend.Controllers
         public async Task<IEnumerable<Campeonato>> GetCampeonatos()
         {
             return await _context.Campeonato.FromSqlRaw("SELECT * FROM CAMPEONATO ORDER BY FechaInicio DESC").ToListAsync();
+        }
+
+        // GET api/Campeonato/Fechas
+        [HttpGet("Fechas")]
+        public async Task<IEnumerable<Fechas>> GetFechas()
+        {
+            return await _context.Fechas.FromSqlRaw("SELECT * FROM FECHAS").ToListAsync();
+        }
+
+        // GET api/Campeonato/Nombres
+        [HttpGet("Nombres")]
+        public async Task<IEnumerable<Nombres>> GetNombres()
+        {
+            return await _context.Nombres.FromSqlRaw("SELECT Id, Nombre FROM CAMPEONATO").ToListAsync();
         }
 
 

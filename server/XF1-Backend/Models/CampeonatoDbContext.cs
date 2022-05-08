@@ -10,6 +10,7 @@ namespace XF1_Backend.Models
     {
         public DbSet<Campeonato> Campeonato { get; set; }
         public DbSet<Fechas> Fechas { get; set; }
+        public DbSet<Nombres> Nombres { get; set; }
         public CampeonatoDbContext(DbContextOptions<CampeonatoDbContext> options) : base(options)
         {
 
