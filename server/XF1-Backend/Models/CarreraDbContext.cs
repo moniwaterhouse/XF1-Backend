@@ -9,6 +9,7 @@ namespace XF1_Backend.Models
     public class CarreraDbContext : DbContext
     {
         public DbSet<Carrera> Carrera { get; set; }
+        public DbSet<FechasCarrera> FechasCarrera { get; set; }
         public CarreraDbContext(DbContextOptions<CarreraDbContext> options) : base(options)
         {
 
@@ -16,6 +17,7 @@ namespace XF1_Backend.Models
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Carrera>().ToTable("Carrera");
+            modelBuilder.Entity<FechasCarrera>().ToView("FechasCarrera").HasNoKey();
         }
     }
 }

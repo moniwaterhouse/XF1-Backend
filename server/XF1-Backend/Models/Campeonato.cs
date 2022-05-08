@@ -9,6 +9,7 @@ namespace XF1_Backend.Models
     {
         public string Id { get; set; }
         public string Nombre { get; set; }
+        public int Presupuesto { get; set; }
         public DateTime FechaInicio { get; set; }
         public string HoraInicio { get; set; }
         public DateTime FechaFin { get; set; }
@@ -18,6 +19,14 @@ namespace XF1_Backend.Models
     
     public class Fechas
     {
+        public DateTime FechaInicio { get; set; }
+        public DateTime FechaFin { get; set; }
+    }
+
+    public class Nombres
+    {
+        public string Id { get; set; }
+        public string Nombre { get; set; }
         public DateTime FechaInicio { get; set; }
         public DateTime FechaFin { get; set; }
     }

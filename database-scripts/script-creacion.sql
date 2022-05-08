@@ -30,10 +30,11 @@ CREATE TABLE CAMPEONATO
 (
 	Id					VARCHAR(6),
 	Nombre				VARCHAR(30),
+	Presupuesto			INT,
 	FechaInicio			DATE,
-	HoraInicio			TIME,
+	HoraInicio			VARCHAR(10),
 	FechaFin			DATE,
-	HoraFin				TIME,
+	HoraFin				VARCHAR(10),
 	ReglasPuntuacion	VARCHAR(1000),
 
 	PRIMARY KEY(Id)
@@ -49,12 +50,12 @@ CREATE TABLE CARRERA
 	NombrePais			VARCHAR(30),
 	NombrePista			VARCHAR(30),
 	FechaInicio			DATE,
-	HoraInicio			TIME,
+	HoraInicio			VARCHAR(10),
 	FechaFin			DATE,
-	HoraFin				TIME,
+	HoraFin				VARCHAR(10),
 	Estado				VARCHAR(30),
 
-	PRIMARY KEY(Id)
+	PRIMARY KEY(Id, IdCampeonato)
 );
 
 -- Tabla 3 - Liga
@@ -109,8 +110,19 @@ REFERENCES LIGA(Id);
 DROP VIEW IF EXISTS FECHAS;
 GO
 CREATE VIEW FECHAS
+
 AS SELECT CAMPEONATO.FechaInicio, CAMPEONATO.FechaFin
 FROM CAMPEONATO
+
+GO
+
+DROP VIEW IF EXISTS FECHAS;
+GO
+CREATE VIEW FECHASCARRERA
+
+AS SELECT FechaInicio, FechaFin
+FROM CARRERA
+
 GO
 
 -- STORED PROCEDURES -- 
@@ -151,9 +163,9 @@ GO
 
 -- POPULACION DE LAS TABLAS
 
-INSERT INTO CAMPEONATO	(Id, Nombre, FechaInicio, HoraInicio, FechaFin, HoraFin, ReglasPuntuacion)
-			VALUES		('KL9HY6', 'Campeonato 2022', '02-15-2022', '13:00', '10-23-2022', '14:30', NULL),
-						('23F6SH', 'Campeonato 2023', '02-15-2023', '13:00', '5-11-2023', '14:30', NULL);
+INSERT INTO CAMPEONATO	(Id, Nombre, Presupuesto, FechaInicio, HoraInicio, FechaFin, HoraFin, ReglasPuntuacion)
+			VALUES		('KL9HY6', 'Campeonato 2022', 2, '06-15-2022', '13:00', '10-23-2022', '14:30', 'Se va a considerar que los primeros 100 lugares ganaran (100-pos) puntos.'),
+						('23F6SH', 'Campeonato 2023', 4, '02-15-2023', '13:00', '5-11-2023', '14:30', NULL);
 
 INSERT INTO CARRERA		(Id, IdCampeonato, Nombre, NombrePais, NombrePista, FechaInicio, HoraInicio, FechaFin, HoraFin, Estado)
 			VALUES		(1, 'KL9HY6', 'Carrera marzo CRI', 'Costa Rica', 'Pista San José', '03-03-2022', '1:00', '03-06-2022', '13:00', 'Carrera Completada'),
