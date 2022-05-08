@@ -12,10 +12,16 @@ namespace XF1_Backend.Models
         public string Nombre { get; set; }
         public string NombrePais { get; set; }
         public string NombrePista { get; set; }
-        public DateTime FechaClasificacion { get; set; }
-        public string HoraClasificacion { get; set; }
-        public DateTime FechaCarrera { get; set; }
-        public string HoraCarrera { get; set; }
+        public DateTime FechaInicio { get; set; }
+        public string HoraInicio { get; set; }
+        public DateTime FechaFin { get; set; }
+        public string HoraFin { get; set; }
         public string Estado { get; set; }
+    }
+
+    public class FechasCarrera
+    {
+        public DateTime FechaInicio { get; set; }
+        public DateTime FechaFin { get; set; }
     }
 }

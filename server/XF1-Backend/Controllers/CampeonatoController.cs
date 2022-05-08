@@ -121,7 +121,8 @@ namespace XF1_Backend.Controllers
         [HttpGet("Nombres")]
         public async Task<IEnumerable<Nombres>> GetNombres()
         {
-            return await _context.Nombres.FromSqlRaw("SELECT Id, Nombre FROM CAMPEONATO").ToListAsync();
+            return await _context.Nombres.FromSqlRaw("SELECT Id, Nombre, FechaInicio, FechaFin" + 
+                "                                   FROM CAMPEONATO ORDER BY FechaInicio DESC").ToListAsync();
         }
 
 
