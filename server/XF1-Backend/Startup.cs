@@ -28,6 +28,7 @@ namespace XF1_Backend
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddCors();
             services.AddDbContext<CampeonatoDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("XF1-BackendConectionString")));
             services.AddDbContext<CarreraDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("XF1-BackendConectionString")));
             services.AddDbContext<LigaDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("XF1-BackendConectionString")));
@@ -44,6 +45,19 @@ namespace XF1_Backend
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+
+            app.UseCors(options =>
+
+            {
+
+                options.WithOrigins("http://localhost:4200");
+
+                options.AllowAnyMethod();
+
+                options.AllowAnyHeader();
+
+            });
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -61,6 +75,8 @@ namespace XF1_Backend
             {
                 endpoints.MapControllers();
             });
+
+           
         }
     }
 }
