@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using XF1_Backend.Models;
+using XF1_Backend.Logic;
 
 namespace XF1_Backend.Controllers
 {
@@ -19,44 +20,15 @@ namespace XF1_Backend.Controllers
             _context = context;
         }
 
-        private static int GenerarId(IEnumerable<Carrera> carreras)
-        {   
-            int newId = 1;
-
-            foreach (var carrera in carreras)
-            {
-                if (carrera.Id >= newId) newId = carrera.Id + 1;
-            }
-
-            return newId;
-
-        }
-
-        private static bool RevisarFechas(DateTime fechaInicio, DateTime fechaFinal, IEnumerable<Carrera> carreras)
-        {
-
-            foreach (var carrera in carreras)
-            {
-                if (DateTime.Compare(fechaInicio, carrera.FechaInicio) >= 0 &&
-                    DateTime.Compare(fechaInicio, carrera.FechaFin) <= 0) return false;
-
-                if (DateTime.Compare(fechaFinal, carrera.FechaInicio) >= 0 &&
-                    DateTime.Compare(fechaFinal, carrera.FechaFin) <= 0) return false;
-
-                if (DateTime.Compare(fechaInicio, carrera.FechaInicio) <= 0 &&
-                    DateTime.Compare(fechaFinal, carrera.FechaFin) >= 0) return false;
-            }
-
-            return true;
-        }
 
         // POST:
         [HttpPost]
         public async Task<ActionResult<Carrera>> PostCarrera(Carrera carrera)
         {
             IEnumerable<Carrera> carreras = await _context.Carrera.FromSqlInterpolated($@"SELECT * FROM CARRERA WHERE IdCampeonato = {carrera.IdCampeonato}").ToListAsync();
-            carrera.Id = GenerarId(carreras);
-            bool permitido = RevisarFechas(carrera.FechaInicio, carrera.FechaFin, carreras);
+            IEnumerable<Fechas> fechas = await _context.FechasCarrera.FromSqlInterpolated($@"SELECT FechaInicio, FechaFin FROM CARRERA WHERE IdCampeonato = {carrera.IdCampeonato}").ToListAsync();
+            carrera.Id = LogicFunctions.GenerarId(carreras);
+            bool permitido = LogicFunctions.RevisarFechas(carrera.FechaInicio, carrera.FechaFin, fechas);
             if (permitido == false) return Conflict("Existe un conflicto de fechas con otra carrera");
 
             carrera.Estado = "Pendiente";
@@ -75,7 +47,7 @@ namespace XF1_Backend.Controllers
 
         // GET: api/Carrera/Fechas
         [HttpGet("Fechas/{idCampeonato}")]
-        public async Task<IEnumerable<FechasCarrera>> GetAllFechas(string idCampeonato)
+        public async Task<IEnumerable<Fechas>> GetAllFechas(string idCampeonato)
         {
             return await _context.FechasCarrera.FromSqlInterpolated(@$"SELECT FechaInicio, FechaFin
                                                                     FROM CARRERA
