@@ -32,7 +32,7 @@ namespace XF1_Backend.Logic
          * para diferenciar las carreras entre sí. La idea es que este no se repita con
          * llaves ya existentes.
          */
-        public static string GenerarLlave()
+        public static string GenerarLlave(IEnumerable<Campeonato> campeonatos)
         {
             Random rd = new Random();
             string possibleCharacters = "QWERTYUIOPASDFGHJKLZXCVBNM1234567890";
@@ -44,6 +44,11 @@ namespace XF1_Backend.Logic
             {
                 rand_num = rd.Next(0, 35);
                 key += possibleCharacters[rand_num];
+            }
+
+            foreach (var campeonato in campeonatos)
+            {
+                if (campeonato.Id == key) return GenerarLlave(campeonatos);
             }
 
             return key;
