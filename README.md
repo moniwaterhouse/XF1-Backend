@@ -227,3 +227,44 @@ Observaciones: No hay necesidad de especificar el id porque el sistema le da uno
 
 Note que la fecha tiene que estar en el formato de YYYY-MM-DD y las horas son un string en formato de 24 horas. Además en el campo del idCampeonato se debe poner la llave y no el nombre de este. 
 
+### CAR-4
+
+Tipo: GET
+
+Descripción: Este request es un get all de las carreras pero en vez de mostrar el id del campeonato muestra el nombre del campeonato.
+
+Url: `/api/Carrera/NombreCampeonato` 
+
+Json: El resultado tiene este formato
+
+```Json
+[
+  {
+    "id": 1,
+    "nombreCampeonato": "Campeonato 2022",
+    "nombre": "Carrera marzo CRI",
+    "nombrePais": "Costa Rica",
+    "nombrePista": "Pista San José",
+    "fechaInicio": "2022-03-03T00:00:00",
+    "horaInicio": "1:00",
+    "fechaFin": "2022-03-06T00:00:00",
+    "horaFin": "13:00",
+    "estado": "Carrera Completada"
+  },
+  {
+    "id": 2,
+    "nombreCampeonato": "Campeonato 2022",
+    "nombre": "Carrera mayo ESP",
+    "nombrePais": "España",
+    "nombrePista": "Pista Madrid",
+    "fechaInicio": "2022-05-03T00:00:00",
+    "horaInicio": "14:00",
+    "fechaFin": "2022-05-06T00:00:00",
+    "horaFin": "15:00",
+    "estado": "Pendiente"
+  }
+]
+```
+
+Observaciones: Note que el formato con el que se retornan las fechas es YYYY-MM-DD
+
