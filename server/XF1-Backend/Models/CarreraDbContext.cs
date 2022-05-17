@@ -10,6 +10,7 @@ namespace XF1_Backend.Models
     {
         public DbSet<Carrera> Carrera { get; set; }
         public DbSet<Fechas> FechasCarrera { get; set; }
+        public DbSet<CarreraNombre> Nombre { get; set; }
         public CarreraDbContext(DbContextOptions<CarreraDbContext> options) : base(options)
         {
 

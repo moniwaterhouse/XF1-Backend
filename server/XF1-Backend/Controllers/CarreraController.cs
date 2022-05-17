@@ -58,5 +58,12 @@ namespace XF1_Backend.Controllers
         {
             return await _context.FechasCarrera.FromSqlInterpolated(CarreraRequests.getFechasPorCampeonato(idCampeonato)).ToListAsync();
         }
+
+        // GET: api/Carrera/NombreCampeonato
+        [HttpGet("NombreCampeonato")]
+        public async Task<IEnumerable<CarreraNombre>> GetNombreCampeonato()
+        {
+            return await _context.Nombre.FromSqlRaw(CarreraRequests.getCarrerasNombreCampeonato).ToListAsync();
+        }
     }
 }

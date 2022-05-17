@@ -57,6 +57,7 @@ namespace XF1_Backend.Controllers
             return await _context.Campeonato.FromSqlRaw(CampeonatoRequests.getCampeonatos).ToListAsync();
         }
 
+
         // GET api/Campeonato/Fechas
         [HttpGet("Fechas")]
         public async Task<IEnumerable<Fechas>> GetFechas()
