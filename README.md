@@ -125,7 +125,7 @@ Json: El resultado tiene este formato
   {
     "id" : "43GH6E",
     "nombre": "Campeonato 2026"
-  },
+  }
 ]
 ```
 
@@ -163,10 +163,10 @@ Json: El resultado tiene este formato
     "nombre": "Carrera mayo CR",
     "nombrePais": "Costa Rica",
     "nombrePista": "Pista San Jose",
-    "fechaClasificacion": "2022-05-07",
-    "horaClasificacion": "14:00",
-    "fechaCarrera": "2022-05-10",
-    "horaCarrera": "13:00",
+    "fechaInicio": "2022-05-07",
+    "horaInicio": "14:00",
+    "fechaFin": "2022-05-10",
+    "horaFin": "13:00",
     "estado": "Pendiente"
   }
 ]
