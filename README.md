@@ -432,26 +432,4 @@ Url: `/api/Escuderia`
 
 Observaciones: en la url se colocará el link de la imagen de la escuderia
 
-## Requests EQUIPOS (EQU)
 
-### EQU-1
-
-Tipo: POST
-
-Descipcion: Este request permite crear un equipo con los datos enviados en el Json
-
-Url: `/api/Equipo`
-
-```Json
-{
-  "marcaEscuderia": "FERRARI",
-  "nombrePiloto1": "Nico Hulkenberg",
-  "nombrePiloto2": "Lewis Hamilton",
-  "nombrePiloto3": "Kevin Magnuussen",
-  "nombrePiloto4": "Sebastian Vettel",
-  "nombrePiloto5": "Mick Shumacher",
-  "costo": 146
-}
-```
-
-Observaciones: en la url se colocará el link de la imagen de la escuderia
