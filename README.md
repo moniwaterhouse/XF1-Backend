@@ -131,6 +131,24 @@ Json: El resultado tiene este formato
 
 Observaciones: -
 
+## CAM-5
+
+Tipo: GET
+
+Descripción: Este request da como resultado el presupuesto de la temporada actual, la idea es que no se tenga que especificar la temporada, solamente sea capaz de reconocerla por el año actual.
+
+Url: `/api/Campeonato/Presupuesto`
+
+Json: El resultado tiene este formato
+
+```Json
+{
+  "presupuesto": 270
+}
+```
+
+Observaciones: -
+
 ## Requests CARRERA (CAR)
 
 ### CAR-1
@@ -268,3 +286,172 @@ Json: El resultado tiene este formato
 
 Observaciones: Note que el formato con el que se retornan las fechas es YYYY-MM-DD
 
+## Requests USUARIO (USU)
+
+### USU-1
+
+Tipo: GET
+
+Descripción: Este request es retorna todos los correos existentes, es solamente para compronbar que el que se va a añadir no coincida con alguno que ya se tenga guardado.
+
+Url: `/api/Usuario/Correos` 
+
+Json: El resultado tiene este formato
+
+```Json
+[
+  {
+    "correo": "juan@gmail.com"
+  },
+  {
+    "correo": "monica@gmail.com"
+  },
+  {
+    "correo": "steven@gmail.com"
+  }
+]
+```
+
+Observaciones: --
+
+### USU-2
+
+Tipo: GET
+
+Descipcion: Este request retorna todo los nombres de las escuderias existentes, es solamente para compronar que la que se va a añadir no existe.
+
+Url: `/api/Usuario/Escuderias`
+
+```Json
+[
+  {
+    "nombreEscuderia": "RayoF1"
+  },
+  {
+    "nombreEscuderia": "ganadoresCR"
+  }
+]
+```
+
+Observaciones: --
+
+### USU-3
+
+Tipo: POST
+
+Descipcion: Este request permite crear los equipos de un jugador y asociarlos a este mismo.
+
+Url: `/api/Usuario`
+
+```Json
+{
+  "nombreUsuario": "NachoGranados",
+  "correo": "nacho@gmail.com",
+  "pais": "Costa Rica",
+  "contrasena": "1234",
+  "nombreEscideria": "miEscuderia",
+  "marcaEscuderia-1": "FERRARI",
+  "nombrePiloto1-1": "Nico Hulkenberg",
+  "nombrePiloto2-1": "Lewis Hamilton",
+  "nombrePiloto3-1": "Kevin Magnuussen",
+  "nombrePiloto4-1": "Sebastian Vettel",
+  "nombrePiloto5-1": "Mick Shumacher",
+  "costo-1": 146,
+  "marcaEscuderia-2": "FERRARI",
+  "nombrePiloto1-2": "Nico Hulkenberg",
+  "nombrePiloto2-2": "Lewis Hamilton",
+  "nombrePiloto3-2": "Kevin Magnuussen",
+  "nombrePiloto4-2": "Sebastian Vettel",
+  "nombrePiloto5-2": "Mick Shumacher",
+  "costo-2": 146
+}
+```
+
+Observaciones: no hacen falta más datos porque el backend se encarga de asignar los id y de hacer las relaciones. Es importante que sí vayan todos los datos de ese Json completos porque para crear un cuenta se necesitan todos
+
+## Requests PILOTOS (PIL)
+
+### PIL-1
+
+Tipo: GET
+
+Descipcion: Este request retorna todos los datos de todas los pilotos
+
+Url: `/api/Piloto`
+
+```Json
+[
+  {
+    "nombre": "Charles Leclerc",
+    "pais": "Polonia",
+    "precio": 30,
+    "equipoReal": "FERRARI",
+    "urlLogo": "url"
+  },
+  {
+    "nombre": "Max Verstappen",
+    "pais": "Holanda",
+    "precio": 30,
+    "equipoReal": "RED BULL",
+    "urlLogo": "url"
+  }
+]
+```
+
+Observaciones: en la url se colocará el link de la imagen del piloto
+
+## Requests ESCUDERIAS (ESC)
+
+### ESC-1
+
+Tipo: GET
+
+Descipcion: Este request retorna todos los datos de todas las escuderias
+
+Url: `/api/Escuderia`
+
+```Json
+[
+  {
+    "marca": "FERRARI",
+    "precio": 55,
+    "urlLogo": "url"
+  },
+  {
+    "marca": "MERCEDES",
+    "precio": 45,
+    "urlLogo": "url"
+  },
+  {
+    "marca": "WILLIAMS",
+    "precio": 10,
+    "urlLogo": "url"
+  }
+]
+```
+
+Observaciones: en la url se colocará el link de la imagen de la escuderia
+
+## Requests EQUIPOS (EQU)
+
+### EQU-1
+
+Tipo: POST
+
+Descipcion: Este request permite crear un equipo con los datos enviados en el Json
+
+Url: `/api/Equipo`
+
+```Json
+{
+  "marcaEscuderia": "FERRARI",
+  "nombrePiloto1": "Nico Hulkenberg",
+  "nombrePiloto2": "Lewis Hamilton",
+  "nombrePiloto3": "Kevin Magnuussen",
+  "nombrePiloto4": "Sebastian Vettel",
+  "nombrePiloto5": "Mick Shumacher",
+  "costo": 146
+}
+```
+
+Observaciones: en la url se colocará el link de la imagen de la escuderia
