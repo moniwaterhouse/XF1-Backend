@@ -88,10 +88,10 @@ CREATE TABLE USUARIO
 DROP TABLE IF EXISTS USUARIOXLIGA
 CREATE TABLE USUARIOXLIGA
 (
-	CorreoUsuario	INT,
+	CorreoUsuario	VARCHAR(100),
 	IdLiga		INT,
 
-	PRIMARY KEY(IdUsuario, IdLiga)
+	PRIMARY KEY(CorreoUsuario, IdLiga)
 );
 
 -- Tabla 6 - Equipo
@@ -106,7 +106,7 @@ CREATE TABLE EQUIPO
 	NombrePiloto4	VARCHAR(100),
 	NombrePiloto5	VARCHAR(100),
 	PuntajePublica	INT,
-	Presupuesto		INT,
+	Costo			INT,
 
 	PRIMARY KEY(Id)
 );
@@ -243,7 +243,7 @@ GO
 -- POPULACION DE LAS TABLAS
 
 INSERT INTO CAMPEONATO	(Id, Nombre, Presupuesto, FechaInicio, HoraInicio, FechaFin, HoraFin, ReglasPuntuacion)
-			VALUES		('KL9HY6', 'Campeonato 2022', 100, '06-15-2022', '13:00', '10-23-2022', '14:30', 'Se va a considerar que los primeros 100 lugares ganaran (100-pos) puntos.');
+			VALUES		('KL9HY6', 'Campeonato 2022', 250, '06-15-2022', '13:00', '10-23-2022', '14:30', 'Se va a considerar que los primeros 100 lugares ganaran (100-pos) puntos.');
 
 
 INSERT INTO CARRERA		(Id, IdCampeonato, Nombre, NombrePais, NombrePista, FechaInicio, HoraInicio, FechaFin, HoraFin, Estado)
@@ -254,8 +254,7 @@ INSERT INTO CARRERA		(Id, IdCampeonato, Nombre, NombrePais, NombrePista, FechaIn
 
 
 INSERT INTO LIGA	(Id, IdCampeonato, Tipo)
-			VALUES	(1, 'KL9HY6', 'Publica'),
-					(2, '23F6SH', 'Pública');
+			VALUES	(1, 'KL9HY6', 'Publica');
 
 INSERT INTO ESCUDERIA (Marca, Precio, UrlLogo)
 			VALUES  ('FERRARI', 55, 'url'),
@@ -269,41 +268,37 @@ INSERT INTO ESCUDERIA (Marca, Precio, UrlLogo)
 					('ASTON MARTIN', 10, 'url'),
 					('WILLIAMS', 10, 'url');
 
-INSERT INTO PILOTO	(Nombre, Pais, Precio, Equipo, UrlLofo)
-			VALUES	('Charles Leclerc', 'Polonia', 30, 'url'),
-					('Max Verstappen', 'Holanda', 30, 'url'),
-					('Sergio Perez', 'Mexico', 26, 'url'),
-					('George Russell', 'Gran Bretaña', 25, 'url'),
-					('Carlos Sainz', 'España', 25, 'url'),
-					('Lewis Hamilton', 'Gran Bretaña', 25, 'url'),
-					('Lando Norris', 'Gran Bretaña', 23, 'url'),
-					('Fernando Alonso', 'España', 23, 'url'),
-					('Valtteri Bottas', 'Finlandia', 23, 'url'),
-					('Esteban Ocoon', 'Francia', 22,  'url'),
-					('Kevin Magnuussen', 'Dinamarca', 20, 'url'),
-					('Daniel Ricciardo', 'Australia', 18, 'url'),
-					('Yuki Tsunoda', 'Japon', 15, 'url'),
-					('Sebastiian Vettel', 'Alemania', 15, 'url'),
-					('Lance Stroll', 'Canada', 13, 'url'),
-					('Mick Shumacher', 'Alemania', 13, 'url'),
-					('Nico Hulkenberg', 'Alemania', 11, 'url');
+INSERT INTO PILOTO	(Nombre, Pais, Precio, EquipoReal, UrlLogo)
+			VALUES	('Charles Leclerc', 'Polonia', 30, 'FERRARI', 'url'),
+					('Max Verstappen', 'Holanda', 30, 'RED BULL', 'url'),
+					('Sergio Perez', 'Mexico', 26, 'RED BULL', 'url'),
+					('George Russell', 'Gran Bretaña', 25, 'MERCEDES', 'url'),
+					('Carlos Sainz', 'España', 25, 'FERRARI', 'url'),
+					('Lewis Hamilton', 'Gran Bretaña', 25, 'MERCEDES', 'url'),
+					('Lando Norris', 'Gran Bretaña', 23, 'MCLAREN', 'url'),
+					('Fernando Alonso', 'España', 23, 'ALPINE F1 TEAM', 'url'),
+					('Valtteri Bottas', 'Finlandia', 23, 'ALFA ROMEO RACING', 'url'),
+					('Esteban Ocoon', 'Francia', 22, 'ALPINE F1 TEAM',  'url'),
+					('Kevin Magnuussen', 'Dinamarca', 20, 'HAAS F1 TEAM', 'url'),
+					('Daniel Ricciardo', 'Australia', 18, 'MCLAREN', 'url'),
+					('Yuki Tsunoda', 'Japon', 15, 'ALPHATAURI', 'url'),
+					('Sebastian Vettel', 'Alemania', 15, 'ASTON MARTIN', 'url'),
+					('Lance Stroll', 'Canada', 13, 'ASTON MARTIN', 'url'),
+					('Mick Shumacher', 'Alemania', 13, 'HAAS F1 TEAM', 'url'),
+					('Nico Hulkenberg', 'Alemania', 11, 'ASTON MARTIN', 'url');
+
+INSERT INTO EQUIPO  (Id, MarcaEscuderia,	NombrePiloto1,	NombrePiloto2,	NombrePiloto3,	NombrePiloto4,	NombrePiloto5,	PuntajePublica,	Costo)
+		VALUES		(1, 'FERRARI', 'Esteban Ocoon', 'Lance Stroll', 'Daniel Ricciardo', 'Mick Shumacher', 'Lewis Hamilton', 0, 146),
+					(2, 'ASTON MARTIN', 'Charles Leclerc', 'Lewis Hamilton', 'Yuki Tsunoda', 'Sebastian Vettel', 'Lance Stroll', 0, 108),
+					(3, 'MCLAREN', 'Nico Hulkenberg', 'Mick Shumacher', 'Kevin Magnuussen', 'Lando Norris', 'Fernando Alonso', 0, 125),
+					(4, 'RED BULL', 'Sergio Perez', 'Kevin Magnuussen', 'Yuki Tsunoda', 'Sebastian Vettel', 'Nico Hulkenberg', 0, 132);
+
+INSERT INTO USUARIO (NombreUsuario, Correo, Pais, Contrasena, NombreEscuderia, IdEquipo1, IdEquipo2)
+			VALUES	('Juan Navarro', 'juan@gmail.com', 'Costa Rica', '81dc9bdb52d04dc20036dbd8313ed055', 'RayoF1', 1, 2),
+					('Monica Waterhouse', 'monica@gmail.com', 'Costa Rica', '81dc9bdb52d04dc20036dbd8313ed055', 'ganadoresCR', 3, 4);
 
 
+INSERT INTO USUARIOXLIGA	(CorreoUsuario, IdLiga)
+			VALUES			('juan@gmail.com', 1),
+							('monica@gmail.com', 1);
 
-
---INSERT INTO USUARIO (NombreUsuario, Correo, Pais, Contrasena, NombreEscuderia, IdEquipo1, IdEquipo2)
-	--		VALUES	(1),
-	--				(2),
-	--				(3);
-
---INSERT INTO EQUIPO	(Id, MarcaEscuderia, NombrePiloto1, NombrePiloto2, NombrePiloto3, NombrePiloto4, NombrePiloto5, PuntajePublica, PuntajePrivada, Presupuesto)
-	--		VALUES	(1, 'RED BULL', 'Carlos Sainz',
-
-
-INSERT INTO USUARIOXLIGA	(IdUsuario, IdLiga)
-			VALUES			(1, 1),
-							(1, 2),
-							(2, 1),
-							(2, 2),
-							(3, 1),
-							(3, 2);
