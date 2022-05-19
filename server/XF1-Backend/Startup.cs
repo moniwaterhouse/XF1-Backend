@@ -34,6 +34,9 @@ namespace XF1_Backend
             services.AddDbContext<LigaDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("XF1-BackendConectionString")));
             services.AddDbContext<UsuarioDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("XF1-BackendConectionString")));
             services.AddDbContext<UsuarioXLigaDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("XF1-BackendConectionString")));
+            services.AddDbContext<EscuderiaDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("XF1-BackendConectionString")));
+            services.AddDbContext<PilotoDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("XF1-BackendConectionString")));
+            services.AddDbContext<EquipoDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("XF1-BackendConectionString")));
             services.AddControllers();
 
             services.AddSwaggerGen(c =>
