@@ -27,8 +27,8 @@ namespace XF1_Backend.Controllers
         public async Task<ActionResult<Carrera>> PostCarrera(Carrera carrera)
         {
             // crear llave
-            IEnumerable<Carrera> carreras = await _context.Carrera.FromSqlInterpolated(CarreraRequests.getCarreraPorCampeonato(carrera.IdCampeonato)).ToListAsync();
-            carrera.Id = LogicFunctions.GenerarId(carreras);
+            IEnumerable<Id> carreraIds = await _context.Ids.FromSqlInterpolated(CarreraRequests.getCarreraPorCampeonato(carrera.IdCampeonato)).ToListAsync();
+            carrera.Id = LogicFunctions.GenerarId(carreraIds);
 
             // verificar fechas
             IEnumerable<Fechas> fechas = await _context.FechasCarrera.FromSqlInterpolated(CarreraRequests.getFechasPorCampeonato(carrera.IdCampeonato)).ToListAsync();

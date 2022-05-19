@@ -9,18 +9,18 @@ namespace XF1_Backend.Logic
     public class LogicFunctions
     {
         /*
-         * Descripcion: esta funcion carga un nuevo identificador para una nueva carrera
-         * basado en los id que ya existen.
+         * Descripcion: esta funcion carga un nuevo identificador para cualquier tabla que necesite
+         * un identificador numerico entero basado en los id que ya existen.
          * Input: carreras -> es una lista de las cerreras existentes.
          * Output: newId -> un entero correspondiente al nuevo id.
          */
-        public static int GenerarId(IEnumerable<Carrera> carreras)
+        public static int GenerarId(IEnumerable<Id> ids)
         {
             int newId = 1;
 
-            foreach (var carrera in carreras)
+            foreach (var id in ids)
             {
-                if (carrera.Id >= newId) newId = carrera.Id + 1;
+                if (id.IdNum >= newId) newId = id.IdNum + 1;
             }
 
             return newId;
@@ -78,6 +78,16 @@ namespace XF1_Backend.Logic
             }
 
             return true;
+        }
+
+        /*
+         * Descripcion: esta funcion toma un texto y lo encripta con MD5
+         * Entradas: contraseña sin encriptas
+         * Salida: contraseña encriptada
+         */
+        public static string EncriptarContrasena(string contrasena)
+        {
+            return "Contraseña encriptada";
         }
     }
 }

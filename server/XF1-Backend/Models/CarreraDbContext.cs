@@ -11,6 +11,7 @@ namespace XF1_Backend.Models
         public DbSet<Carrera> Carrera { get; set; }
         public DbSet<Fechas> FechasCarrera { get; set; }
         public DbSet<CarreraNombre> Nombre { get; set; }
+        public DbSet<Id> Ids { get; set; }
         public CarreraDbContext(DbContextOptions<CarreraDbContext> options) : base(options)
         {
 
@@ -19,6 +20,7 @@ namespace XF1_Backend.Models
         {
             modelBuilder.Entity<Carrera>().ToTable("Carrera");
             modelBuilder.Entity<Fechas>().ToView("FechasCarrera").HasNoKey();
+            modelBuilder.Entity<Id>().HasNoKey();
         }
     }
 }

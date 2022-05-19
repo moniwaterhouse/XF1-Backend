@@ -15,5 +15,6 @@ namespace XF1_Backend.Requests
 
         // Obtener todos los nombres de escuderias
         public static string getEscuderias = "SELECT NombreEscuderia FROM USUARIO";
+
     }
 }
