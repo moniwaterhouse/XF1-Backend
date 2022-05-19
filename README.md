@@ -231,13 +231,13 @@ Json: El resultado a postear necesita el siguiente formato
 ```Json
   {
     "idCampeonato": "XCV5TG",
-    "nombre": "Carrera mayo CR",
+    "nombre": "Carrera sep CR",
     "nombrePais": "Costa Rica",
     "nombrePista": "Pista San Jose",
-    "fechaClasificacion": "2022-05-07",
+    "fechaClasificacion": "2022-09-07",
     "horaClasificacion": "14:00",
-    "fechaCarrera": "2022-05-10",
-    "horaCarrera": "13:00",
+    "fechaCarrera": "2022-09-10",
+    "horaCarrera": "13:00"
   }
 ```
 
