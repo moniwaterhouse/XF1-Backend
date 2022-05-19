@@ -339,7 +339,7 @@ Observaciones: --
 
 Tipo: POST
 
-Descipcion: Este request permite crear los equipos de un jugador y asociarlos a este mismo.
+Descipcion: Este request permite crear un jugador
 
 Url: `/api/Usuario`
 
@@ -349,25 +349,13 @@ Url: `/api/Usuario`
   "correo": "nacho@gmail.com",
   "pais": "Costa Rica",
   "contrasena": "1234",
-  "nombreEscideria": "miEscuderia",
-  "marcaEscuderia_1": "FERRARI",
-  "nombrePiloto1_1": "Nico Hulkenberg",
-  "nombrePiloto2_1": "Lewis Hamilton",
-  "nombrePiloto3_1": "Kevin Magnuussen",
-  "nombrePiloto4_1": "Sebastian Vettel",
-  "nombrePiloto5_1": "Mick Shumacher",
-  "costo_1": 146,
-  "marcaEscuderia_2": "FERRARI",
-  "nombrePiloto1_2": "Nico Hulkenberg",
-  "nombrePiloto2_2": "Lewis Hamilton",
-  "nombrePiloto3_2": "Kevin Magnuussen",
-  "nombrePiloto4_2": "Sebastian Vettel",
-  "nombrePiloto5_2": "Mick Shumacher",
-  "costo_2": 146
+  "nombreEscuderia": "miEscuderia",
+  "idEquipo1": 1,
+  "idEquipo2": 3
 }
 ```
 
-Observaciones: no hacen falta más datos porque el backend se encarga de asignar los id y de hacer las relaciones. Es importante que sí vayan todos los datos de ese Json completos porque para crear un cuenta se necesitan todos
+Observaciones: se deben asociar los mismo equipos que se crearon justo antes al usuario.
 
 ## Requests PILOTOS (PIL)
 
@@ -431,5 +419,30 @@ Url: `/api/Escuderia`
 ```
 
 Observaciones: en la url se colocará el link de la imagen de la escuderia
+
+
+## Requests EQUIPOS (EQU)
+
+### EQU-1
+
+Tipo: POST
+
+Descipcion: Este request crea un nuevo equipo y retorna el id de este nuevo creado.
+
+Url: `/api/Equipo`
+
+```Json
+{
+  "marcaEscuderia": "FERRARI",
+  "nombrePiloto1": "Nico Hulkenberg",
+  "nombrePiloto2": "Lewis Hamilton",
+  "nombrePiloto3": "Kevin Magnuussen",
+  "nombrePiloto4": "Sebastian Vettel",
+  "nombrePiloto5": "Mick Shumacher",
+  "costo": 146
+}
+```
+
+Observaciones: no hace falta especificar el id porque ese se añade desde el backend.
 
 
