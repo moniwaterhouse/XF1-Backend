@@ -1,16 +1,15 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using XF1_Backend.Controlles;
-
 
 namespace XF1_Backend_Tests
 {
     [TestClass]
-    public class TestsCampeonato
+    public class LogicTests
     {
         [TestMethod]
         public void InsertarValorNulo()
         {
-            
+
         }
     }
+
 }

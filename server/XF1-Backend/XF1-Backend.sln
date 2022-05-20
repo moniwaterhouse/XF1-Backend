@@ -1,11 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.31729.503
+# Visual Studio Version 17
+VisualStudioVersion = 17.2.32516.85
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XF1-Backend", "XF1-Backend.csproj", "{6A244E6C-57A2-46C7-84D1-5EE018ED725A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XF1-Backend-Tests", "..\XF1-Backend-Tests\XF1-Backend-Tests.csproj", "{732377EA-09E9-469D-85A4-2F5335CEAD67}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XF1-Backend-Unit-Testing", "..\XF1-Backend-Unit-Testing\XF1-Backend-Unit-Testing.csproj", "{4E7D0524-BF94-4423-97ED-77D60D0FE606}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -17,10 +17,10 @@ Global
 		{6A244E6C-57A2-46C7-84D1-5EE018ED725A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6A244E6C-57A2-46C7-84D1-5EE018ED725A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6A244E6C-57A2-46C7-84D1-5EE018ED725A}.Release|Any CPU.Build.0 = Release|Any CPU
-		{732377EA-09E9-469D-85A4-2F5335CEAD67}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{732377EA-09E9-469D-85A4-2F5335CEAD67}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{732377EA-09E9-469D-85A4-2F5335CEAD67}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{732377EA-09E9-469D-85A4-2F5335CEAD67}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4E7D0524-BF94-4423-97ED-77D60D0FE606}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4E7D0524-BF94-4423-97ED-77D60D0FE606}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4E7D0524-BF94-4423-97ED-77D60D0FE606}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4E7D0524-BF94-4423-97ED-77D60D0FE606}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
