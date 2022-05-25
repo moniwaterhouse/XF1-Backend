@@ -25,6 +25,7 @@ namespace XF1_Backend.Controllers
         [HttpPost]
         public async Task<ActionResult<Usuario>> PostUsuario(Usuario usuario)
         {
+            usuario.Contrasena = LogicFunctions.EncriptarContrasena(usuario.Contrasena);
             _context.Usuario.Add(usuario);
             await _context.SaveChangesAsync(); 
             return Ok();
