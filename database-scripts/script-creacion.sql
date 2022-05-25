@@ -283,35 +283,35 @@ INSERT INTO LIGA	(Id, IdCampeonato, Tipo)
 			VALUES	(1, 'KL9HY6', 'Publica');
 
 INSERT INTO ESCUDERIA (Marca, Precio, UrlLogo)
-			VALUES  ('FERRARI', 55, 'url'),
-					('RED BULL', 45, 'url'),
-					('MERCEDES', 45, 'url'),
-					('MCLAREN', 35, 'url'),
-					('ALFA ROMEO RACING', 30, 'url'),
-					('ALPINE F1 TEAM', 25, 'url'),
-					('ALPHATAURI', 20, 'url'),
-					('HAAS F1 TEAM', 15, 'url'),
-					('ASTON MARTIN', 10, 'url'),
-					('WILLIAMS', 10, 'url');
+			VALUES  ('FERRARI', 55, 'https://i.pinimg.com/originals/3d/8e/eb/3d8eebbdb50c5370e59e031ca161aacd.jpg'),
+					('RED BULL', 45, 'https://i.pinimg.com/originals/2e/07/5b/2e075bf5f5570e5ef486455454c037d4.jpg'),
+					('MERCEDES', 45, 'https://i.pinimg.com/originals/13/da/b6/13dab6e986c7495f24924cc6f33e3b3b.jpg'),
+					('MCLAREN', 35, 'https://i.pinimg.com/originals/e0/44/fa/e044fa6657a80ce064102f8b75031731.jpg'),
+					('ALFA ROMEO RACING', 30, 'https://i.pinimg.com/originals/b6/78/f1/b678f12f803bc44f6f818a48e4d4e944.jpg'),
+					('ALPINE F1 TEAM', 25, 'https://i.pinimg.com/originals/13/54/7e/13547e6bb857266780c29997a514fa30.jpg'),
+					('ALPHATAURI', 20, 'https://i.pinimg.com/originals/e2/85/2f/e2852fe967b6926700d4432febc598f1.jpg'),
+					('HAAS F1 TEAM', 15, 'https://i.pinimg.com/originals/06/18/ab/0618ab732238746039468659782f1023.jpg'),
+					('ASTON MARTIN', 10, 'https://i.pinimg.com/originals/15/3f/60/153f60fd1240d4175b670bc7c0ed51af.jpg'),
+					('WILLIAMS', 10, 'https://i.pinimg.com/originals/11/a1/9a/11a19ae032e2b756994e9cf5d3b524dc.jpg');
 
 INSERT INTO PILOTO	(Nombre, Pais, Precio, EquipoReal, UrlLogo)
-			VALUES	('Charles Leclerc', 'Polonia', 30, 'FERRARI', 'url'),
-					('Max Verstappen', 'Holanda', 30, 'RED BULL', 'url'),
-					('Sergio Perez', 'Mexico', 26, 'RED BULL', 'url'),
-					('George Russell', 'Gran Bretaña', 25, 'MERCEDES', 'url'),
-					('Carlos Sainz', 'España', 25, 'FERRARI', 'url'),
-					('Lewis Hamilton', 'Gran Bretaña', 25, 'MERCEDES', 'url'),
-					('Lando Norris', 'Gran Bretaña', 23, 'MCLAREN', 'url'),
-					('Fernando Alonso', 'España', 23, 'ALPINE F1 TEAM', 'url'),
-					('Valtteri Bottas', 'Finlandia', 23, 'ALFA ROMEO RACING', 'url'),
-					('Esteban Ocoon', 'Francia', 22, 'ALPINE F1 TEAM',  'url'),
-					('Kevin Magnuussen', 'Dinamarca', 20, 'HAAS F1 TEAM', 'url'),
-					('Daniel Ricciardo', 'Australia', 18, 'MCLAREN', 'url'),
-					('Yuki Tsunoda', 'Japon', 15, 'ALPHATAURI', 'url'),
-					('Sebastian Vettel', 'Alemania', 15, 'ASTON MARTIN', 'url'),
-					('Lance Stroll', 'Canada', 13, 'ASTON MARTIN', 'url'),
-					('Mick Shumacher', 'Alemania', 13, 'HAAS F1 TEAM', 'url'),
-					('Nico Hulkenberg', 'Alemania', 11, 'ASTON MARTIN', 'url');
+			VALUES	('Charles Leclerc', 'Polonia', 30, 'FERRARI', 'https://soymotor.com/sites/default/files/styles/small/public/imagenes/piloto/perfil-charles-leclerc-2022-soymotor.png'),
+					('Max Verstappen', 'Holanda', 30, 'RED BULL', 'https://cdn-9.motorsport.com/images/mgl/24vA3r46/s8/max-verstappen-red-bull-racing-1.jpg'),
+					('Sergio Perez', 'Mexico', 26, 'RED BULL', 'https://cdn-1.motorsport.com/images/mgl/0a9neZP0/s8/sergio-perez-red-bull-racing-1.jpg'),
+					('George Russell', 'Gran Bretaña', 25, 'MERCEDES', 'https://depor.com/resizer/8QK8KXksasI9Zjruij0420_xgzs=/1200x900/smart/filters:format(jpeg):quality(75)/cloudfront-us-east-1.images.arcpublishing.com/elcomercio/NMEIUWUAPZHXNNRPVYBXAFB37A.jpeg'),
+					('Carlos Sainz', 'España', 25, 'FERRARI', 'https://cdn-8.motorsport.com/images/mgl/YXRnk570/s800/carlos-sainz-jr-ferrari-1.jpg'),
+					('Lewis Hamilton', 'Gran Bretaña', 25, 'MERCEDES', 'https://cdn-6.motorsport.com/images/mgl/0mb95oa2/s800/lewis-hamilton-mercedes-1.jpg'),
+					('Lando Norris', 'Gran Bretaña', 23, 'MCLAREN', 'https://sportsbase.io/images/gpfans/copy_380x388/ce1b523d65a77c79377505f103bd6028ad77f33d.png'),
+					('Fernando Alonso', 'España', 23, 'ALPINE F1 TEAM', 'https://cdn-1.motorsport.com/images/mgl/YBea5Kv2/s800/fernando-alonso-alpine-1.jpg'),
+					('Valtteri Bottas', 'Finlandia', 23, 'ALFA ROMEO RACING', 'https://static.motor.es/f1/fichas/contenido/valtteri-bottas/valtteri-bottas2021_1617632013.jpg'),
+					('Esteban Ocoon', 'Francia', 22, 'ALPINE F1 TEAM',  'https://static.motor.es/f1/fichas/contenido/esteban-ocon/esteban-ocon2021_1617620557.jpg'),
+					('Kevin Magnuussen', 'Dinamarca', 20, 'HAAS F1 TEAM', 'https://soymotor.com/sites/default/files/styles/small/public/imagenes/piloto/perfil-kevin-magnussen-2022-soymotor.png'),
+					('Daniel Ricciardo', 'Australia', 18, 'MCLAREN', 'https://cdn-3.motorsport.com/images/mgl/24vA4nA6/s800/daniel-ricciardo-mclaren-1.jpg'),
+					('Yuki Tsunoda', 'Japon', 15, 'ALPHATAURI', 'https://cdn-2.motorsport.com/images/mgl/24vA3zN6/s800/yuki-tsunoda-alphatauri-1.jpg'),
+					('Sebastian Vettel', 'Alemania', 15, 'ASTON MARTIN', 'https://cdn-1.motorsport.com/images/mgl/2jXZrAb6/s8/sebastian-vettel-aston-martin-1.jpg'),
+					('Lance Stroll', 'Canada', 13, 'ASTON MARTIN', 'https://soymotor.com/sites/default/files/styles/small/public/imagenes/piloto/perfil-lance-stroll-2022-soymotor_0.png'),
+					('Mick Shumacher', 'Alemania', 13, 'HAAS F1 TEAM', 'https://static.motor.es/f1/fichas/contenido/mick-schumacher/mick-schumacher2021_1617622323.jpg'),
+					('Nico Hulkenberg', 'Alemania', 11, 'ASTON MARTIN', 'https://static.motor.es/f1/fichas/contenido/nico-hulkenberg.jpg');
 
 INSERT INTO EQUIPO  (Id, MarcaEscuderia,	NombrePiloto1,	NombrePiloto2,	NombrePiloto3,	NombrePiloto4,	NombrePiloto5,	PuntajePublica,	Costo)
 		VALUES		(1, 'FERRARI', 'Esteban Ocoon', 'Lance Stroll', 'Daniel Ricciardo', 'Mick Shumacher', 'Lewis Hamilton', 0, 146),
@@ -328,3 +328,4 @@ INSERT INTO USUARIOXLIGA	(CorreoUsuario, IdLiga)
 			VALUES			('juan@gmail.com', 1),
 							('monica@gmail.com', 1);
 
+SELECT * FROM USUARIO
