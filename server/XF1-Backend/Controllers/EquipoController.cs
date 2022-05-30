@@ -27,7 +27,7 @@ namespace XF1_Backend.Controllers
         {
             // crear el equipo 1
             IEnumerable<Id> equipoIds = await _context.Ids.FromSqlRaw(EquipoRequests.GetIds).ToListAsync();
-            equipo.Id = LogicFunctions.GenerarId(equipoIds);
+            equipo.Id = IdLogicFunctions.GenerarId(equipoIds);
 
             _context.Equipos.Add(equipo);
             await _context.SaveChangesAsync();

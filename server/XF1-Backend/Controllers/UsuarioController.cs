@@ -26,7 +26,7 @@ namespace XF1_Backend.Controllers
         public async Task<ActionResult<Usuario>> PostUsuario(Usuario usuario)
         {
             // Encriptar contraseña
-            usuario.Contrasena = LogicFunctions.EncriptarContrasena(usuario.Contrasena);
+            usuario.Contrasena = StringLogicFunctions.EncriptarContrasena(usuario.Contrasena);
 
             // Añadir nuevo jugador
             _context.Usuario.Add(usuario);

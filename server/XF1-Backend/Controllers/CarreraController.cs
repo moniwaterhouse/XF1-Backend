@@ -28,11 +28,11 @@ namespace XF1_Backend.Controllers
         {
             // crear llave
             IEnumerable<Id> carreraIds = await _context.Ids.FromSqlInterpolated(CarreraRequests.getCarreraPorCampeonato(carrera.IdCampeonato)).ToListAsync();
-            carrera.Id = LogicFunctions.GenerarId(carreraIds);
+            carrera.Id = IdLogicFunctions.GenerarId(carreraIds);
 
             // verificar fechas
             IEnumerable<Fechas> fechas = await _context.FechasCarrera.FromSqlInterpolated(CarreraRequests.getFechasPorCampeonato(carrera.IdCampeonato)).ToListAsync();
-            bool permitido = LogicFunctions.RevisarFechas(carrera.FechaInicio, carrera.FechaFin, fechas);
+            bool permitido = DateLogicFunctions.RevisarFechas(carrera.FechaInicio, carrera.FechaFin, fechas);
             if (permitido == false) return Conflict("Existe un conflicto de fechas con otra carrera");
 
             // definir estado por defecto

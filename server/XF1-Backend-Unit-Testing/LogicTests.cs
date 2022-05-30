@@ -25,7 +25,7 @@ namespace XF1_Backend_Unit_Testing
                 carreraIds.Add(newId);
             }
 
-            int resultado = LogicFunctions.GenerarId(carreraIds);
+            int resultado = IdLogicFunctions.GenerarId(carreraIds);
 
             Assert.IsNotNull(resultado);
 
@@ -48,7 +48,7 @@ namespace XF1_Backend_Unit_Testing
                 carreraIds.Add(newId);
             }
 
-            int resultado = LogicFunctions.GenerarId(carreraIds);      
+            int resultado = IdLogicFunctions.GenerarId(carreraIds);      
             
             Assert.AreEqual(resultado, carreraIds.Count);
 
@@ -84,7 +84,7 @@ namespace XF1_Backend_Unit_Testing
             campeonatosIds.Add(campeonato4);
             campeonatosIds.Add(campeonato5);
 
-            string resultado = LogicFunctions.GenerarLlave(campeonatosIds);
+            string resultado = IdLogicFunctions.GenerarLlave(campeonatosIds);
 
             Assert.IsNotNull(resultado);
 
@@ -121,7 +121,7 @@ namespace XF1_Backend_Unit_Testing
             campeonatosIds.Add(campeonato4);
             campeonatosIds.Add(campeonato5);
 
-            string resultado = LogicFunctions.GenerarLlave(campeonatosIds);
+            string resultado = IdLogicFunctions.GenerarLlave(campeonatosIds);
 
             Assert.AreEqual(resultado.Length, 6);
 
@@ -158,7 +158,7 @@ namespace XF1_Backend_Unit_Testing
             campeonatosIds.Add(campeonato4);
             campeonatosIds.Add(campeonato5);
 
-            string resultado = LogicFunctions.GenerarLlave(campeonatosIds);
+            string resultado = IdLogicFunctions.GenerarLlave(campeonatosIds);
 
             Assert.AreNotEqual(resultado, "23F6SH");
             Assert.AreNotEqual(resultado, "KL9HY6");
@@ -206,7 +206,7 @@ namespace XF1_Backend_Unit_Testing
             fechas.Add(fecha4);
             fechas.Add(fecha5);
 
-            bool resultado = LogicFunctions.RevisarFechas(fechaInicio, fechaFin, fechas);
+            bool resultado = IdLogicFunctions.RevisarFechas(fechaInicio, fechaFin, fechas);
 
             Assert.IsNotNull(resultado);
 
@@ -251,7 +251,7 @@ namespace XF1_Backend_Unit_Testing
             fechas.Add(fecha4);
             fechas.Add(fecha5);
 
-            bool resultado = LogicFunctions.RevisarFechas(fechaInicio, fechaFin, fechas);
+            bool resultado = IdLogicFunctions.RevisarFechas(fechaInicio, fechaFin, fechas);
 
             Assert.IsTrue(resultado);
 
@@ -296,7 +296,7 @@ namespace XF1_Backend_Unit_Testing
             fechas.Add(fecha4);
             fechas.Add(fecha5);
 
-            bool resultado = LogicFunctions.RevisarFechas(fechaInicio, fechaFin, fechas);
+            bool resultado = IdLogicFunctions.RevisarFechas(fechaInicio, fechaFin, fechas);
 
             Assert.IsFalse(resultado);
 
@@ -311,7 +311,7 @@ namespace XF1_Backend_Unit_Testing
         {
             string contrasena = "especificacion";
 
-            string resultado = LogicFunctions.EncriptarContrasena(contrasena);
+            string resultado = IdLogicFunctions.EncriptarContrasena(contrasena);
 
             Assert.IsNotNull(resultado);
 
@@ -326,7 +326,7 @@ namespace XF1_Backend_Unit_Testing
         {
             string contrasena = "especificacion";
 
-            string resultado = LogicFunctions.EncriptarContrasena(contrasena);
+            string resultado = IdLogicFunctions.EncriptarContrasena(contrasena);
 
             Assert.AreNotEqual(resultado, contrasena);
 
