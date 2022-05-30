@@ -43,7 +43,10 @@ namespace XF1_Backend.Controllers
 
             usuario.Contrasena = StringLogicFunctions.EncriptarContrasena(usuario.Contrasena);
             _context.Usuario.Add(usuario);
-            await _context.SaveChangesAsync(); 
+            await _context.SaveChangesAsync();
+
+            // Añadir el jugador a la liga pública
+            _context.Database.ExecuteSqlInterpolated(UsuarioRequests.anadirUsuarioLiga(usuario.Correo));
             return Ok();
         }
 

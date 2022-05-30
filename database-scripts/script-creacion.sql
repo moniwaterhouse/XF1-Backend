@@ -164,7 +164,7 @@ CREATE TABLE PILOTO
 	PRIMARY KEY(Nombre)
 );
 
--- LLAVES FORÁNEAS --
+-- LLAVES FORï¿½NEAS --
 
 ALTER TABLE CARRERA
 ADD CONSTRAINT FK_CARRERA_CAMPEONATO FOREIGN KEY(IdCampeonato)
@@ -287,7 +287,7 @@ END
 GO
 
 -- nombre: sp_anadir_usuario_liga
--- descripcion: este sp añade al nuevo usuario a todas las ligas publicas que hay
+-- descripcion: este sp aï¿½ade al nuevo usuario a todas las ligas publicas que hay
 -- solamente indicando el correo de este
 DROP PROCEDURE IF EXISTS sp_anadir_usuario_liga
 GO
@@ -315,8 +315,8 @@ INSERT INTO CAMPEONATO	(Id, Nombre, Presupuesto, FechaInicio, HoraInicio, FechaF
 
 
 INSERT INTO CARRERA		(Id, IdCampeonato, Nombre, NombrePais, NombrePista, FechaInicio, HoraInicio, FechaFin, HoraFin, Estado)
-			VALUES		(1, 'KL9HY6', 'Carrera marzo CRI', 'Costa Rica', 'Pista San José', '03-03-2022', '1:00', '03-06-2022', '13:00', 'Carrera Completada'),
-						(2, 'KL9HY6', 'Carrera mayo ESP', 'España', 'Pista Madrid', '05-03-2022', '14:00', '05-06-2022', '15:00', 'Carrera Completada'),
+			VALUES		(1, 'KL9HY6', 'Carrera marzo CRI', 'Costa Rica', 'Pista San Josï¿½', '03-03-2022', '1:00', '03-06-2022', '13:00', 'Carrera Completada'),
+						(2, 'KL9HY6', 'Carrera mayo ESP', 'Espaï¿½a', 'Pista Madrid', '05-03-2022', '14:00', '05-06-2022', '15:00', 'Carrera Completada'),
 						(3, 'KL9HY6', 'Carrera junio BEL', 'Belgica', 'Pista Bruselas', '06-21-2022', '15:30', '06-25-2022', '9:00', 'Pendiente'),
 						(4, 'KL9HY6', 'Carrera agosto FRA', 'Francia', 'Pista Paris', '08-14-2022', '15:00', '08-19-2022', '10:00', 'Pendiente');
 
@@ -340,11 +340,11 @@ INSERT INTO PILOTO	(Nombre, Pais, Precio, EquipoReal, UrlLogo)
 			VALUES	('Charles Leclerc', 'Polonia', 30, 'FERRARI', 'https://soymotor.com/sites/default/files/styles/small/public/imagenes/piloto/perfil-charles-leclerc-2022-soymotor.png'),
 					('Max Verstappen', 'Holanda', 30, 'RED BULL', 'https://cdn-9.motorsport.com/images/mgl/24vA3r46/s8/max-verstappen-red-bull-racing-1.jpg'),
 					('Sergio Perez', 'Mexico', 26, 'RED BULL', 'https://cdn-1.motorsport.com/images/mgl/0a9neZP0/s8/sergio-perez-red-bull-racing-1.jpg'),
-					('George Russell', 'Gran Bretaña', 25, 'MERCEDES', 'https://depor.com/resizer/8QK8KXksasI9Zjruij0420_xgzs=/1200x900/smart/filters:format(jpeg):quality(75)/cloudfront-us-east-1.images.arcpublishing.com/elcomercio/NMEIUWUAPZHXNNRPVYBXAFB37A.jpeg'),
-					('Carlos Sainz', 'España', 25, 'FERRARI', 'https://cdn-8.motorsport.com/images/mgl/YXRnk570/s800/carlos-sainz-jr-ferrari-1.jpg'),
-					('Lewis Hamilton', 'Gran Bretaña', 25, 'MERCEDES', 'https://cdn-6.motorsport.com/images/mgl/0mb95oa2/s800/lewis-hamilton-mercedes-1.jpg'),
-					('Lando Norris', 'Gran Bretaña', 23, 'MCLAREN', 'https://sportsbase.io/images/gpfans/copy_380x388/ce1b523d65a77c79377505f103bd6028ad77f33d.png'),
-					('Fernando Alonso', 'España', 23, 'ALPINE F1 TEAM', 'https://cdn-1.motorsport.com/images/mgl/YBea5Kv2/s800/fernando-alonso-alpine-1.jpg'),
+					('George Russell', 'Gran Bretaï¿½a', 25, 'MERCEDES', 'https://depor.com/resizer/8QK8KXksasI9Zjruij0420_xgzs=/1200x900/smart/filters:format(jpeg):quality(75)/cloudfront-us-east-1.images.arcpublishing.com/elcomercio/NMEIUWUAPZHXNNRPVYBXAFB37A.jpeg'),
+					('Carlos Sainz', 'Espaï¿½a', 25, 'FERRARI', 'https://cdn-8.motorsport.com/images/mgl/YXRnk570/s800/carlos-sainz-jr-ferrari-1.jpg'),
+					('Lewis Hamilton', 'Gran Bretaï¿½a', 25, 'MERCEDES', 'https://cdn-6.motorsport.com/images/mgl/0mb95oa2/s800/lewis-hamilton-mercedes-1.jpg'),
+					('Lando Norris', 'Gran Bretaï¿½a', 23, 'MCLAREN', 'https://sportsbase.io/images/gpfans/copy_380x388/ce1b523d65a77c79377505f103bd6028ad77f33d.png'),
+					('Fernando Alonso', 'Espaï¿½a', 23, 'ALPINE F1 TEAM', 'https://cdn-1.motorsport.com/images/mgl/YBea5Kv2/s800/fernando-alonso-alpine-1.jpg'),
 					('Valtteri Bottas', 'Finlandia', 23, 'ALFA ROMEO RACING', 'https://static.motor.es/f1/fichas/contenido/valtteri-bottas/valtteri-bottas2021_1617632013.jpg'),
 					('Esteban Ocoon', 'Francia', 22, 'ALPINE F1 TEAM',  'https://static.motor.es/f1/fichas/contenido/esteban-ocon/esteban-ocon2021_1617620557.jpg'),
 					('Kevin Magnuussen', 'Dinamarca', 20, 'HAAS F1 TEAM', 'https://soymotor.com/sites/default/files/styles/small/public/imagenes/piloto/perfil-kevin-magnussen-2022-soymotor.png'),
