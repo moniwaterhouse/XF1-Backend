@@ -126,6 +126,7 @@ DROP TABLE IF EXISTS EQUIPO
 CREATE TABLE EQUIPO
 (
 	Id				INT,
+	Nombre			VARCHAR(100),
 	MarcaEscuderia	VARCHAR(100),
 	NombrePiloto1	VARCHAR(100),
 	NombrePiloto2	VARCHAR(100),
@@ -133,6 +134,7 @@ CREATE TABLE EQUIPO
 	NombrePiloto4	VARCHAR(100),
 	NombrePiloto5	VARCHAR(100),
 	PuntajePublica	INT,
+	PuntajePrivada	INT,
 	Costo			INT,
 
 	PRIMARY KEY(Id)
@@ -283,7 +285,7 @@ GO
 -- POPULACION DE LAS TABLAS
 
 INSERT INTO CAMPEONATO	(Id, Nombre, Presupuesto, FechaInicio, HoraInicio, FechaFin, HoraFin, ReglasPuntuacion)
-			VALUES		('KL9HY6', 'Campeonato 2022', 250, '06-15-2022', '13:00', '10-23-2022', '14:30', 'Se va a considerar que los primeros 100 lugares ganaran (100-pos) puntos.');
+			VALUES		('KL9HY6', 'Campeonato 2022', 250, '04-15-2022', '13:00', '10-23-2022', '14:30', 'Se va a considerar que los primeros 100 lugares ganaran (100-pos) puntos.');
 
 
 INSERT INTO CARRERA		(Id, IdCampeonato, Nombre, NombrePais, NombrePista, FechaInicio, HoraInicio, FechaFin, HoraFin, Estado)
@@ -327,11 +329,11 @@ INSERT INTO PILOTO	(Nombre, Pais, Precio, EquipoReal, UrlLogo)
 					('Mick Shumacher', 'Alemania', 13, 'HAAS F1 TEAM', 'https://static.motor.es/f1/fichas/contenido/mick-schumacher/mick-schumacher2021_1617622323.jpg'),
 					('Nico Hulkenberg', 'Alemania', 11, 'ASTON MARTIN', 'https://static.motor.es/f1/fichas/contenido/nico-hulkenberg.jpg');
 
-INSERT INTO EQUIPO  (Id, MarcaEscuderia,	NombrePiloto1,	NombrePiloto2,	NombrePiloto3,	NombrePiloto4,	NombrePiloto5,	PuntajePublica,	Costo)
-		VALUES		(1, 'FERRARI', 'Esteban Ocoon', 'Lance Stroll', 'Daniel Ricciardo', 'Mick Shumacher', 'Lewis Hamilton', 0, 146),
-					(2, 'ASTON MARTIN', 'Charles Leclerc', 'Lewis Hamilton', 'Yuki Tsunoda', 'Sebastian Vettel', 'Lance Stroll', 0, 108),
-					(3, 'MCLAREN', 'Nico Hulkenberg', 'Mick Shumacher', 'Kevin Magnuussen', 'Lando Norris', 'Fernando Alonso', 0, 125),
-					(4, 'RED BULL', 'Sergio Perez', 'Kevin Magnuussen', 'Yuki Tsunoda', 'Sebastian Vettel', 'Nico Hulkenberg', 0, 132);
+INSERT INTO EQUIPO  (Id, Nombre, MarcaEscuderia,	NombrePiloto1,	NombrePiloto2,	NombrePiloto3,	NombrePiloto4,	NombrePiloto5,	PuntajePublica, PuntajePrivada,	Costo)
+		VALUES		(1, 'Campeones', 'FERRARI', 'Esteban Ocoon', 'Lance Stroll', 'Daniel Ricciardo', 'Mick Shumacher', 'Lewis Hamilton', 0, 0, 146),
+					(2, 'VivaF1', 'ASTON MARTIN', 'Charles Leclerc', 'Lewis Hamilton', 'Yuki Tsunoda', 'Sebastian Vettel', 'Lance Stroll', 0, 0, 108),
+					(3, 'GOAT', 'MCLAREN', 'Nico Hulkenberg', 'Mick Shumacher', 'Kevin Magnuussen', 'Lando Norris', 'Fernando Alonso', 0, 0, 125),
+					(4, 'Speed', 'RED BULL', 'Sergio Perez', 'Kevin Magnuussen', 'Yuki Tsunoda', 'Sebastian Vettel', 'Nico Hulkenberg', 0, 0, 132);
 
 INSERT INTO USUARIO (NombreUsuario, Correo, Pais, Contrasena, NombreEscuderia, IdEquipo1, IdEquipo2)
 			VALUES	('NachoNavarro', 'juan@gmail.com', 'Costa Rica', '81dc9bdb52d04dc20036dbd8313ed055', 'RayoF1', 1, 2),
