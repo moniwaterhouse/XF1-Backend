@@ -18,7 +18,7 @@ namespace XF1_Backend.Requests
         public static string getFechasCampeonatos = "SELECT CAMPEONATO.FechaInicio, CAMPEONATO.FechaFin FROM CAMPEONATO";
 
         // stored procedure para crear liga
-        public static System.FormattableString crearLiga(string id) { return $@"EXECUTE sp_crear_liga {id}"; }
+        public static System.FormattableString crearLiga(string id, int activa) { return $@"EXECUTE sp_crear_liga_publica {id}, {activa}"; }
 
         // obtener fechas de los campeonatos
         public static string getFechas =    "SELECT CAMPEONATO.FechaInicio, CAMPEONATO.FechaFin " +

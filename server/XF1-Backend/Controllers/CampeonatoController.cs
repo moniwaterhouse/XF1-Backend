@@ -43,7 +43,7 @@ namespace XF1_Backend.Controllers
                 await _context.SaveChangesAsync();
 
                 // crear liga publica y añadir los jugadoers ahí
-                await _context.Database.ExecuteSqlInterpolatedAsync(CampeonatoRequests.crearLiga(campeonato.Id));
+                await _context.Database.ExecuteSqlInterpolatedAsync(CampeonatoRequests.crearLiga(campeonato.Id, 0));
                 await _context.SaveChangesAsync();
 
                 return Ok();

@@ -16,5 +16,8 @@ namespace XF1_Backend.Requests
         // Obtener todos los nombres de escuderias
         public static string getEscuderias = "SELECT NombreEscuderia FROM USUARIO";
 
+        // Stored procedure de añadir nuevo usuario a ligas publicas
+        public static System.FormattableString anadirUsuarioLiga(string correo) { return $@"EXECUTE sp_anadir_usuario_liga {correo}"; }
+
     }
 }

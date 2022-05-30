@@ -25,9 +25,15 @@ namespace XF1_Backend.Controllers
         [HttpPost]
         public async Task<ActionResult<Usuario>> PostUsuario(Usuario usuario)
         {
+            // Encriptar contraseña
             usuario.Contrasena = LogicFunctions.EncriptarContrasena(usuario.Contrasena);
+
+            // Añadir nuevo jugador
             _context.Usuario.Add(usuario);
-            await _context.SaveChangesAsync(); 
+            await _context.SaveChangesAsync();
+
+            // Añadir el jugador a la liga pública
+            _context.Database.ExecuteSqlInterpolated(UsuarioRequests.anadirUsuarioLiga(usuario.Correo));
             return Ok();
         }
 
