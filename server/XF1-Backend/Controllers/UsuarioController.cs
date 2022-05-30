@@ -25,6 +25,23 @@ namespace XF1_Backend.Controllers
         [HttpPost]
         public async Task<ActionResult<Usuario>> PostUsuario(Usuario usuario)
         {
+            // revisión de valores nulos
+            /*
+             * revisar que no existan valores nulos
+             */
+
+            // revisión de extensión 
+            /*
+             * revisar que los valores que se quieren añadir no excedan el máximo de caracteres
+             */
+
+            // revisión de repetición de correo electrónico
+
+            /*
+             * Realizar un método que asegure que no se repita el correo electrónico con alguno ya existente
+             */
+
+
             // Encriptar contraseña
             usuario.Contrasena = StringLogicFunctions.EncriptarContrasena(usuario.Contrasena);
 

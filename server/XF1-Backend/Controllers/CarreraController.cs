@@ -26,6 +26,17 @@ namespace XF1_Backend.Controllers
         [HttpPost]
         public async Task<ActionResult<Carrera>> PostCarrera(Carrera carrera)
         {
+            // revisión de valores nulos
+            /*
+             * Revisión de que ninguno de los datos sea nulo
+             * 
+             */
+
+            // revisión de longitud
+            /*
+             * Revisión de que el nombre de carrera y pista cumplan con ser menores de 30 caracteres
+             */
+
             // crear llave
             IEnumerable<Id> carreraIds = await _context.Ids.FromSqlInterpolated(CarreraRequests.getCarreraPorCampeonato(carrera.IdCampeonato)).ToListAsync();
             carrera.Id = IdLogicFunctions.GenerarId(carreraIds);

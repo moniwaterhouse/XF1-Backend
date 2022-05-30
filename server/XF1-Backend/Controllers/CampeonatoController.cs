@@ -26,6 +26,19 @@ namespace XF1_Backend.Controllers
         [HttpPost]
         public async Task<ActionResult<Campeonato>> PostCampeonatos(Campeonato campeonato)
         {
+            // revisión de valores nulos
+            /*
+             * Revisión de que ninguno de los datos sea nulo
+             * 
+             * 
+             */
+
+            // revision longitud
+            /*
+             * añadir validación de que el nombre del campeonato debe estar entre 5 y 30 caracteres
+             * 
+             * añadir la validación de que la descripción debe ser menor a 1000 caracteres
+             */
 
             // generar llave unica del campeonato
             IEnumerable<Campeonato> campeonatosAnteriores;
@@ -34,19 +47,19 @@ namespace XF1_Backend.Controllers
 
             // revision de choque de fechas
             IEnumerable<Fechas> fechas;
-                fechas = await _context.Fechas.FromSqlRaw(CampeonatoRequests.getFechasCampeonatos).ToListAsync();
-                bool permitido = DateLogicFunctions.RevisarFechas(campeonato.FechaInicio, campeonato.FechaFin, fechas);
-                if (permitido == false) return Conflict("Existe un conflicto de fechas con otro campeonato");
+            fechas = await _context.Fechas.FromSqlRaw(CampeonatoRequests.getFechasCampeonatos).ToListAsync();
+            bool permitido = DateLogicFunctions.RevisarFechas(campeonato.FechaInicio, campeonato.FechaFin, fechas);
+            if (permitido == false) return Conflict("Existe un conflicto de fechas con otro campeonato");
 
-                // añadir campeonato
-                _context.Campeonato.Add(campeonato);
-                await _context.SaveChangesAsync();
+            // añadir campeonato
+            _context.Campeonato.Add(campeonato);
+            await _context.SaveChangesAsync();
 
-                // crear liga publica y añadir los jugadoers ahí
-                await _context.Database.ExecuteSqlInterpolatedAsync(CampeonatoRequests.crearLiga(campeonato.Id, 0));
-                await _context.SaveChangesAsync();
+            // crear liga publica y añadir los jugadoers ahí
+            await _context.Database.ExecuteSqlInterpolatedAsync(CampeonatoRequests.crearLiga(campeonato.Id, 0));
+            await _context.SaveChangesAsync();
 
-                return Ok();
+            return Ok();
 
         }
 
