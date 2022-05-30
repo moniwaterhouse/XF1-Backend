@@ -12,7 +12,7 @@ namespace XF1_Backend.Requests
     public class CampeonatoRequests
     {
         // obtener todos los campeonatos
-        public static string getCampeonatos = "SELECT * FROM CAMPEONATO ORDER BY FechaInicio DESC";
+        public static string getCampeonatos = "SELECT * FROM CAMPEONATO ORDER BY FechaInicio ASC";
 
         // obtener fechas de los campeonatos
         public static string getFechasCampeonatos = "SELECT CAMPEONATO.FechaInicio, CAMPEONATO.FechaFin FROM CAMPEONATO";
