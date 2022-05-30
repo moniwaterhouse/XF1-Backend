@@ -91,6 +91,7 @@ CREATE TABLE LIGA
 	IdLiga			VARCHAR(20),
 	IdCampeonato	VARCHAR(6),
 	Tipo			VARCHAR(10),
+	Activa			INT,
 	
 	PRIMARY KEY(IdLiga)
 );
@@ -115,7 +116,7 @@ DROP TABLE IF EXISTS USUARIOXLIGA
 CREATE TABLE USUARIOXLIGA
 (
 	CorreoUsuario	VARCHAR(100),
-	IdLiga		VARCHAR(6),
+	IdLiga		VARCHAR(20),
 
 	PRIMARY KEY(CorreoUsuario, IdLiga)
 );
@@ -177,7 +178,7 @@ REFERENCES USUARIO(Correo);
 
 ALTER TABLE USUARIOXLIGA
 ADD CONSTRAINT FK_USUARIOXLIGA_LIGA FOREIGN KEY(IdLiga)
-REFERENCES LIGA(IdCampeonato);
+REFERENCES LIGA(IdLiga);
 
 ALTER TABLE USUARIO
 ADD CONSTRAINT FK_USUARIO_EQUIPO_1 FOREIGN KEY(IdEquipo1)
@@ -236,16 +237,17 @@ GO
 -- descripcion: este sp crea una nueva liga public asociada al campeonato
 -- que se ingresa por parametro. La idea es utilizarlo cuando se crea un
 -- campeonato. Tambien asocia a todos los jugadoeres activos a la liga.
-DROP PROCEDURE IF EXISTS sp_crear_liga
+DROP PROCEDURE IF EXISTS sp_crear_liga_publica
 GO
-CREATE PROCEDURE sp_crear_liga(
-	@IdCampeonato	VARCHAR(6)
+CREATE PROCEDURE sp_crear_liga_publica (
+	@IdCampeonato	VARCHAR(6),
+	@Activa			INT
 )
 AS
 BEGIN
 
-	INSERT INTO LIGA (IdCampeonato, Activa)
-			VALUES	 (@IdCampeonato, 0);
+	INSERT INTO LIGA (IdLiga, IdCampeonato, Tipo, Activa)
+			VALUES	 (@IdCampeonato, @IdCampeonato, 'Publica',@Activa);
 
 	INSERT INTO USUARIOXLIGA (CorreoUsuario, IdLiga)
 		SELECT
@@ -253,6 +255,25 @@ BEGIN
 			@IdCampeonato AS IdLiga
 		FROM USUARIO;
 
+END
+GO
+
+-- nombre: sp_anadir_usuario_liga
+-- descripcion: este sp añade al nuevo usuario a todas las ligas publicas que hay
+-- solamente indicando el correo de este
+DROP PROCEDURE IF EXISTS sp_anadir_usuario_liga
+GO
+CREATE PROCEDURE sp_anadir_usuario_liga (
+	@CorreoUsuario	VARCHAR(100)
+)
+AS
+BEGIN
+	INSERT INTO USUARIOXLIGA (CorreoUsuario, IdLiga)
+		SELECT
+			@CorreoUsuario AS CorreoUsuario,
+			IdLiga
+		FROM LIGA
+		WHERE Tipo = 'Publica'
 END
 GO
 
@@ -272,8 +293,8 @@ INSERT INTO CARRERA		(Id, IdCampeonato, Nombre, NombrePais, NombrePista, FechaIn
 						(4, 'KL9HY6', 'Carrera agosto FRA', 'Francia', 'Pista Paris', '08-14-2022', '15:00', '08-19-2022', '10:00', 'Pendiente');
 
 
-INSERT INTO LIGA	(IdCampeonato, Activa)
-			VALUES	('KL9HY6', 1);
+INSERT INTO LIGA	(IdLiga, IdCampeonato, Tipo, Activa)
+			VALUES	('KL9HY6', 'KL9HY6', 'Publica', 1);
 
 INSERT INTO ESCUDERIA (Marca, Precio, UrlLogo)
 			VALUES  ('FERRARI', 55, 'https://i.pinimg.com/originals/3d/8e/eb/3d8eebbdb50c5370e59e031ca161aacd.jpg'),
@@ -320,5 +341,3 @@ INSERT INTO USUARIO (NombreUsuario, Correo, Pais, Contrasena, NombreEscuderia, I
 INSERT INTO USUARIOXLIGA	(CorreoUsuario, IdLiga)
 			VALUES			('juan@gmail.com', 'KL9HY6'),
 							('monica@gmail.com', 'KL9HY6');
-
-SELECT * FROM USUARIO
