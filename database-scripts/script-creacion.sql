@@ -372,4 +372,3 @@ INSERT INTO USUARIO (NombreUsuario, Correo, Pais, Contrasena, NombreEscuderia, I
 INSERT INTO USUARIOXLIGA	(CorreoUsuario, IdLiga)
 			VALUES			('juan@gmail.com', 'KL9HY6'),
 							('monica@gmail.com', 'KL9HY6');
-
