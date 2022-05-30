@@ -26,27 +26,40 @@ namespace XF1_Backend.Controllers
         [HttpPost]
         public async Task<ActionResult<Campeonato>> PostCampeonatos(Campeonato campeonato)
         {
+            // revisión de valores nulos
+            /*
+             * Revisión de que ninguno de los datos sea nulo
+             * 
+             * 
+             */
 
-                // generar llave unica del campeonato
-                IEnumerable<Campeonato> campeonatosAnteriores;
-                campeonatosAnteriores = await _context.Campeonato.FromSqlRaw(CampeonatoRequests.getCampeonatos).ToListAsync();
-                campeonato.Id = LogicFunctions.GenerarLlave(campeonatosAnteriores);
+            // revision longitud
+            /*
+             * añadir validación de que el nombre del campeonato debe estar entre 5 y 30 caracteres
+             * 
+             * añadir la validación de que la descripción debe ser menor a 1000 caracteres
+             */
 
-                // revision de choque de fechas
-                IEnumerable<Fechas> fechas;
-                fechas = await _context.Fechas.FromSqlRaw(CampeonatoRequests.getFechasCampeonatos).ToListAsync();
-                bool permitido = LogicFunctions.RevisarFechas(campeonato.FechaInicio, campeonato.FechaFin, fechas);
-                if (permitido == false) return Conflict("Existe un conflicto de fechas con otro campeonato");
+            // generar llave unica del campeonato
+            IEnumerable<Campeonato> campeonatosAnteriores;
+            campeonatosAnteriores = await _context.Campeonato.FromSqlRaw(CampeonatoRequests.getCampeonatos).ToListAsync();
+            campeonato.Id = IdLogicFunctions.GenerarLlave(campeonatosAnteriores);
 
-                // añadir campeonato
-                _context.Campeonato.Add(campeonato);
-                await _context.SaveChangesAsync();
+            // revision de choque de fechas
+            IEnumerable<Fechas> fechas;
+            fechas = await _context.Fechas.FromSqlRaw(CampeonatoRequests.getFechasCampeonatos).ToListAsync();
+            bool permitido = DateLogicFunctions.RevisarFechas(campeonato.FechaInicio, campeonato.FechaFin, fechas);
+            if (permitido == false) return Conflict("Existe un conflicto de fechas con otro campeonato");
 
-                // crear liga publica y añadir los jugadoers ahí
-                await _context.Database.ExecuteSqlInterpolatedAsync(CampeonatoRequests.crearLiga(campeonato.Id));
-                await _context.SaveChangesAsync();
+            // añadir campeonato
+            _context.Campeonato.Add(campeonato);
+            await _context.SaveChangesAsync();
 
-                return Ok();
+            // crear liga publica y añadir los jugadoers ahí
+            await _context.Database.ExecuteSqlInterpolatedAsync(CampeonatoRequests.crearLiga(campeonato.Id, 0));
+            await _context.SaveChangesAsync();
+
+            return Ok();
 
         }
 

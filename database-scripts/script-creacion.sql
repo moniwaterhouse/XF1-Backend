@@ -88,11 +88,11 @@ CREATE TABLE CARRERA
 DROP TABLE IF EXISTS LIGA
 CREATE TABLE LIGA
 (
-	Id				INT,
+	IdLiga			VARCHAR(20),
 	IdCampeonato	VARCHAR(6),
 	Tipo			VARCHAR(10),
 	
-	PRIMARY KEY(Id)
+	PRIMARY KEY(IdLiga)
 );
 
 -- Tabla 4 - Jugadores
@@ -115,7 +115,7 @@ DROP TABLE IF EXISTS USUARIOXLIGA
 CREATE TABLE USUARIOXLIGA
 (
 	CorreoUsuario	VARCHAR(100),
-	IdLiga		INT,
+	IdLiga		VARCHAR(6),
 
 	PRIMARY KEY(CorreoUsuario, IdLiga)
 );
@@ -177,7 +177,7 @@ REFERENCES USUARIO(Correo);
 
 ALTER TABLE USUARIOXLIGA
 ADD CONSTRAINT FK_USUARIOXLIGA_LIGA FOREIGN KEY(IdLiga)
-REFERENCES LIGA(Id);
+REFERENCES LIGA(IdCampeonato);
 
 ALTER TABLE USUARIO
 ADD CONSTRAINT FK_USUARIO_EQUIPO_1 FOREIGN KEY(IdEquipo1)
@@ -244,20 +244,13 @@ CREATE PROCEDURE sp_crear_liga(
 AS
 BEGIN
 
-	DECLARE @IdLiga INT;
-
-	SELECT @IdLiga = MAX(Id)
-	FROM LIGA;
-
-	SET @IdLiga = @IdLiga + 1;
-
-	INSERT INTO LIGA (Id, IdCampeonato, Tipo)
-			VALUES	 (@IdLiga, @IdCampeonato, 'Pública');
+	INSERT INTO LIGA (IdCampeonato, Activa)
+			VALUES	 (@IdCampeonato, 0);
 
 	INSERT INTO USUARIOXLIGA (CorreoUsuario, IdLiga)
 		SELECT
 			Correo AS CorreoUsuario,
-			@IdLiga AS IdLiga
+			@IdCampeonato AS IdLiga
 		FROM USUARIO;
 
 END
@@ -279,8 +272,8 @@ INSERT INTO CARRERA		(Id, IdCampeonato, Nombre, NombrePais, NombrePista, FechaIn
 						(4, 'KL9HY6', 'Carrera agosto FRA', 'Francia', 'Pista Paris', '08-14-2022', '15:00', '08-19-2022', '10:00', 'Pendiente');
 
 
-INSERT INTO LIGA	(Id, IdCampeonato, Tipo)
-			VALUES	(1, 'KL9HY6', 'Publica');
+INSERT INTO LIGA	(IdCampeonato, Activa)
+			VALUES	('KL9HY6', 1);
 
 INSERT INTO ESCUDERIA (Marca, Precio, UrlLogo)
 			VALUES  ('FERRARI', 55, 'https://i.pinimg.com/originals/3d/8e/eb/3d8eebbdb50c5370e59e031ca161aacd.jpg'),
@@ -325,7 +318,7 @@ INSERT INTO USUARIO (NombreUsuario, Correo, Pais, Contrasena, NombreEscuderia, I
 
 
 INSERT INTO USUARIOXLIGA	(CorreoUsuario, IdLiga)
-			VALUES			('juan@gmail.com', 1),
-							('monica@gmail.com', 1);
+			VALUES			('juan@gmail.com', 'KL9HY6'),
+							('monica@gmail.com', 'KL9HY6');
 
 SELECT * FROM USUARIO
