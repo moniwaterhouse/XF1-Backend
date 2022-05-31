@@ -445,4 +445,75 @@ Url: `/api/Equipo`
 
 Observaciones: no hace falta especificar el id porque ese se añade desde el backend.
 
+## Requests LIGAS (LIG)
+
+### LIG-1
+
+Tipo: GET
+
+Descripción: Este request da como resultado los datos de la tabla de resultados de la liga pública, todos acomodados por puntajes, tal y como se definió en el mockup
+
+Url: `/api/Liga/PuntajesPublica`
+
+Json: El resultado tiene este formato
+
+```Json
+[
+  {
+    "posicion": 1,
+    "jugador": "NachoNavarro",
+    "escuderia": "RayoF1",
+    "equipo": "VivaF1",
+    "puntos": 160
+  },
+  {
+    "posicion": 2,
+    "jugador": "NachoNavarro",
+    "escuderia": "RayoF1",
+    "equipo": "Campeones",
+    "puntos": 150
+  },
+  {
+    "posicion": 3,
+    "jugador": "MoniWaterhouse",
+    "escuderia": "ganadoresCR",
+    "equipo": "GOAT",
+    "puntos": 110
+  }
+]
+```
+
+Observaciones: -.
+
+### LIG-2
+
+Tipo: GET
+
+Descripción: Este request da como resultado los datos de la tabla de la liga pública pero solo para los equipos de un usuario en específico (la idea es tomar los del usuario logueado)
+
+Url: `/api/Liga/PuntajesPublica/{correo}` donde el correo es el correo del usuario a consultar
+
+Json: El resultado tiene este formato
+
+```Json
+[
+  {
+    "posicion": 2,
+    "jugador": "NachoNavarro",
+    "escuderia": "RayoF1",
+    "equipo": "Campeones",
+    "puntos": 150
+  },
+  {
+    "posicion": 3,
+    "jugador": "MoniWaterhouse",
+    "escuderia": "ganadoresCR",
+    "equipo": "GOAT",
+    "puntos": 110
+  }
+]
+```
+
+Observaciones: Note que la posición dada coincide con la posición de la tabla general (del request LIG-1) y no necesariamente con el de este request, esto es para dar ese dato como se definió en el mockup.
+
 
