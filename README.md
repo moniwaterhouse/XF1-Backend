@@ -464,26 +464,29 @@ Json: El resultado tiene este formato
     "jugador": "NachoNavarro",
     "escuderia": "RayoF1",
     "equipo": "VivaF1",
-    "puntos": 160
+    "puntos": 160,
+    "correo": "juan@gmail.com"
   },
   {
     "posicion": 2,
     "jugador": "NachoNavarro",
     "escuderia": "RayoF1",
     "equipo": "Campeones",
-    "puntos": 150
+    "puntos": 150,
+    "correo": "juan@gmail.com"
   },
   {
     "posicion": 3,
     "jugador": "MoniWaterhouse",
     "escuderia": "ganadoresCR",
     "equipo": "GOAT",
-    "puntos": 110
+    "puntos": 110,
+    "correo": "juan@gmail.com"
   }
 ]
 ```
 
-Observaciones: -.
+Observaciones: Note que también se da el dato del correo, este no se va a mostrar pero es util para el routing que permite ver el perfil de los jugadores.
 
 ### LIG-2
 
@@ -502,18 +505,107 @@ Json: El resultado tiene este formato
     "jugador": "NachoNavarro",
     "escuderia": "RayoF1",
     "equipo": "Campeones",
-    "puntos": 150
+    "puntos": 150,
+    "correo": "juan@gmail.com"
   },
   {
     "posicion": 3,
     "jugador": "MoniWaterhouse",
     "escuderia": "ganadoresCR",
     "equipo": "GOAT",
-    "puntos": 110
+    "puntos": 110,
+    "correo": "juan@gmail.com"
   }
 ]
 ```
 
 Observaciones: Note que la posición dada coincide con la posición de la tabla general (del request LIG-1) y no necesariamente con el de este request, esto es para dar ese dato como se definió en el mockup.
 
+
+### LIG-3
+
+
+Tipo: GET
+
+Descripción: Este request da como resultado los datos de la tabla de la liga privada a la que pertenece un jugador (un jugador solamente puede pertenecer a una liga privada)
+
+Url: `/api/Liga/PuntajesPrivada/{correo}` donde el correo es el correo del usuario que se encuentra logueado, un usuario solamente puede estar en una liga privada a la vez es por esto que no hay conflicto 
+
+Json: El resultado tiene este formato
+
+```Json
+[
+  {
+    "posicion": 1,
+    "jugador": "NachoNavarro",
+    "escuderia": "RayoF1",
+    "equipo": "VivaF1",
+    "puntos": 160,
+    "correo": "juan@gmail.com"
+  },
+  {
+    "posicion": 2,
+    "jugador": "NachoNavarro",
+    "escuderia": "RayoF1",
+    "equipo": "Campeones",
+    "puntos": 150,
+    "correo": "juan@gmail.com"
+  },
+  {
+    "posicion": 3,
+    "jugador": "MoniWaterhouse",
+    "escuderia": "ganadoresCR",
+    "equipo": "GOAT",
+    "puntos": 110,
+    "correo": "monica@gmail.com"
+  }
+]
+```
+
+Observaciones: Se da el correo para ayudar al routing del perfil del usuario
+
+### LIG-4
+
+
+Tipo: GET
+
+Descripción: Este request da como resultado los nombres de los jugadores de la liga privada en la que se encuentra el jugador actual
+
+Url: `/api/Liga/UsuariosLiga/{correo}` donde el correo es el correo del usuario que se encuentra logueado, un usuario solamente puede estar en una liga privada a la vez es por esto que no hay conflicto 
+
+Json: El resultado tiene este formato
+
+```Json
+[
+  {
+    "jugador": "MoniWaterhouse"
+  },
+  {
+    "jugador": "NachoNavarro"
+  }
+]
+```
+
+Observaciones: -
+
+### LIG-5
+
+
+Tipo: GET
+
+Descripción: Este request da como resultado la información de la liga privada en la que se encuentra el usuario logueado
+
+Url: `/api/Liga/InfoPrivada/{correo}` donde el correo es el correo del usuario que se encuentra logueado, un usuario solamente puede estar en una liga privada a la vez es por esto que no hay conflicto 
+
+Json: El resultado tiene este formato
+
+```Json
+{
+  "cantidad": 4,
+  "idLiga": "KL9HY6-WEF567",
+  "activa": 0
+}
+```
+
+Observaciones: estos datos son usados como se muestra en el mockup
 
