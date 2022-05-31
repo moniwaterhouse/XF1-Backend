@@ -26,16 +26,29 @@ namespace XF1_Backend.Controllers
         [HttpPost]
         public async Task<ActionResult<Campeonato>> PostCampeonatos(Campeonato campeonato)
         {
+                // revisión de valores nulos
+                /*
+                 * Revisión de que ninguno de los datos sea nulo
+                 * 
+                 * 
+                 */
+
+                // revision longitud
+                /*
+                 * añadir validación de que el nombre del campeonato debe estar entre 5 y 30 caracteres
+                 * 
+                 * añadir la validación de que la descripción debe ser menor a 1000 caracteres
+                 */
 
                 // generar llave unica del campeonato
                 IEnumerable<Campeonato> campeonatosAnteriores;
                 campeonatosAnteriores = await _context.Campeonato.FromSqlRaw(CampeonatoRequests.getCampeonatos).ToListAsync();
-                campeonato.Id = LogicFunctions.GenerarLlave(campeonatosAnteriores);
+                campeonato.Id = IdLogicFunctions.GenerarLlave(campeonatosAnteriores);
 
                 // revision de choque de fechas
                 IEnumerable<Fechas> fechas;
                 fechas = await _context.Fechas.FromSqlRaw(CampeonatoRequests.getFechasCampeonatos).ToListAsync();
-                bool permitido = LogicFunctions.RevisarFechas(campeonato.FechaInicio, campeonato.FechaFin, fechas);
+                bool permitido = DateLogicFunctions.RevisarFechas(campeonato.FechaInicio, campeonato.FechaFin, fechas);
                 if (permitido == false) return Conflict("Existe un conflicto de fechas con otro campeonato");
 
                 // añadir campeonato

@@ -26,13 +26,24 @@ namespace XF1_Backend.Controllers
         [HttpPost]
         public async Task<ActionResult<Carrera>> PostCarrera(Carrera carrera)
         {
+            // revisión de valores nulos
+            /*
+             * Revisión de que ninguno de los datos sea nulo
+             * 
+             */
+
+            // revisión de longitud
+            /*
+             * Revisión de que el nombre de carrera y pista cumplan con ser menores de 30 caracteres
+             */
+
             // crear llave
             IEnumerable<Id> carreraIds = await _context.Ids.FromSqlInterpolated(CarreraRequests.getCarreraPorCampeonato(carrera.IdCampeonato)).ToListAsync();
-            carrera.Id = LogicFunctions.GenerarId(carreraIds);
+            carrera.Id = IdLogicFunctions.GenerarId(carreraIds);
 
             // verificar fechas
             IEnumerable<Fechas> fechas = await _context.FechasCarrera.FromSqlInterpolated(CarreraRequests.getFechasPorCampeonato(carrera.IdCampeonato)).ToListAsync();
-            bool permitido = LogicFunctions.RevisarFechas(carrera.FechaInicio, carrera.FechaFin, fechas);
+            bool permitido = DateLogicFunctions.RevisarFechas(carrera.FechaInicio, carrera.FechaFin, fechas);
             if (permitido == false) return Conflict("Existe un conflicto de fechas con otra carrera");
 
             // definir estado por defecto

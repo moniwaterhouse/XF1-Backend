@@ -360,7 +360,8 @@ INSERT INTO EQUIPO  (Id, Nombre, MarcaEscuderia,	NombrePiloto1,	NombrePiloto2,	N
 					(2, 'VivaF1', 'ASTON MARTIN', 'Charles Leclerc', 'Lewis Hamilton', 'Yuki Tsunoda', 'Sebastian Vettel', 'Lance Stroll', 160, 0, 108),
 					(3, 'GOAT', 'MCLAREN', 'Nico Hulkenberg', 'Mick Shumacher', 'Kevin Magnuussen', 'Lando Norris', 'Fernando Alonso', 110, 0, 125),
 					(4, 'Speed', 'RED BULL', 'Sergio Perez', 'Kevin Magnuussen', 'Yuki Tsunoda', 'Sebastian Vettel', 'Nico Hulkenberg', 65, 0, 132),
-					(5, 'EquipoTOP1', 'WILLIAMS', 'Carlos Sainz', 'Nico Hulkenberg', 'Valtteri Bottas', 'Lando Norris', 'Daniel Ricciardo', 155, 0, 100);
+					(5, 'EquipoTOP1', 'WILLIAMS', 'Carlos Sainz', 'Nico Hulkenberg', 'Valtteri Bottas', 'Lando Norris', 'Daniel Ricciardo', 155, 0, 100),
+					(6, 'DreamTeam', 'MERCEDES', 'Carlos Sainz', 'Kevin Magnuussen', 'Esteban Ocoon', 'Mick Shumacher', 'Lewis Hamilton', 160, 0, 165);
 
 INSERT INTO USUARIO (NombreUsuario, Correo, Pais, Contrasena, NombreEscuderia, IdEquipo1, IdEquipo2)
 			VALUES	('NachoNavarro', 'juan@gmail.com', 'Costa Rica', '81dc9bdb52d04dc20036dbd8313ed055', 'RayoF1', 1, 2),
