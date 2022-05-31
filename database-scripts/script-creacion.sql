@@ -233,6 +233,19 @@ FROM CARRERA
 
 GO
 
+-- view de puntajes en liga publica
+DROP VIEW IF EXISTS PuntajesPublica
+GO
+CREATE VIEW PuntajesPublica
+AS SELECT ROW_NUMBER() OVER(ORDER BY EQU.PuntajePublica DESC) AS Posicion, USU.NombreUsuario AS Jugador, USU.NombreEscuderia AS Escuderia, EQU.Nombre AS Equipo, EQU.PuntajePublica AS Puntos
+FROM (((LIGA AS LIG JOIN CAMPEONATO AS CAM ON LIG.IdCampeonato = CAM.Id)
+		JOIN USUARIOXLIGA UXL ON LIG.IdLiga = UXL.IdLiga)
+		JOIN USUARIO AS USU ON UXL.CorreoUsuario = USU.Correo)
+		JOIN EQUIPO AS EQU ON (USU.IdEquipo1 = EQU.Id OR USU.IdEquipo2 = EQU.Id)
+WHERE CAM.FechaFin > GETDATE() AND CAM.FechaInicio < GETDATE()
+
+GO
+
 -- STORED PROCEDURES -- 
 
 -- nombre: sp_crear_liga
@@ -330,10 +343,10 @@ INSERT INTO PILOTO	(Nombre, Pais, Precio, EquipoReal, UrlLogo)
 					('Nico Hulkenberg', 'Alemania', 11, 'ASTON MARTIN', 'https://static.motor.es/f1/fichas/contenido/nico-hulkenberg.jpg');
 
 INSERT INTO EQUIPO  (Id, Nombre, MarcaEscuderia,	NombrePiloto1,	NombrePiloto2,	NombrePiloto3,	NombrePiloto4,	NombrePiloto5,	PuntajePublica, PuntajePrivada,	Costo)
-		VALUES		(1, 'Campeones', 'FERRARI', 'Esteban Ocoon', 'Lance Stroll', 'Daniel Ricciardo', 'Mick Shumacher', 'Lewis Hamilton', 0, 0, 146),
-					(2, 'VivaF1', 'ASTON MARTIN', 'Charles Leclerc', 'Lewis Hamilton', 'Yuki Tsunoda', 'Sebastian Vettel', 'Lance Stroll', 0, 0, 108),
-					(3, 'GOAT', 'MCLAREN', 'Nico Hulkenberg', 'Mick Shumacher', 'Kevin Magnuussen', 'Lando Norris', 'Fernando Alonso', 0, 0, 125),
-					(4, 'Speed', 'RED BULL', 'Sergio Perez', 'Kevin Magnuussen', 'Yuki Tsunoda', 'Sebastian Vettel', 'Nico Hulkenberg', 0, 0, 132);
+		VALUES		(1, 'Campeones', 'FERRARI', 'Esteban Ocoon', 'Lance Stroll', 'Daniel Ricciardo', 'Mick Shumacher', 'Lewis Hamilton', 150, 0, 146),
+					(2, 'VivaF1', 'ASTON MARTIN', 'Charles Leclerc', 'Lewis Hamilton', 'Yuki Tsunoda', 'Sebastian Vettel', 'Lance Stroll', 160, 0, 108),
+					(3, 'GOAT', 'MCLAREN', 'Nico Hulkenberg', 'Mick Shumacher', 'Kevin Magnuussen', 'Lando Norris', 'Fernando Alonso', 110, 0, 125),
+					(4, 'Speed', 'RED BULL', 'Sergio Perez', 'Kevin Magnuussen', 'Yuki Tsunoda', 'Sebastian Vettel', 'Nico Hulkenberg', 65, 0, 132);
 
 INSERT INTO USUARIO (NombreUsuario, Correo, Pais, Contrasena, NombreEscuderia, IdEquipo1, IdEquipo2)
 			VALUES	('NachoNavarro', 'juan@gmail.com', 'Costa Rica', '81dc9bdb52d04dc20036dbd8313ed055', 'RayoF1', 1, 2),
