@@ -20,5 +20,18 @@ namespace XF1_Backend.Models
         public string Escuderia { get; set; }
         public string Equipo { get; set; }
         public int Puntos { get; set; }
+        public string Correo { get; set; }
+    }
+
+    public class InfoLigaPrivada
+    {
+        public int Cantidad { get; set; }
+        public string IdLiga { get; set; }
+        public int Activa { get; set; }
+    }
+
+    public class UsuariosLiga
+    {
+        public string Jugador { get; set; }
     }
 }

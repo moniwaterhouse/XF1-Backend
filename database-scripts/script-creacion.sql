@@ -28,6 +28,9 @@ DROP CONSTRAINT IF EXISTS FK_USUARIO_EQUIPO_1;
 ALTER TABLE USUARIO
 DROP CONSTRAINT IF EXISTS FK_USUARIO_EQUIPO_2;
 
+ALTER TABLE USUARIO
+DROP CONSTRAINT IF EXISTS FK_USUARIO_LIGA;
+
 ALTER TABLE EQUIPO
 DROP CONSTRAINT IF EXISTS FK_EQUIPO_ESCUDERIA;
 
@@ -107,6 +110,7 @@ CREATE TABLE USUARIO
 	NombreEscuderia		VARCHAR(100),
 	IdEquipo1			INT,
 	IdEquipo2			INT,
+	IdLigaPrivada		VARCHAR(20),
 
 	PRIMARY KEY(Correo)
 );
@@ -164,7 +168,7 @@ CREATE TABLE PILOTO
 	PRIMARY KEY(Nombre)
 );
 
--- LLAVES FOR�NEAS --
+-- LLAVES FORANEAS --
 
 ALTER TABLE CARRERA
 ADD CONSTRAINT FK_CARRERA_CAMPEONATO FOREIGN KEY(IdCampeonato)
@@ -189,6 +193,10 @@ REFERENCES EQUIPO(Id);
 ALTER TABLE USUARIO
 ADD CONSTRAINT FK_USUARIO_EQUIPO_2 FOREIGN KEY(IdEquipo2)
 REFERENCES EQUIPO(Id);
+
+ALTER TABLE USUARIO
+ADD CONSTRAINT FK_USUARIO_LIGA FOREIGN KEY(IdLigaPrivada)
+REFERENCES LIGA(IdLiga);
 
 ALTER TABLE EQUIPO
 ADD CONSTRAINT FK_EQUIPO_ESCUDERIA FOREIGN KEY(MarcaEscuderia)
@@ -237,12 +245,12 @@ GO
 DROP VIEW IF EXISTS PuntajesPublica
 GO
 CREATE VIEW PuntajesPublica
-AS SELECT ROW_NUMBER() OVER(ORDER BY EQU.PuntajePublica DESC) AS Posicion, USU.NombreUsuario AS Jugador, USU.NombreEscuderia AS Escuderia, EQU.Nombre AS Equipo, EQU.PuntajePublica AS Puntos
+AS SELECT ROW_NUMBER() OVER(ORDER BY EQU.PuntajePublica DESC) AS Posicion, USU.NombreUsuario AS Jugador, USU.NombreEscuderia AS Escuderia, EQU.Nombre AS Equipo, EQU.PuntajePublica AS Puntos, USU.Correo AS Correo
 FROM (((LIGA AS LIG JOIN CAMPEONATO AS CAM ON LIG.IdCampeonato = CAM.Id)
 		JOIN USUARIOXLIGA UXL ON LIG.IdLiga = UXL.IdLiga)
 		JOIN USUARIO AS USU ON UXL.CorreoUsuario = USU.Correo)
 		JOIN EQUIPO AS EQU ON (USU.IdEquipo1 = EQU.Id OR USU.IdEquipo2 = EQU.Id)
-WHERE CAM.FechaFin > GETDATE() AND CAM.FechaInicio < GETDATE()
+WHERE CAM.FechaFin > GETDATE() AND CAM.FechaInicio < GETDATE() AND LIG.Tipo = 'Publica'
 
 GO
 
@@ -250,7 +258,7 @@ GO
 DROP VIEW IF EXISTS PuntajesPrivada
 GO
 CREATE VIEW PuntajesPrivada
-AS SELECT ROW_NUMBER() OVER(ORDER BY EQU.PuntajePublica DESC) AS Posicion, USU.NombreUsuario AS Jugador, USU.NombreEscuderia AS Escuderia, EQU.Nombre AS Equipo, EQU.PuntajePublica AS Puntos
+AS SELECT ROW_NUMBER() OVER(ORDER BY EQU.PuntajePublica DESC) AS Posicion, USU.NombreUsuario AS Jugador, USU.NombreEscuderia AS Escuderia, EQU.Nombre AS Equipo, EQU.PuntajePublica AS Puntos, LIG.IdLiga AS IdLiga, USU.Correo AS Correo
 FROM (((LIGA AS LIG JOIN CAMPEONATO AS CAM ON LIG.IdCampeonato = CAM.Id)
 		JOIN USUARIOXLIGA UXL ON LIG.IdLiga = UXL.IdLiga)
 		JOIN USUARIO AS USU ON UXL.CorreoUsuario = USU.Correo)
@@ -315,14 +323,16 @@ INSERT INTO CAMPEONATO	(Id, Nombre, Presupuesto, FechaInicio, HoraInicio, FechaF
 
 
 INSERT INTO CARRERA		(Id, IdCampeonato, Nombre, NombrePais, NombrePista, FechaInicio, HoraInicio, FechaFin, HoraFin, Estado)
-			VALUES		(1, 'KL9HY6', 'Carrera marzo CRI', 'Costa Rica', 'Pista San Jos�', '03-03-2022', '1:00', '03-06-2022', '13:00', 'Carrera Completada'),
-						(2, 'KL9HY6', 'Carrera mayo ESP', 'Espa�a', 'Pista Madrid', '05-03-2022', '14:00', '05-06-2022', '15:00', 'Carrera Completada'),
+			VALUES		(1, 'KL9HY6', 'Carrera marzo CRI', 'Costa Rica', 'Pista San Jose', '03-03-2022', '1:00', '03-06-2022', '13:00', 'Carrera Completada'),
+						(2, 'KL9HY6', 'Carrera mayo ESP', 'Espana', 'Pista Madrid', '05-03-2022', '14:00', '05-06-2022', '15:00', 'Carrera Completada'),
 						(3, 'KL9HY6', 'Carrera junio BEL', 'Belgica', 'Pista Bruselas', '06-21-2022', '15:30', '06-25-2022', '9:00', 'Pendiente'),
 						(4, 'KL9HY6', 'Carrera agosto FRA', 'Francia', 'Pista Paris', '08-14-2022', '15:00', '08-19-2022', '10:00', 'Pendiente');
 
 
 INSERT INTO LIGA	(IdLiga, IdCampeonato, Tipo, Activa)
-			VALUES	('KL9HY6', 'KL9HY6', 'Publica', 1);
+			VALUES	('KL9HY6', 'KL9HY6', 'Publica', 1),
+					('KL9HY6-WEF567', 'KL9HY6', 'Privada', 0);
+
 
 INSERT INTO ESCUDERIA (Marca, Precio, UrlLogo)
 			VALUES  ('FERRARI', 55, 'https://i.pinimg.com/originals/3d/8e/eb/3d8eebbdb50c5370e59e031ca161aacd.jpg'),
@@ -340,11 +350,11 @@ INSERT INTO PILOTO	(Nombre, Pais, Precio, EquipoReal, UrlLogo)
 			VALUES	('Charles Leclerc', 'Polonia', 30, 'FERRARI', 'https://soymotor.com/sites/default/files/styles/small/public/imagenes/piloto/perfil-charles-leclerc-2022-soymotor.png'),
 					('Max Verstappen', 'Holanda', 30, 'RED BULL', 'https://cdn-9.motorsport.com/images/mgl/24vA3r46/s8/max-verstappen-red-bull-racing-1.jpg'),
 					('Sergio Perez', 'Mexico', 26, 'RED BULL', 'https://cdn-1.motorsport.com/images/mgl/0a9neZP0/s8/sergio-perez-red-bull-racing-1.jpg'),
-					('George Russell', 'Gran Breta�a', 25, 'MERCEDES', 'https://depor.com/resizer/8QK8KXksasI9Zjruij0420_xgzs=/1200x900/smart/filters:format(jpeg):quality(75)/cloudfront-us-east-1.images.arcpublishing.com/elcomercio/NMEIUWUAPZHXNNRPVYBXAFB37A.jpeg'),
-					('Carlos Sainz', 'Espa�a', 25, 'FERRARI', 'https://cdn-8.motorsport.com/images/mgl/YXRnk570/s800/carlos-sainz-jr-ferrari-1.jpg'),
-					('Lewis Hamilton', 'Gran Breta�a', 25, 'MERCEDES', 'https://cdn-6.motorsport.com/images/mgl/0mb95oa2/s800/lewis-hamilton-mercedes-1.jpg'),
-					('Lando Norris', 'Gran Breta�a', 23, 'MCLAREN', 'https://sportsbase.io/images/gpfans/copy_380x388/ce1b523d65a77c79377505f103bd6028ad77f33d.png'),
-					('Fernando Alonso', 'Espa�a', 23, 'ALPINE F1 TEAM', 'https://cdn-1.motorsport.com/images/mgl/YBea5Kv2/s800/fernando-alonso-alpine-1.jpg'),
+					('George Russell', 'Gran Bretana', 25, 'MERCEDES', 'https://depor.com/resizer/8QK8KXksasI9Zjruij0420_xgzs=/1200x900/smart/filters:format(jpeg):quality(75)/cloudfront-us-east-1.images.arcpublishing.com/elcomercio/NMEIUWUAPZHXNNRPVYBXAFB37A.jpeg'),
+					('Carlos Sainz', 'Espana', 25, 'FERRARI', 'https://cdn-8.motorsport.com/images/mgl/YXRnk570/s800/carlos-sainz-jr-ferrari-1.jpg'),
+					('Lewis Hamilton', 'Gran Bretana', 25, 'MERCEDES', 'https://cdn-6.motorsport.com/images/mgl/0mb95oa2/s800/lewis-hamilton-mercedes-1.jpg'),
+					('Lando Norris', 'Gran Bretana', 23, 'MCLAREN', 'https://sportsbase.io/images/gpfans/copy_380x388/ce1b523d65a77c79377505f103bd6028ad77f33d.png'),
+					('Fernando Alonso', 'Espana', 23, 'ALPINE F1 TEAM', 'https://cdn-1.motorsport.com/images/mgl/YBea5Kv2/s800/fernando-alonso-alpine-1.jpg'),
 					('Valtteri Bottas', 'Finlandia', 23, 'ALFA ROMEO RACING', 'https://static.motor.es/f1/fichas/contenido/valtteri-bottas/valtteri-bottas2021_1617632013.jpg'),
 					('Esteban Ocoon', 'Francia', 22, 'ALPINE F1 TEAM',  'https://static.motor.es/f1/fichas/contenido/esteban-ocon/esteban-ocon2021_1617620557.jpg'),
 					('Kevin Magnuussen', 'Dinamarca', 20, 'HAAS F1 TEAM', 'https://soymotor.com/sites/default/files/styles/small/public/imagenes/piloto/perfil-kevin-magnussen-2022-soymotor.png'),
@@ -361,14 +371,22 @@ INSERT INTO EQUIPO  (Id, Nombre, MarcaEscuderia,	NombrePiloto1,	NombrePiloto2,	N
 					(3, 'GOAT', 'MCLAREN', 'Nico Hulkenberg', 'Mick Shumacher', 'Kevin Magnuussen', 'Lando Norris', 'Fernando Alonso', 110, 0, 125),
 					(4, 'Speed', 'RED BULL', 'Sergio Perez', 'Kevin Magnuussen', 'Yuki Tsunoda', 'Sebastian Vettel', 'Nico Hulkenberg', 65, 0, 132),
 					(5, 'EquipoTOP1', 'WILLIAMS', 'Carlos Sainz', 'Nico Hulkenberg', 'Valtteri Bottas', 'Lando Norris', 'Daniel Ricciardo', 155, 0, 100),
-					(6, 'DreamTeam', 'MERCEDES', 'Carlos Sainz', 'Kevin Magnuussen', 'Esteban Ocoon', 'Mick Shumacher', 'Lewis Hamilton', 160, 0, 165);
+					(6, 'DreamTeam', 'MERCEDES', 'Carlos Sainz', 'Kevin Magnuussen', 'Esteban Ocoon', 'Mick Shumacher', 'Lewis Hamilton', 160, 0, 165),
+					(7, 'super-equipo1', 'FERRARI', 'Charles Leclerc', 'Lance Stroll', 'Valtteri Bottas', 'Fernando Alonso', 'Mick Shumacher', 140, 0, 105),
+					(8, 'super-equipo2', 'FERRARI', 'Yuki Tsunoda', 'Nico Hulkenberg', 'Valtteri Bottas', 'Carlos Sainz', 'Lance Stroll', 100, 0, 95);
 
-INSERT INTO USUARIO (NombreUsuario, Correo, Pais, Contrasena, NombreEscuderia, IdEquipo1, IdEquipo2)
-			VALUES	('NachoNavarro', 'juan@gmail.com', 'Costa Rica', '81dc9bdb52d04dc20036dbd8313ed055', 'RayoF1', 1, 2),
-					('MoniWaterhouse', 'monica@gmail.com', 'Costa Rica', '81dc9bdb52d04dc20036dbd8313ed055', 'ganadoresCR', 3, 4),
-					('NachoGranados', 'jose@gmail.com', 'Costa Rica', '81dc9bdb52d04dc20036dbd8313ed055', 'EscuderiaTOP', 5, 6);
+INSERT INTO USUARIO (NombreUsuario, Correo, Pais, Contrasena, NombreEscuderia, IdEquipo1, IdEquipo2, IdLigaPrivada)
+			VALUES	('NachoNavarro', 'juan@gmail.com', 'Costa Rica', '81dc9bdb52d04dc20036dbd8313ed055', 'RayoF1', 1, 2, 'KL9HY6-WEF567'),
+					('MoniWaterhouse', 'monica@gmail.com', 'Costa Rica', '81dc9bdb52d04dc20036dbd8313ed055', 'ganadoresCR', 3, 4, 'KL9HY6-WEF567'),
+					('NachoGranados', 'jose@gmail.com', 'Costa Rica', '81dc9bdb52d04dc20036dbd8313ed055', 'EscuderiaTOP', 5, 6, null),
+					('Steven', 'steven@gmail.com', 'Costa Rica', '81dc9bdb52d04dc20036dbd8313ed055', 'super-escuderia', 7, 8, null);
 
 
 INSERT INTO USUARIOXLIGA	(CorreoUsuario, IdLiga)
 			VALUES			('juan@gmail.com', 'KL9HY6'),
-							('monica@gmail.com', 'KL9HY6');
+							('monica@gmail.com', 'KL9HY6'),
+							('jose@gmail.com', 'KL9HY6'),
+							('steven@gmail.com', 'KL9HY6'),
+							('juan@gmail.com', 'KL9HY6-WEF567'),
+							('monica@gmail.com', 'KL9HY6-WEF567');
+

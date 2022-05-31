@@ -34,5 +34,26 @@ namespace XF1_Backend.Controllers
         {
             return await _context.PuntajesPublicas.FromSqlRaw(LigaRequests.getPuntajePublicaPorUsuario(correo)).ToListAsync();
         }
+
+        // GET api/Liga/PuntajesPrivada/{Correo}
+        [HttpGet("PuntajesPrivada/{correo}")]
+        public async Task<IEnumerable<PuntajesPublica>> GetPuntajesPrivada(string correo)
+        {
+            return await _context.PuntajesPublicas.FromSqlRaw(LigaRequests.getPuntajePrivadaPorUsuario(correo)).ToListAsync();
+        }
+
+        // GET api/Liga/InfoPrivada
+        [HttpGet("InfoPrivada/{correo}")]
+        public async Task<InfoLigaPrivada> GetInfoLigaPrivada(string correo)
+        {
+            return await _context.InfoLigaPrivadas.FromSqlRaw(LigaRequests.getInfoLigaPrivada(correo)).FirstOrDefaultAsync();
+        }
+
+        // GET api/Liga/UsuariosLiga
+        [HttpGet("UsuariosLiga/{correo}")]
+        public async Task<IEnumerable<UsuariosLiga>> GetUsuariosLiga (string correo)
+        {
+            return await _context.UsuariosLigas.FromSqlRaw(LigaRequests.getUsuariosLiga(correo)).ToListAsync();
+        }
     }
 }
