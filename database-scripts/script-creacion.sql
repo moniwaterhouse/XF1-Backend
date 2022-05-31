@@ -246,6 +246,19 @@ WHERE CAM.FechaFin > GETDATE() AND CAM.FechaInicio < GETDATE()
 
 GO
 
+-- view de puntajes en liga privada
+DROP VIEW IF EXISTS PuntajesPrivada
+GO
+CREATE VIEW PuntajesPrivada
+AS SELECT ROW_NUMBER() OVER(ORDER BY EQU.PuntajePublica DESC) AS Posicion, USU.NombreUsuario AS Jugador, USU.NombreEscuderia AS Escuderia, EQU.Nombre AS Equipo, EQU.PuntajePublica AS Puntos
+FROM (((LIGA AS LIG JOIN CAMPEONATO AS CAM ON LIG.IdCampeonato = CAM.Id)
+		JOIN USUARIOXLIGA UXL ON LIG.IdLiga = UXL.IdLiga)
+		JOIN USUARIO AS USU ON UXL.CorreoUsuario = USU.Correo)
+		JOIN EQUIPO AS EQU ON (USU.IdEquipo1 = EQU.Id OR USU.IdEquipo2 = EQU.Id)
+WHERE LIG.Tipo = 'Privada'
+
+GO
+
 -- STORED PROCEDURES -- 
 
 -- nombre: sp_crear_liga
@@ -346,11 +359,13 @@ INSERT INTO EQUIPO  (Id, Nombre, MarcaEscuderia,	NombrePiloto1,	NombrePiloto2,	N
 		VALUES		(1, 'Campeones', 'FERRARI', 'Esteban Ocoon', 'Lance Stroll', 'Daniel Ricciardo', 'Mick Shumacher', 'Lewis Hamilton', 150, 0, 146),
 					(2, 'VivaF1', 'ASTON MARTIN', 'Charles Leclerc', 'Lewis Hamilton', 'Yuki Tsunoda', 'Sebastian Vettel', 'Lance Stroll', 160, 0, 108),
 					(3, 'GOAT', 'MCLAREN', 'Nico Hulkenberg', 'Mick Shumacher', 'Kevin Magnuussen', 'Lando Norris', 'Fernando Alonso', 110, 0, 125),
-					(4, 'Speed', 'RED BULL', 'Sergio Perez', 'Kevin Magnuussen', 'Yuki Tsunoda', 'Sebastian Vettel', 'Nico Hulkenberg', 65, 0, 132);
+					(4, 'Speed', 'RED BULL', 'Sergio Perez', 'Kevin Magnuussen', 'Yuki Tsunoda', 'Sebastian Vettel', 'Nico Hulkenberg', 65, 0, 132),
+					(5, 'EquipoTOP1', 'WILLIAMS', 'Carlos Sainz', 'Nico Hulkenberg', 'Valtteri Bottas', 'Lando Norris', 'Daniel Ricciardo', 155, 0, 100);
 
 INSERT INTO USUARIO (NombreUsuario, Correo, Pais, Contrasena, NombreEscuderia, IdEquipo1, IdEquipo2)
 			VALUES	('NachoNavarro', 'juan@gmail.com', 'Costa Rica', '81dc9bdb52d04dc20036dbd8313ed055', 'RayoF1', 1, 2),
-					('MoniWaterhouse', 'monica@gmail.com', 'Costa Rica', '81dc9bdb52d04dc20036dbd8313ed055', 'ganadoresCR', 3, 4);
+					('MoniWaterhouse', 'monica@gmail.com', 'Costa Rica', '81dc9bdb52d04dc20036dbd8313ed055', 'ganadoresCR', 3, 4),
+					('NachoGranados', 'jose@gmail.com', 'Costa Rica', '81dc9bdb52d04dc20036dbd8313ed055', 'EscuderiaTOP', 5, 6);
 
 
 INSERT INTO USUARIOXLIGA	(CorreoUsuario, IdLiga)
