@@ -14,8 +14,10 @@ namespace XF1_Backend.Models
         public DbSet<UsuariosLiga> UsuariosLigas { get; set; }
         public DbSet<CantidadJugador> CantidadJugadores { get; set; }
         public DbSet<CampeonatoActual> CampeonatoActual { get; set; }
+        public DbSet<IdPrivadas> IdPrivadas { get; set; }
 
         public DbSet<NuevaLiga> NuevaLiga { get; set; }
+        public DbSet<ActualizarLiga> ActualizarLigas { get; set; }
 
         public LigaDbContext(DbContextOptions<LigaDbContext> options) : base(options) { }
 
@@ -28,6 +30,8 @@ namespace XF1_Backend.Models
             modelBuilder.Entity<CantidadJugador>().HasNoKey();
             modelBuilder.Entity<CampeonatoActual>().HasNoKey();
             modelBuilder.Entity<NuevaLiga>().HasNoKey();
+            modelBuilder.Entity<IdPrivadas>().HasNoKey();
+            modelBuilder.Entity<ActualizarLiga>().HasNoKey();
         }
     }
 }

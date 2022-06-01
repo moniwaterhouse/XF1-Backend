@@ -56,11 +56,25 @@ namespace XF1_Backend.Controllers
             return await _context.UsuariosLigas.FromSqlRaw(LigaRequests.getUsuariosLiga(correo)).ToListAsync();
         }
 
-        // GET api/Liga/CantidadJugador
+        // GET api/Liga/CantidadJugador/{correo}
         [HttpGet("CantidadJugador/{correo}")]
         public async Task<CantidadJugador> GetDisponibilidaLigaPrivada(string correo)
         {
             return await _context.CantidadJugadores.FromSqlRaw(LigaRequests.GetDisponibilidaLigaPrivada(correo)).FirstOrDefaultAsync();
+        }
+
+        // GET api/Liga/IdPrivadas
+        [HttpGet("IdPrivadas")]
+        public async Task<IEnumerable<IdPrivadas>> GetIdPrivadas()
+        {
+            return await _context.IdPrivadas.FromSqlRaw(LigaRequests.GetIdPrivadas).ToListAsync();
+        }
+
+        // GET api/Liga/CantidadJugadorPorId/{idLiga}
+        [HttpGet("CantidadJugadorPorId/{idLiga}")]
+        public async Task<CantidadJugador> GeCantidadLigaPrivada(string idLiga)
+        {
+            return await _context.CantidadJugadores.FromSqlRaw(LigaRequests.GeCantidadLigaPrivada(idLiga)).FirstOrDefaultAsync();
         }
 
         // POST api/Liga
@@ -98,6 +112,28 @@ namespace XF1_Backend.Controllers
 
             // Añadir la nueva liga
             await _context.Database.ExecuteSqlInterpolatedAsync(LigaRequests.AnadirNuevaLiga(idLigaPrivada, llaveActual.IdActual, nuevaLiga.Nombre, nuevaLiga.Correo));
+            await _context.SaveChangesAsync();
+
+            return Ok();
+        }
+
+        // PUT api/Liga
+        [HttpPut]
+        public async Task<ActionResult<Liga>> PutLigaPrivada(ActualizarLiga actualizarLiga)
+        {
+            // revision de que la liga exista
+            /*
+             * esta revision es logica y se hace con el id de la liga que viene en el json
+             * si no está entonces se responde con un conflicto
+             */
+
+            // revision de que la liga privada existente tenga espacio
+            /*
+             * esta revisa que haya espacio disponible ( hay un máximo de 20 usuarios y 40 equipos)
+             */
+
+            // añadir el usuario a la liga privada
+            await _context.Database.ExecuteSqlInterpolatedAsync(LigaRequests.ActualizarLigaPrivada(actualizarLiga.Id, actualizarLiga.Correo));
             await _context.SaveChangesAsync();
 
             return Ok();

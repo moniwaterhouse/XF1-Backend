@@ -341,6 +341,26 @@ BEGIN
 END
 GO
 
+-- nombre: sp_anadir_usuario_liga_privada
+-- descripcion: este sp añade a un usuario en la liga privada
+DROP PROCEDURE IF EXISTS sp_anadir_usuario_liga_privada
+GO
+CREATE PROCEDURE sp_anadir_usuario_liga_privada(
+	@IdLigaPrivada		VARCHAR(20),
+	@Correo				VARCHAR(100)
+)
+AS
+BEGIN
+	INSERT INTO USUARIOXLIGA(IdLiga, CorreoUsuario)
+		VALUES (@IdLigaPrivada, @Correo);
+
+	UPDATE USUARIO
+	SET IdLigaPrivada = @IdLigaPrivada
+	WHERE Correo = @Correo;
+
+END
+GO
+
 -- nombre: fc_validar_fechas_campeonato
 -- descripcion: este sp valida que las fechas 
 

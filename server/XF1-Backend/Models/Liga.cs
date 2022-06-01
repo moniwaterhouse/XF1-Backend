@@ -41,9 +41,20 @@ namespace XF1_Backend.Models
         public int Cantidad { get; set; }
     }
 
+    public class IdPrivadas
+    {
+        public string Id { get; set; }
+    }
+
     public class NuevaLiga
     {
         public string Nombre { get; set; }
+        public string Correo { get; set; }
+    }
+
+    public class ActualizarLiga
+    {
+        public string Id { get; set; }
         public string Correo { get; set; }
     }
 }
