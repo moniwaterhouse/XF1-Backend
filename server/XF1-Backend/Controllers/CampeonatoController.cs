@@ -34,24 +34,23 @@ namespace XF1_Backend.Controllers
             if (permitido == false) return Conflict("Se requieren todos los datos del campeonato");
 
             // revisión de la longitud del nombre del campeonato
-            permitido = StringLogicFunctions.LongitudNombreCampeonato(campeonato.Nombre);
-            if (permitido == false) return Conflict("El nombre del campeonato de ser de 5 a 30 caracteres");
+            permitido = StringLogicFunctions.LongitudNombre(campeonato.Nombre);
+            if (permitido == false) return Conflict("El nombre del campeonato debe ser de 5 a 30 caracteres");
 
             // revisión de la longitud de la descripción del campeonato
             permitido = StringLogicFunctions.LongitudDescripcionCampeonato(campeonato.ReglasPuntuacion);
-            if (permitido == false) return Conflict("La descripción del campeonato de ser de máximo 1000 caracteres");
+            if (permitido == false) return Conflict("La descripción del campeonato debe ser de máximo 1000 caracteres");
             
             // generar llave unica del campeonato
             IEnumerable<Campeonato> campeonatosAnteriores;
             campeonatosAnteriores = await _context.Campeonato.FromSqlRaw(CampeonatoRequests.getCampeonatos).ToListAsync();
             campeonato.Id = IdLogicFunctions.GenerarLlave(campeonatosAnteriores);
 
-            // revision de choque de fechas
+            // revisión de traslape de fechas
             IEnumerable<Fechas> fechas;
             fechas = await _context.Fechas.FromSqlRaw(CampeonatoRequests.getFechasCampeonatos).ToListAsync();
-            permitido = DateLogicFunctions.RevisarFechas(campeonato.FechaInicio, campeonato.FechaFin, fechas);
+            permitido = DateLogicFunctions.RevisarTraslapeFechas(campeonato.FechaInicio, campeonato.FechaFin, fechas);
             if (permitido == false) return Conflict("Existe un conflicto de fechas con otro campeonato");
-
 
             // revisión de fechas anteriores a la actual
             permitido = DateLogicFunctions.RevisarFechasAnteriores(campeonato.FechaInicio, campeonato.FechaFin);

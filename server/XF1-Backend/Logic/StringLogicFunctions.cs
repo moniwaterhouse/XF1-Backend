@@ -34,13 +34,11 @@ namespace XF1_Backend.Logic
         }
 
         /*
-         * Descripcion: esta funcion verifica que el nombre del campeonato
-         * sea de 5 a 30 caracteres
-         * Entradas: nombre del campeonato
-         * Salida: booleano que indica si el nombre del campeonata es de
-         * 5 a 30 caracteres o no
+         * Descripcion: esta funcion verifica que el nombre sea de 5 a 30 caracteres
+         * Entradas: nombre
+         * Salida: booleano que indica si el nombre es de 5 a 30 caracteres o no
          */
-        public static bool LongitudNombreCampeonato(string nombre)
+        public static bool LongitudNombre(string nombre)
         {
             if(nombre.Length >= 5 && nombre.Length <= 30)
             {
@@ -80,5 +78,8 @@ namespace XF1_Backend.Logic
 
 
 
+
+
+        }
+
     }
-}
