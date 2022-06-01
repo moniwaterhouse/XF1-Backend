@@ -494,7 +494,7 @@ Tipo: GET
 
 Descripción: Este request da como resultado los datos de la tabla de la liga pública pero solo para los equipos de un usuario en específico (la idea es tomar los del usuario logueado)
 
-Url: `/api/Liga/PuntajesPublica/{correo}` donde el correo es el correo del usuario a consultar
+Url: `/api/Liga/PuntajesPublica/{correo}` donde el correo es el correo del usuario a consultar. Es importante que se debe escribir el correo con apóstrofes entre el nombre por ejemplo, en vez de escribir steven@gmail.com se escribe 'steven@gmail.com' 
 
 Json: El resultado tiene este formato
 
@@ -529,7 +529,7 @@ Tipo: GET
 
 Descripción: Este request da como resultado los datos de la tabla de la liga privada a la que pertenece un jugador (un jugador solamente puede pertenecer a una liga privada)
 
-Url: `/api/Liga/PuntajesPrivada/{correo}` donde el correo es el correo del usuario que se encuentra logueado, un usuario solamente puede estar en una liga privada a la vez es por esto que no hay conflicto 
+Url: `/api/Liga/PuntajesPrivada/{correo}` donde el correo es el correo del usuario que se encuentra logueado, un usuario solamente puede estar en una liga privada a la vez es por esto que no hay conflicto. Es importante que se debe escribir el correo con apóstrofes entre el nombre por ejemplo, en vez de escribir steven@gmail.com se escribe 'steven@gmail.com'  
 
 Json: El resultado tiene este formato
 
@@ -571,7 +571,7 @@ Tipo: GET
 
 Descripción: Este request da como resultado los nombres de los jugadores de la liga privada en la que se encuentra el jugador actual
 
-Url: `/api/Liga/UsuariosLiga/{correo}` donde el correo es el correo del usuario que se encuentra logueado, un usuario solamente puede estar en una liga privada a la vez es por esto que no hay conflicto 
+Url: `/api/Liga/UsuariosLiga/{correo}` donde el correo es el correo del usuario que se encuentra logueado, un usuario solamente puede estar en una liga privada a la vez es por esto que no hay conflicto. Es importante que se debe escribir el correo con apóstrofes entre el nombre por ejemplo, en vez de escribir steven@gmail.com se escribe 'steven@gmail.com'  
 
 Json: El resultado tiene este formato
 
@@ -595,7 +595,7 @@ Tipo: GET
 
 Descripción: Este request da como resultado la información de la liga privada en la que se encuentra el usuario logueado
 
-Url: `/api/Liga/InfoPrivada/{correo}` donde el correo es el correo del usuario que se encuentra logueado, un usuario solamente puede estar en una liga privada a la vez es por esto que no hay conflicto 
+Url: `/api/Liga/InfoPrivada/{correo}` donde el correo es el correo del usuario que se encuentra logueado, un usuario solamente puede estar en una liga privada a la vez es por esto que no hay conflicto. Es importante que se debe escribir el correo con apóstrofes entre el nombre por ejemplo, en vez de escribir steven@gmail.com se escribe 'steven@gmail.com'  
 
 Json: El resultado tiene este formato
 
@@ -608,4 +608,43 @@ Json: El resultado tiene este formato
 ```
 
 Observaciones: estos datos son usados como se muestra en el mockup
+
+### LIG-6
+
+
+Tipo: GET
+
+Descripción: Este request da como resultado la cantidad de jugadores que hay en la liga privada en la que se encuentra un jugador en específico. Si el resultado es 0 este jugador no está en una liga privada.
+
+Url: `/api/Liga/CantidadJugador/{correo}` donde el correo es el correo del usuario que se encuentra logueado, un usuario solamente puede estar en una liga privada a la vez es por esto que no hay conflicto. Es importante que se debe escribir el correo con apóstrofes entre el nombre por ejemplo, en vez de escribir steven@gmail.com se escribe 'steven@gmail.com' 
+
+Json: El resultado tiene este formato
+
+```Json
+{
+  "cantidad": 4
+}
+```
+
+Observaciones: -
+
+### LIG-7
+
+
+Tipo: POST
+
+Descripción: Este request permite crear una liga privada para un usuario que no se encuentra en una.
+
+Url: `/api/Liga` 
+
+Json: El Json que se debe adjuntar necesita el siguiente formato
+
+```Json
+{
+  "nombre": "grangranliga",
+  "correo": "jose@gmail.com"
+}
+```
+
+Observaciones: -
 
