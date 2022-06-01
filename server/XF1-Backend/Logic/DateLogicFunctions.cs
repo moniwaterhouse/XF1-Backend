@@ -4,7 +4,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using XF1_Backend.Models;
 
-
 namespace XF1_Backend.Logic
 {
     public class DateLogicFunctions
@@ -17,7 +16,7 @@ namespace XF1_Backend.Logic
          * fechas -> lista de las fechas actuales.
          * Salida: boleano que indica si hay un choque de fechas o no.
          */
-        public static bool RevisarFechas(DateTime fechaInicio, DateTime fechaFin, IEnumerable<Fechas> fechas)
+        public static bool RevisarTraslapeFechas(DateTime fechaInicio, DateTime fechaFin, IEnumerable<Fechas> fechas)
         {
 
             foreach (var fecha in fechas)
@@ -34,5 +33,22 @@ namespace XF1_Backend.Logic
 
             return true;
         }
+
+        /*
+         * Descripción: esta funcion verifica que la fechas no sean anteriores a la fecha actual
+         * Entradas: fechaInicio, fechaFinal -> fechas del rango que se desea añadir         
+         * Salida: boleano que indica si las fechas son anteriores o no
+         */
+        public static bool RevisarFechasAnteriores(DateTime fechaInicio, DateTime fechaFin)
+        {
+            if(fechaInicio >= DateTime.Now && fechaFin > DateTime.Now)
+            {
+                return true;
+            }
+            
+            return false;
+            
+        }
+
     }
 }

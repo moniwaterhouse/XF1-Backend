@@ -284,7 +284,7 @@ AS
 BEGIN
 
 	INSERT INTO LIGA (IdLiga, IdCampeonato, Tipo, Activa)
-			VALUES	 (@IdCampeonato, @IdCampeonato, 'Publica', @Activa);
+			VALUES	 (@IdCampeonato, @IdCampeonato, 'Publica',@Activa);
 
 	INSERT INTO USUARIOXLIGA (CorreoUsuario, IdLiga)
 		SELECT
