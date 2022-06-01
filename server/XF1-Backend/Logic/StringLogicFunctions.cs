@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using System.Security.Cryptography;
 using System.Text;
 using XF1_Backend.Models;
+using System.Text.RegularExpressions;
 
 namespace XF1_Backend.Logic
 {
@@ -94,9 +95,31 @@ namespace XF1_Backend.Logic
         */
         public static bool LongitudContrasena(string contrasena)
         {
-            if (contrasena.Length == 8 && contrasena.All(char.IsLetterOrDigit))
+            if (contrasena.Length == 8)
             {
-                return true;
+
+                bool letras = false;
+                bool numeros = false;
+
+                foreach (char caracter in contrasena)
+                {
+                    if (Char.IsLetter(caracter))
+                    {
+                        letras = true;
+                    }
+
+                    if (Char.IsDigit(caracter))
+                    {
+                        numeros = true;
+                    }
+
+                }
+
+                if (letras == true && numeros == true)
+                {
+                    return true;
+                }
+
             }
 
             return false;
@@ -114,7 +137,7 @@ namespace XF1_Backend.Logic
         {
             foreach (var correo in correos)
             {
-                if(correoUsuario.Equals(correo))
+                if(correoUsuario.Equals(correo.Correo))
                 {
                     return false;
                 }

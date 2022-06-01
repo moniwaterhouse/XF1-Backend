@@ -172,7 +172,7 @@ namespace XF1_Backend_Unit_Testing
             usuario.NombreUsuario = "DanielMadriz";
             usuario.Correo = "daniel.madriz@itcr.ac.cr";
             usuario.Pais = "Costa Rica";
-            usuario.Contrasena = "EspeIS2020";
+            usuario.Contrasena = "Espe2022";
             usuario.NombreEscuderia = "Ferrari";
             usuario.IdEquipo1 = 1;
             usuario.IdEquipo2 = 2;
@@ -196,7 +196,7 @@ namespace XF1_Backend_Unit_Testing
             usuario.NombreUsuario = "DanielMadriz";
             usuario.Correo = "daniel.madriz@itcr.ac.cr";
             usuario.Pais = "Costa Rica";
-            usuario.Contrasena = "EspeIS2020";
+            usuario.Contrasena = "Espe2022";
             usuario.NombreEscuderia = "Ferrari";
             usuario.IdEquipo1 = 1;
             usuario.IdEquipo2 = 2;
