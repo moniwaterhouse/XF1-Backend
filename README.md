@@ -357,6 +357,45 @@ Url: `/api/Usuario`
 
 Observaciones: se deben asociar los mismo equipos que se crearon justo antes al usuario.
 
+### USU-4
+
+Tipo: GET
+
+Descipcion: Este request retorna toda la información del perfil de un usuario
+
+Url: `/api/Usuario/Perfil/{correo}` donde el `correo` corresponde al correo del usuario y este tiene que venir encerrado en apóstrofes. 
+
+```Json
+[
+  {
+    "nombreUsuario": "NachoNavarro",
+    "pais": "Costa Rica",
+    "nombreEscuderia": "RayoF1",
+    "marcaEscuderia": "FERRARI",
+    "nombreEquipo": "Campeones",
+    "nombrePiloto1": "Esteban Ocoon",
+    "nombrePiloto2": "Lance Stroll",
+    "nombrePiloto3": "Daniel Ricciardo",
+    "nombrePiloto4": "Mick Shumacher",
+    "nombrePiloto5": "Lewis Hamilton"
+  },
+  {
+    "nombreUsuario": "NachoNavarro",
+    "pais": "Costa Rica",
+    "nombreEscuderia": "RayoF1",
+    "marcaEscuderia": "ASTON MARTIN",
+    "nombreEquipo": "VivaF1",
+    "nombrePiloto1": "Charles Leclerc",
+    "nombrePiloto2": "Lewis Hamilton",
+    "nombrePiloto3": "Yuki Tsunoda",
+    "nombrePiloto4": "Sebastian Vettel",
+    "nombrePiloto5": "Lance Stroll"
+  }
+]
+```
+
+Observaciones: Note que el correo en la url del request debe venir encerrado por apóstrofes, si no se hace así entonces no funciona.
+
 ## Requests PILOTOS (PIL)
 
 ### PIL-1
