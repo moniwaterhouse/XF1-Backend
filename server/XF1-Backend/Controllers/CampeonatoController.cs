@@ -26,20 +26,21 @@ namespace XF1_Backend.Controllers
         [HttpPost]
         public async Task<ActionResult<Campeonato>> PostCampeonatos(Campeonato campeonato)
         {
-            // revisión de valores nulos
-            /*
-             * Revisión de que ninguno de los datos sea nulo
-             * 
-             * 
-             */
 
-            // revision longitud
-            /*
-             * añadir validación de que el nombre del campeonato debe estar entre 5 y 30 caracteres
-             * 
-             * añadir la validación de que la descripción debe ser menor a 1000 caracteres
-             */
+            bool permitido;
 
+            // revisión de valores nulos           
+            permitido = NullValuesLogicFunctions.ValoresNulosCampeonato(campeonato);
+            if (permitido == false) return Conflict("Se requieren todos los datos del campeonato");
+
+            // revisión de la longitud del nombre del campeonato
+            permitido = StringLogicFunctions.LongitudNombreCampeonato(campeonato.Nombre);
+            if (permitido == false) return Conflict("El nombre del campeonato de ser de 5 a 30 caracteres");
+
+            // revisión de la longitud de la descripción del campeonato
+            permitido = StringLogicFunctions.LongitudDescripcionCampeonato(campeonato.ReglasPuntuacion);
+            if (permitido == false) return Conflict("La descripción del campeonato de ser de máximo 1000 caracteres");
+            
             // generar llave unica del campeonato
             IEnumerable<Campeonato> campeonatosAnteriores;
             campeonatosAnteriores = await _context.Campeonato.FromSqlRaw(CampeonatoRequests.getCampeonatos).ToListAsync();
@@ -48,8 +49,13 @@ namespace XF1_Backend.Controllers
             // revision de choque de fechas
             IEnumerable<Fechas> fechas;
             fechas = await _context.Fechas.FromSqlRaw(CampeonatoRequests.getFechasCampeonatos).ToListAsync();
-            bool permitido = DateLogicFunctions.RevisarFechas(campeonato.FechaInicio, campeonato.FechaFin, fechas);
+            permitido = DateLogicFunctions.RevisarFechas(campeonato.FechaInicio, campeonato.FechaFin, fechas);
             if (permitido == false) return Conflict("Existe un conflicto de fechas con otro campeonato");
+
+
+            // revisión de fechas anteriores a la actual
+            permitido = DateLogicFunctions.RevisarFechasAnteriores(campeonato.FechaInicio, campeonato.FechaFin);
+            if (permitido == false) return Conflict("No se puede crear un campeonato con una fecha menor a la actual");
 
             // añadir campeonato
             _context.Campeonato.Add(campeonato);
@@ -70,7 +76,6 @@ namespace XF1_Backend.Controllers
             return await _context.Campeonato.FromSqlRaw(CampeonatoRequests.getCampeonatos).ToListAsync();
         }
 
-
         // GET api/Campeonato/Fechas
         [HttpGet("Fechas")]
         public async Task<IEnumerable<Fechas>> GetFechas()
@@ -85,6 +90,6 @@ namespace XF1_Backend.Controllers
             return await _context.Nombres.FromSqlRaw(CampeonatoRequests.getNombres).ToListAsync();
         }
 
-
     }
+
 }

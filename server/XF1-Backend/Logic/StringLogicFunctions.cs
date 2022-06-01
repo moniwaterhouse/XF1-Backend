@@ -6,7 +6,6 @@ using System.Security.Cryptography;
 using System.Text;
 using XF1_Backend.Models;
 
-
 namespace XF1_Backend.Logic
 {
     public class StringLogicFunctions
@@ -33,5 +32,53 @@ namespace XF1_Backend.Logic
 
             return newContrasena.ToString();
         }
+
+        /*
+         * Descripcion: esta funcion verifica que el nombre del campeonato
+         * sea de 5 a 30 caracteres
+         * Entradas: nombre del campeonato
+         * Salida: booleano que indica si el nombre del campeonata es de
+         * 5 a 30 caracteres o no
+         */
+        public static bool LongitudNombreCampeonato(string nombre)
+        {
+            if(nombre.Length >= 5 && nombre.Length <= 30)
+            {
+                return true;
+            }
+
+            return false;
+
+        }
+
+        /*
+         * Descripcion: esta funcion verifica que la descripcion del campeonato
+         * sea menor o igual a 1000 caracteres
+         * Entradas: descripcion del campeonato
+         * Salida: booleano que indica si el nombre del campeonata es menor o
+         * igual a 1000 caracteres
+         */
+        public static bool LongitudDescripcionCampeonato(string descripcion)
+        {
+            if (descripcion.Length <= 1000)
+            {
+                return true;
+            }
+
+            return false;
+
+        }
+
+
+
+
+
+
+
+
+
+
+
+
     }
 }
