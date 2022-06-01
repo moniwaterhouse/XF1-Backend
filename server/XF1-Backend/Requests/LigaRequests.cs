@@ -43,5 +43,13 @@ namespace XF1_Backend.Requests
         public static string GetLigasPrivada = "SELECT * FROM LIGA WHERE Tipo = \'Privada\'";
 
         public static System.FormattableString AnadirNuevaLiga (string idLiga, string idCampeonato, string nombre ,string correo) { return $@"EXECUTE sp_formar_liga_privada @IdLigaPrivada = {idLiga}, @Campeonato = {idCampeonato}, @Nombre = {nombre}, @Correo = {correo}"; }
+
+        public static string GetIdPrivadas = "SELECT IdLiga AS Id FROM LIGA WHERE Tipo = \'Privada\'";
+
+        public static string GeCantidadLigaPrivada(string idLiga) { return $@"SELECT Count(PP.Jugador) AS Cantidad
+                                                                                           FROM PuntajesPrivada AS PP
+                                                                                           WHERE IdLiga = {idLiga}"; }
+
+        public static System.FormattableString ActualizarLigaPrivada(string idLiga, string correo) { return $@"EXECUTE sp_anadir_usuario_liga_privada @IdLigaPrivada = {idLiga}, @Correo = {correo}"; }
     }
 }
