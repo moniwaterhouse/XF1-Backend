@@ -30,5 +30,10 @@ namespace XF1_Backend.Models
         public DateTime FechaInicio { get; set; }
         public DateTime FechaFin { get; set; }
     }
+
+    public class CampeonatoActual
+    {
+        public string IdActual { get; set; }
+    }
     
 }
