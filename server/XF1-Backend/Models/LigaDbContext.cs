@@ -12,6 +12,10 @@ namespace XF1_Backend.Models
         public DbSet<PuntajesPublica> PuntajesPublicas { get; set;}
         public DbSet<InfoLigaPrivada> InfoLigaPrivadas { get; set; }
         public DbSet<UsuariosLiga> UsuariosLigas { get; set; }
+        public DbSet<CantidadJugador> CantidadJugadores { get; set; }
+        public DbSet<CampeonatoActual> CampeonatoActual { get; set; }
+
+        public DbSet<NuevaLiga> NuevaLiga { get; set; }
 
         public LigaDbContext(DbContextOptions<LigaDbContext> options) : base(options) { }
 
@@ -21,6 +25,9 @@ namespace XF1_Backend.Models
             modelBuilder.Entity<PuntajesPublica>().ToView("PuntajesPublica").HasNoKey();
             modelBuilder.Entity<InfoLigaPrivada>().HasNoKey();
             modelBuilder.Entity<UsuariosLiga>().HasNoKey();
+            modelBuilder.Entity<CantidadJugador>().HasNoKey();
+            modelBuilder.Entity<CampeonatoActual>().HasNoKey();
+            modelBuilder.Entity<NuevaLiga>().HasNoKey();
         }
     }
 }

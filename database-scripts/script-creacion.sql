@@ -93,6 +93,7 @@ CREATE TABLE LIGA
 (
 	IdLiga			VARCHAR(20),
 	IdCampeonato	VARCHAR(6),
+	Nombre			VARCHAR(100),
 	Tipo			VARCHAR(10),
 	Activa			INT,
 	
@@ -258,7 +259,7 @@ GO
 DROP VIEW IF EXISTS PuntajesPrivada
 GO
 CREATE VIEW PuntajesPrivada
-AS SELECT ROW_NUMBER() OVER(ORDER BY EQU.PuntajePublica DESC) AS Posicion, USU.NombreUsuario AS Jugador, USU.NombreEscuderia AS Escuderia, EQU.Nombre AS Equipo, EQU.PuntajePublica AS Puntos, LIG.IdLiga AS IdLiga, USU.Correo AS Correo
+AS SELECT ROW_NUMBER() OVER(ORDER BY EQU.PuntajePrivada DESC) AS Posicion, USU.NombreUsuario AS Jugador, USU.NombreEscuderia AS Escuderia, EQU.Nombre AS Equipo, EQU.PuntajePrivada AS Puntos, LIG.IdLiga AS IdLiga, USU.Correo AS Correo
 FROM (((LIGA AS LIG JOIN CAMPEONATO AS CAM ON LIG.IdCampeonato = CAM.Id)
 		JOIN USUARIOXLIGA UXL ON LIG.IdLiga = UXL.IdLiga)
 		JOIN USUARIO AS USU ON UXL.CorreoUsuario = USU.Correo)
@@ -283,7 +284,7 @@ AS
 BEGIN
 
 	INSERT INTO LIGA (IdLiga, IdCampeonato, Tipo, Activa)
-			VALUES	 (@IdCampeonato, @IdCampeonato, 'Publica',@Activa);
+			VALUES	 (@IdCampeonato, @IdCampeonato, 'Publica', @Activa);
 
 	INSERT INTO USUARIOXLIGA (CorreoUsuario, IdLiga)
 		SELECT
@@ -313,6 +314,33 @@ BEGIN
 END
 GO
 
+-- nombre: sp_formar_liga_privada
+-- descripción: este sp crea una liga privada y anade al usuario que
+-- la crea en esta misma
+DROP PROCEDURE IF EXISTS sp_formar_liga_privada
+GO
+CREATE PROCEDURE sp_formar_liga_privada(
+	@IdLigaPrivada VARCHAR(20),
+	@Campeonato		VARCHAR(6),
+	@Nombre			VARCHAR(100),
+	@Correo			VARCHAR(100)
+)
+AS
+BEGIN
+
+	INSERT INTO LIGA (IdLiga, IdCampeonato, Nombre, Tipo, Activa)
+		VALUES (@IdLigaPrivada, @Campeonato, @Nombre, 'Privada', 0);
+
+	INSERT INTO USUARIOXLIGA(IdLiga, CorreoUsuario)
+		VALUES (@IdLigaPrivada, @Correo);
+
+	UPDATE USUARIO
+	SET IdLigaPrivada = @IdLigaPrivada
+	WHERE Correo = @Correo;
+
+END
+GO
+
 -- nombre: fc_validar_fechas_campeonato
 -- descripcion: este sp valida que las fechas 
 
@@ -329,9 +357,9 @@ INSERT INTO CARRERA		(Id, IdCampeonato, Nombre, NombrePais, NombrePista, FechaIn
 						(4, 'KL9HY6', 'Carrera agosto FRA', 'Francia', 'Pista Paris', '08-14-2022', '15:00', '08-19-2022', '10:00', 'Pendiente');
 
 
-INSERT INTO LIGA	(IdLiga, IdCampeonato, Tipo, Activa)
-			VALUES	('KL9HY6', 'KL9HY6', 'Publica', 1),
-					('KL9HY6-WEF567', 'KL9HY6', 'Privada', 0);
+INSERT INTO LIGA	(IdLiga, IdCampeonato, Nombre, Tipo, Activa)
+			VALUES	('KL9HY6', 'KL9HY6', null, 'Publica', 1),
+					('KL9HY6-WEF567', 'KL9HY6', 'LigaCR-XF1', 'Privada', 0);
 
 
 INSERT INTO ESCUDERIA (Marca, Precio, UrlLogo)

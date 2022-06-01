@@ -33,5 +33,15 @@ namespace XF1_Backend.Requests
                                                                                                 FROM PuntajesPrivada AS PP INNER JOIN USUARIO AS USU ON PP.IdLiga = USU.IdLigaPrivada
                                                                                                 WHERE USU.Correo = {correo}"; }
 
+        public static string GetDisponibilidaLigaPrivada(string correo) { return $@"SELECT Count(PP.Jugador) AS Cantidad
+                                                                                                FROM (PuntajesPrivada AS PP INNER JOIN USUARIO AS USU ON PP.IdLiga = USU.IdLigaPrivada)
+	                                                                                            JOIN LIGA AS LIG ON LIG.IdLiga = USU.IdLigaPrivada	
+                                                                                                WHERE USU.Correo = {correo}"; }
+
+        public static string GetCampeonatoActual = "SELECT Id AS IdActual FROM CAMPEONATO WHERE FechaInicio < GETDATE() AND FechaFin > GETDATE()";
+
+        public static string GetLigasPrivada = "SELECT * FROM LIGA WHERE Tipo = \'Privada\'";
+
+        public static System.FormattableString AnadirNuevaLiga (string idLiga, string idCampeonato, string nombre ,string correo) { return $@"EXECUTE sp_formar_liga_privada @IdLigaPrivada = {idLiga}, @Campeonato = {idCampeonato}, @Nombre = {nombre}, @Correo = {correo}"; }
     }
 }
