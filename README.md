@@ -648,3 +648,63 @@ Json: El Json que se debe adjuntar necesita el siguiente formato
 
 Observaciones: -
 
+### LIG-8
+
+
+Tipo: GET
+
+Descripción: Este request recibe todas las llaves de las ligas privadas. La idea es compararlas con la escrita y si no se encuentra  entonces es porque la llave indicada no existe.
+
+Url: `/api/Liga/IdPrivadas`
+
+Json: El resultado tiene este formato
+
+```Json
+[
+  {
+    "id": "KL9HY6-WEF567"
+  }
+]
+```
+
+Observaciones: -
+
+### LIG-9
+
+
+Tipo: GET
+
+Descripción: Este request recibe todas las llaves de las ligas privadas. La idea es compararlas con la escrita y si no se encuentra  entonces es porque la llave indicada no existe.
+
+Url: `/api/Liga/CantidadJugadorPorId/{idLiga}` donde el `idLiga` tiene que venir entre apóstrofes.
+
+Json: El resultado tiene este formato
+
+```Json
+{
+  "cantidad": 6
+}
+```
+
+Observaciones: si la cantidad es mayor a 38 entonces no se debería permitir que el jugador se una.
+
+
+### LIG-10
+
+
+Tipo: PUT
+
+Descripción: Este request permite actualizar la liga añadiendo un nuevo miembro a esta
+
+Url: `/api/Liga` 
+
+Json: El Json que se debe adjuntar necesita el siguiente formato
+
+```Json
+{
+  "id": "KL9HY6-WEF567",
+  "correo": "steven@gmail.com"
+}
+```
+
+Observaciones: -
