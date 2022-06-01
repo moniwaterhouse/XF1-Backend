@@ -19,5 +19,10 @@ namespace XF1_Backend.Requests
         // Stored procedure de añadir nuevo usuario a ligas publicas
         public static System.FormattableString anadirUsuarioLiga(string correo) { return $@"EXECUTE sp_anadir_usuario_liga {correo}"; }
 
+        // obtener informacion del perfil de usuario
+        public static string getPerfilUsuario(string correo) { return $@"SELECT USU.NombreUsuario, USU.Pais, USU.NombreEscuderia, EQU.MarcaEscuderia, EQU.Nombre AS NombreEquipo, EQU.NombrePiloto1, EQU.NombrePiloto2, EQU.NombrePiloto3, EQU.NombrePiloto4, EQU.NombrePiloto5
+                                                                                        FROM USUARIO AS USU JOIN EQUIPO AS EQU ON (USU.IdEquipo1 = EQU.Id OR USU.IdEquipo2 = EQU.Id)
+                                                                                        WHERE USU.Correo = {correo}"; }
+
     }
 }

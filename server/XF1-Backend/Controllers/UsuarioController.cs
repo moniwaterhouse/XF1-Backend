@@ -63,5 +63,12 @@ namespace XF1_Backend.Controllers
         {
             return await _context.EscuderiaUsuario.FromSqlRaw(UsuarioRequests.getEscuderias).ToListAsync();
         }
+
+        // GET api/Usuario/Perfil/{correo}
+        [HttpGet("Perfil/{correo}")]
+        public async Task<IEnumerable<UsuarioPerfil>> GetPerfilUsuario(string correo)
+        {
+            return await _context.UsuarioPerfil.FromSqlRaw(UsuarioRequests.getPerfilUsuario(correo)).ToListAsync();
+        }
     }
 }

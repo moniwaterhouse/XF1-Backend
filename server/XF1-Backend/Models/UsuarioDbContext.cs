@@ -13,6 +13,7 @@ namespace XF1_Backend.Models
         public DbSet<EscuderiaUsuario> EscuderiaUsuario { get; set; }
         public DbSet<Id> Ids { get; set; }
         public DbSet<Equipo> Equipos { get; set; }
+        public DbSet<UsuarioPerfil> UsuarioPerfil { get; set; }
         public UsuarioDbContext(DbContextOptions<UsuarioDbContext> options) : base(options) { }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -20,6 +21,7 @@ namespace XF1_Backend.Models
             modelBuilder.Entity<CorreoUsuario>().HasNoKey();
             modelBuilder.Entity<EscuderiaUsuario>().HasNoKey();
             modelBuilder.Entity<Id>().HasNoKey();
+            modelBuilder.Entity<UsuarioPerfil>().HasNoKey();
             //modelBuilder.Entity<Equipo>().HasKey("Id");
         }
     }

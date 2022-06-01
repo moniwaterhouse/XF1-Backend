@@ -49,4 +49,18 @@ namespace XF1_Backend.Models
         public int Costo_2 { get; set; }
 
     }
+
+    public class UsuarioPerfil
+    {
+        public string NombreUsuario { get; set; }
+        public string Pais { get; set; }
+        public string NombreEscuderia { get; set; }
+        public string MarcaEscuderia { get; set; }
+        public string NombreEquipo { get; set; }
+        public string NombrePiloto1 { get; set; }
+        public string NombrePiloto2 { get; set; }
+        public string NombrePiloto3 { get; set; }
+        public string NombrePiloto4 { get; set; }
+        public string NombrePiloto5 { get; set; }
+    }
 }
