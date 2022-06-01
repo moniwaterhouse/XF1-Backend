@@ -30,7 +30,7 @@ namespace XF1_Backend.Logic
 
         /*
          * Descripcion: esta funcion verifica que todos los datos de una carrera no sean nulos
-         * Entradas: instancia de la clase Campeonato
+         * Entradas: instancia de la clase Carrera
          * Salida: booleano que indica si algún dato de la carrera es nulo o no
          */
         public static bool ValoresNulosCarrera(Carrera carrera)
@@ -53,23 +53,27 @@ namespace XF1_Backend.Logic
 
         }
 
+        /*
+         * Descripcion: esta funcion verifica que todos los datos del usuario no sean nulos
+         * Entradas: instancia de la clase Usuario
+         * Salida: booleano que indica si algún dato de la carrera es nulo o no
+         */
+        public static bool ValoresNulosUsuario(Usuario usuario)
+        {
+            if(usuario.NombreUsuario == null ||
+               usuario.Correo == null ||
+               usuario.Pais == null ||
+               usuario.Contrasena == null ||
+               usuario.NombreEscuderia == null ||
+               usuario.IdEquipo1 == 0 ||
+               usuario.IdEquipo2 == 0)
+            {
+                return false;
+            }
 
+            return true;
 
-
-        
-        
-        
-        
-        
-        
-        
-        
-
-
-
-
-
-
+        }
 
     }
 

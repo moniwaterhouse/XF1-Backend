@@ -25,22 +25,24 @@ namespace XF1_Backend.Controllers
         [HttpPost]
         public async Task<ActionResult<Usuario>> PostUsuario(Usuario usuario)
         {
-            // revisión de valores nulos
-            /*
-             * revisar que no existan valores nulos
-             */
+            bool permitido;
+            
+            // revisión de valores nulos           
+            permitido = NullValuesLogicFunctions.ValoresNulosUsuario(usuario);
+            if (permitido == false) return Conflict("Se requieren todos los datos del usuario");
 
-            // revisión de extensión 
-            /*
-             * revisar que los valores que se quieren añadir no excedan el máximo de caracteres
-             */
+            // revisión de la longitud del nombre de usuario
+            permitido = StringLogicFunctions.LongitudNombre(usuario.NombreUsuario);
+            if (permitido == false) return Conflict("El nombre de usuario debe ser de 1 a 30 caracteres");
 
-            // revisión de repetición de correo electrónico
+            // revisión de la longitud de la contraseña
+            permitido = StringLogicFunctions.LongitudContrasena(usuario.Contrasena);
+            if (permitido == false) return Conflict("La contraseña del usuario debe ser de 8 caracteres alfanuméricos");                      
 
-            /*
-             * Realizar un método que asegure que no se repita el correo electrónico con alguno ya existente
-             */
-
+            // revisión de repetición de correo
+            IEnumerable<CorreoUsuario> correos = await _context.Correo.FromSqlRaw(UsuarioRequests.getCorreos).ToListAsync();
+            permitido = StringLogicFunctions.RevisarCorreo(usuario.Correo, correos);
+            if (permitido == false) return Conflict("El correa ya ha sido registrado");
 
             // Encriptar contraseña
             usuario.Contrasena = StringLogicFunctions.EncriptarContrasena(usuario.Contrasena);
@@ -67,5 +69,7 @@ namespace XF1_Backend.Controllers
         {
             return await _context.EscuderiaUsuario.FromSqlRaw(UsuarioRequests.getEscuderias).ToListAsync();
         }
+
     }
+
 }

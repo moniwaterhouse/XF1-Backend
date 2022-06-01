@@ -53,7 +53,7 @@ namespace XF1_Backend.Logic
          * Descripcion: esta funcion verifica que la descripcion del campeonato
          * sea menor o igual a 1000 caracteres
          * Entradas: descripcion del campeonato
-         * Salida: booleano que indica si el nombre del campeonata es menor o
+         * Salida: booleano que indica si el nombre del campeonato es menor o
          * igual a 1000 caracteres
          */
         public static bool LongitudDescripcionCampeonato(string descripcion)
@@ -67,19 +67,81 @@ namespace XF1_Backend.Logic
 
         }
 
+        /*
+         * Descripcion: esta funcion verifica que el nombre de usuario sea de
+         * 1 a 30 caracteres
+         * Entradas: nombre de usuario
+         * Salida: booleano que indica si el nombre de usuario es de 5 a 30
+         * caracteres o no
+         */
+        public static bool LongitudNombreUsuario(string nombreUsuario)
+        {
+            if (nombreUsuario.Length >= 1 && nombreUsuario.Length <= 30)
+            {
+                return true;
+            }
 
-
-
-
-
-
-
-
-
-
-
-
+            return false;
 
         }
 
+        /*
+        * Descripcion: esta funcion verifica que la contraseña del usuario
+        * sea de 8 caracteres alfanuméricos
+        * Entradas: contraseña del usuario
+        * Salida: booleano que indica si la contraseña del usuario es de
+        * 8 caracteres alfanuméricos
+        */
+        public static bool LongitudContrasena(string contrasena)
+        {
+            if (contrasena.Length == 8 && contrasena.All(char.IsLetterOrDigit))
+            {
+                return true;
+            }
+
+            return false;
+
+        }
+
+        /*
+        * Descripcion: esta funcion verifica que el correo del usuario sea único
+        * Entradas:
+        * correoUsuario -> correo del usuario
+        * correos -> lista de los correos registrados
+        * Salida: booleano que indica si el correo del usuario es único
+        */
+        public static bool RevisarCorreo(string correoUsuario, IEnumerable<CorreoUsuario> correos)
+        {
+            foreach (var correo in correos)
+            {
+                if(correoUsuario.Equals(correo))
+                {
+                    return false;
+                }
+            }
+
+            return true;
+
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     }
+
+}
