@@ -358,6 +358,17 @@ BEGIN
 	SET IdLigaPrivada = @IdLigaPrivada
 	WHERE Correo = @Correo;
 
+	DECLARE @cantidad INT;
+
+	SELECT @cantidad = COUNT(CorreoUsuario)
+	FROM USUARIOXLIGA
+	WHERE IdLiga = @IdLigaPrivada;
+
+	IF @cantidad > 4
+		UPDATE LIGA
+		SET Activa = 1
+		WHERE IdLiga = @IdLigaPrivada;
+
 END
 GO
 
@@ -380,7 +391,7 @@ INSERT INTO CARRERA		(Id, IdCampeonato, Nombre, NombrePais, NombrePista, FechaIn
 INSERT INTO LIGA	(IdLiga, IdCampeonato, Nombre, Tipo, Activa)
 			VALUES	('KL9HY6', 'KL9HY6', null, 'Publica', 1),
 					('KL9HY6-WEF567', 'KL9HY6', 'LigaCR-XF1', 'Privada', 0),
-					('KL9HY6-BQV538', 'KL9HY6', 'BestLeague', 'Privada', 0);
+					('KL9HY6-BQV538', 'KL9HY6', 'BestLeague', 'Privada', 1);
 
 
 INSERT INTO ESCUDERIA (Marca, Precio, UrlLogo)
