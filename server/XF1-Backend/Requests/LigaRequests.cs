@@ -19,7 +19,7 @@ namespace XF1_Backend.Requests
                                                                                                 WHERE USU.Correo = {correo}
                                                                                                 ORDER BY Puntos DESC"; }
 
-        public static string getPuntajePrivadaPorUsuario(string correo) { return $@"SELECT PP.Posicion, PP.Jugador, PP.Escuderia, PP.Equipo, PP.Puntos, PP.Correo  
+        public static string getPuntajePrivadaPorUsuario(string correo) { return $@"SELECT ROW_NUMBER() OVER(ORDER BY PP.Posicion DESC) AS Posicion, PP.Jugador, PP.Escuderia, PP.Equipo, PP.Puntos, PP.Correo  
                                                                                                 FROM PuntajesPrivada AS PP JOIN USUARIO AS USU ON PP.IdLiga = USU.IdLigaPrivada 
                                                                                                 WHERE USU.Correo = {correo}
                                                                                                 ORDER BY Puntos DESC"; }
