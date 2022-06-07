@@ -24,7 +24,7 @@ namespace XF1_Backend.Requests
                                                                                                 WHERE USU.Correo = {correo}
                                                                                                 ORDER BY Puntos DESC"; }
 
-        public static string getInfoLigaPrivada(string correo) { return $@"SELECT Count(PP.Jugador) AS Cantidad, MAX(PP.IdLiga) AS IdLiga, MAX(LIG.Activa) AS Activa 
+        public static string getInfoLigaPrivada(string correo) { return $@"SELECT MAX(LIG.Nombre) AS Nombre, Count(PP.Jugador) AS Cantidad, MAX(PP.IdLiga) AS IdLiga, MAX(LIG.Activa) AS Activa 
                                                                                                 FROM (PuntajesPrivada AS PP INNER JOIN USUARIO AS USU ON PP.IdLiga = USU.IdLigaPrivada)
                                                                                                 JOIN LIGA AS LIG ON LIG.IdLiga = USU.IdLigaPrivada
                                                                                                 WHERE USU.Correo = {correo}"; }

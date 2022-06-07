@@ -26,6 +26,7 @@ namespace XF1_Backend.Models
 
     public class InfoLigaPrivada
     {
+        public string Nombre { get; set; }
         public int Cantidad { get; set; }
         public string IdLiga { get; set; }
         public int Activa { get; set; }
