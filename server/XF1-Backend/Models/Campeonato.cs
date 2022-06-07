@@ -35,5 +35,10 @@ namespace XF1_Backend.Models
     {
         public string IdActual { get; set; }
     }
+
+    public class CampeonatoPresupuesto
+    {
+        public int Presupuesto { get; set; }
+    }
     
 }

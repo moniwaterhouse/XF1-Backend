@@ -11,6 +11,8 @@ namespace XF1_Backend.Models
         public DbSet<Campeonato> Campeonato { get; set; }
         public DbSet<Fechas> Fechas { get; set; }
         public DbSet<Nombres> Nombres { get; set; }
+
+        public DbSet<CampeonatoPresupuesto> CampeonatoPresupuesto { get; set; }
         public CampeonatoDbContext(DbContextOptions<CampeonatoDbContext> options) : base(options)
         {
 
@@ -19,6 +21,7 @@ namespace XF1_Backend.Models
         {
             modelBuilder.Entity<Campeonato>().ToTable("Campeonato");
             modelBuilder.Entity<Fechas>().ToView("Fechas").HasNoKey();
+            modelBuilder.Entity<CampeonatoPresupuesto>().HasNoKey();
         }
     }
 }

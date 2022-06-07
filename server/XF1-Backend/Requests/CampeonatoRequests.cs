@@ -28,7 +28,10 @@ namespace XF1_Backend.Requests
         public static string getNombres = "SELECT Id, Nombre, FechaInicio, FechaFin" +
                                           " FROM CAMPEONATO ORDER BY FechaInicio DESC";
 
-
+        // obtener presupuesto actual
+        public static string getPresupuestoActual = "SELECT Presupuesto " +
+                                                    "FROM CAMPEONATO " +
+                                                    "WHERE FechaInicio<GETDATE() AND FechaFin > GETDATE()";
     }
 
 }

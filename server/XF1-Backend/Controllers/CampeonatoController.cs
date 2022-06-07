@@ -89,6 +89,13 @@ namespace XF1_Backend.Controllers
             return await _context.Nombres.FromSqlRaw(CampeonatoRequests.getNombres).ToListAsync();
         }
 
+        // GET api/Campeonato/Presupuesto
+        [HttpGet("Presupuesto")]
+        public async Task<CampeonatoPresupuesto> GetPresupuesto()
+        {
+            return await _context.CampeonatoPresupuesto.FromSqlRaw(CampeonatoRequests.getPresupuestoActual).FirstOrDefaultAsync();
+        }
+
     }
 
 }
