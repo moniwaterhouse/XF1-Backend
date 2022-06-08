@@ -239,12 +239,6 @@ namespace XF1_Backend_Unit_Testing
 
         }
 
-
-
-
-
-
-
         /*
          * Descripción: esta prueba unitaria verifica que la salida de la función
          * LongitudContrasena no sea un valor nulo.
@@ -339,22 +333,6 @@ namespace XF1_Backend_Unit_Testing
             Assert.IsFalse(resultado);
 
         }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
         /*
          * Descripción: esta prueba unitaria verifica que la salida de la función
@@ -470,5 +448,164 @@ namespace XF1_Backend_Unit_Testing
 
         }
 
+        /*
+         * Descripción: esta prueba unitaria verifica que la salida de la función
+         * LongitudMarcaEscuderia no sea un valor nulo.
+         */
+        [TestMethod]
+        public void LongitudMarcaEscuderia_NoNulo_Test()
+        {
+            string marcaEscuderia = "EscuderiaPOP2022";
+
+            bool resultado = StringLogicFunctions.LongitudMarcaEscuderia(marcaEscuderia);
+
+            Assert.IsNotNull(resultado);
+
+        }
+
+        /*
+          * Descripción: esta prueba unitaria verifica que la salida de la función
+          * LongitudContrasena retorne un valor booleano True si la marcaEscuderia
+          * es menor igual a 30 caracteres alfanuméricos.
+          */
+        [TestMethod]
+        public void LongitudMarcaEscuderia_30CaracteresAlfanumericos_Test()
+        {
+            string marcaEscuderia = "EscuderiaPOP2022";
+
+            bool resultado = StringLogicFunctions.LongitudMarcaEscuderia(marcaEscuderia);
+
+            Assert.IsTrue(resultado);
+
+        }
+
+        /*
+          * Descripción: esta prueba unitaria verifica que la salida de la función
+          * LongitudMarcaEscuderia retorne un valor booleano False si la marcaEscuderia
+          * es mayor de 30 caracteres alfanuméricos.
+          */
+        [TestMethod]
+        public void LongitudMarcaEscuderia_LongitudIncorrectaMayor_Test()
+        {
+            string marcaEscuderia = "EscuderiaPOP2022TecnologicodeCostaRica";
+
+            bool resultado = StringLogicFunctions.LongitudMarcaEscuderia(marcaEscuderia);
+
+            Assert.IsFalse(resultado);
+
+        }
+
+        /*
+          * Descripción: esta prueba unitaria verifica que la salida de la función
+          * LongitudMarcaEscuderia retorne un valor booleano False si la marcaEscuderia
+          * es menor o igual de 30 letras.
+          */
+        [TestMethod]
+        public void LongitudMarcaEscuderia_CaracteresNoAlfanumericosLetras_Test()
+        {
+            string marcaEscuderia = "EscuderiaPOP";
+
+            bool resultado = StringLogicFunctions.LongitudMarcaEscuderia(marcaEscuderia);
+
+            Assert.IsFalse(resultado);
+
+        }
+
+        /*
+          * Descripción: esta prueba unitaria verifica que la salida de la función
+          * LongitudContrasena retorne un valor booleano False si la marcaEscuderia
+          * es menor o igual de 30 números.
+          */
+        [TestMethod]
+        public void LongitudMarcaEscuderia_CaracteresNoAlfanumericosNumeros_Test()
+        {
+            string marcaEscuderia = "2022";
+
+            bool resultado = StringLogicFunctions.LongitudMarcaEscuderia(marcaEscuderia);
+
+            Assert.IsFalse(resultado);
+
+        }
+
+        /*
+         * Descripción: esta prueba unitaria verifica que la salida de la función
+         * LongitudNombreNuevaLiga no sea un valor nulo.
+         */
+        [TestMethod]
+        public void LongitudNombreNuevaLiga_NoNulo_Test()
+        {
+            string nombre = "NuevaLigaPOP2022";
+
+            bool resultado = StringLogicFunctions.LongitudNombreNuevaLiga(nombre);
+
+            Assert.IsNotNull(resultado);
+
+        }
+
+        /*
+          * Descripción: esta prueba unitaria verifica que la salida de la función
+          * LongitudNombreNuevaLiga retorne un valor booleano True si el nombre es
+          * menor igual a 30 caracteres alfanuméricos.
+          */
+        [TestMethod]
+        public void LongitudNombreNuevaLiga_30CaracteresAlfanumericos_Test()
+        {
+            string nombre = "NuevaLigaPOP2022";
+
+            bool resultado = StringLogicFunctions.LongitudNombreNuevaLiga(nombre);
+
+            Assert.IsTrue(resultado);
+
+        }
+
+        /*
+          * Descripción: esta prueba unitaria verifica que la salida de la función
+          * LongitudNombreNuevaLiga retorne un valor booleano False si el nombre es
+          * mayor de 30 caracteres alfanuméricos.
+          */
+        [TestMethod]
+        public void LongitudNombreNuevaLiga_LongitudIncorrectaMayor_Test()
+        {
+            string nombre = "NuevaLigaPOP2022TecnologicodeCostaRica";
+
+            bool resultado = StringLogicFunctions.LongitudNombreNuevaLiga(nombre);
+
+            Assert.IsFalse(resultado);
+
+        }
+
+        /*
+          * Descripción: esta prueba unitaria verifica que la salida de la función
+          * LongitudNombreNuevaLiga retorne un valor booleano False si el nombre es
+          * menor o igual de 30 letras.
+          */
+        [TestMethod]
+        public void LongitudNombreNuevaLiga_CaracteresNoAlfanumericosLetras_Test()
+        {
+            string nombre = "NuevaLigaPOP";
+
+            bool resultado = StringLogicFunctions.LongitudNombreNuevaLiga(nombre);
+
+            Assert.IsFalse(resultado);
+
+        }
+
+        /*
+          * Descripción: esta prueba unitaria verifica que la salida de la función
+          * LongitudNombreNuevaLiga retorne un valor booleano False si el nombre es
+          * menor o igual de 30 números.
+          */
+        [TestMethod]
+        public void LongitudNombreNuevaLiga_CaracteresNoAlfanumericosNumeros_Test()
+        {
+            string nombre = "2022";
+
+            bool resultado = StringLogicFunctions.LongitudNombreNuevaLiga(nombre);
+
+            Assert.IsFalse(resultado);
+
+        }
+
     }
+
 }

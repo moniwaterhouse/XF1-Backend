@@ -187,6 +187,21 @@ namespace XF1_Backend.Logic
 
         }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         /*
          * Descripcion: esta funcion verifica que el nombre de la nueva liga sea
          * menor o igual a 30 caracteres alfanuméricos
