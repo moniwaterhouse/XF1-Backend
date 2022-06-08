@@ -233,5 +233,141 @@ namespace XF1_Backend_Unit_Testing
 
         }
 
+        /*
+         * Descripción: esta prueba unitaria verifica que la salida de la función
+         * ValoresNulosEquipo no sea un valor nulo.
+         */
+        [TestMethod]
+        public void VValoresNulosEquipo_NoNulo_Test()
+        {
+            Equipo equipo = new Equipo();
+
+            equipo.Id = 1234;
+            equipo.MarcaEscuderia = "Ferrari";
+            equipo.NombrePiloto1 = "Daniel";
+            equipo.NombrePiloto2 = "Steven";
+            equipo.NombrePiloto3 = "Jose Ignacio";
+            equipo.NombrePiloto4 = "Juan Ignacio";
+            equipo.NombrePiloto5 = "Mónica";
+            equipo.PuntajePublica = 1000;
+            equipo.Costo = 1000;
+
+            bool resultado = NullValuesLogicFunctions.ValoresNulosEquipo(equipo);
+
+            Assert.IsNotNull(resultado);
+
+        }
+
+        /*
+          * Descripción: esta prueba unitaria verifica que la salida de la función
+          * ValoresNulosEquipo retorne un valor booleano True si se disponen de
+          * todos los datos del equipo.
+          */
+        [TestMethod]
+        public void ValoresNulosEquipo_NoFaltanDatos_Test()
+        {
+            Equipo equipo = new Equipo();
+
+            equipo.Id = 1234;
+            equipo.MarcaEscuderia = "Ferrari";
+            equipo.NombrePiloto1 = "Daniel";
+            equipo.NombrePiloto2 = "Steven";
+            equipo.NombrePiloto3 = "Jose Ignacio";
+            equipo.NombrePiloto4 = "Juan Ignacio";
+            equipo.NombrePiloto5 = "Mónica";
+            equipo.PuntajePublica = 1000;
+            equipo.Costo = 1000;
+
+            bool resultado = NullValuesLogicFunctions.ValoresNulosEquipo(equipo);
+
+            Assert.IsTrue(resultado);
+
+        }
+
+        /*
+          * Descripción: esta prueba unitaria verifica que la salida de la función
+          * ValoresNulosEquipo retorne un valor booleano False si no se disponen
+          * de todos los datos del equipo.
+          */
+        [TestMethod]
+        public void ValoresNulosEquipo_SiFaltanDatos_Test()
+        {
+            Equipo equipo = new Equipo();
+
+            equipo.Id = 1234;
+            equipo.MarcaEscuderia = "Ferrari";
+            equipo.NombrePiloto1 = "Daniel";
+            equipo.NombrePiloto2 = null;
+            equipo.NombrePiloto3 = null;
+            equipo.NombrePiloto4 = null;
+            equipo.NombrePiloto5 = null;
+            equipo.PuntajePublica = 1000;
+            equipo.Costo = 1000;
+
+            bool resultado = NullValuesLogicFunctions.ValoresNulosEquipo(equipo);
+
+            Assert.IsFalse(resultado);
+
+        }
+
+        /*
+         * Descripción: esta prueba unitaria verifica que la salida de la función
+         * ValoresNulosNuevaLiga no sea un valor nulo.
+         */
+        [TestMethod]
+        public void ValoresNulosNuevaLiga_NoNulo_Test()
+        {
+            NuevaLiga nuevaLiga = new NuevaLiga();
+
+            nuevaLiga.Nombre = "POP";
+            nuevaLiga.Correo = "daniel.madriz@itcr.ac.cr";
+            
+            bool resultado = NullValuesLogicFunctions.ValoresNulosNuevaLiga(nuevaLiga);
+
+            Assert.IsNotNull(resultado);
+
+        }
+
+        /*
+          * Descripción: esta prueba unitaria verifica que la salida de la función
+          * ValoresNulosNuevaLiga retorne un valor booleano True si se disponen de
+          * todos los datos de la nueva liga.
+          */
+        [TestMethod]
+        public void ValoresNulosNuevaLiga_NoFaltanDatos_Test()
+        {
+            NuevaLiga nuevaLiga = new NuevaLiga();
+
+            nuevaLiga.Nombre = "POP";
+            nuevaLiga.Correo = "daniel.madriz@itcr.ac.cr";
+
+            bool resultado = NullValuesLogicFunctions.ValoresNulosNuevaLiga(nuevaLiga);
+
+            Assert.IsTrue(resultado);
+
+        }
+
+        /*
+          * Descripción: esta prueba unitaria verifica que la salida de la función
+          * ValoresNulosNuevaLiga retorne un valor booleano False si no se disponen
+          * de todos los datos de la nueva liga.
+          */
+        [TestMethod]
+        public void ValoresNulosNuevaLiga_SiFaltanDatos_Test()
+        {
+            Equipo equipo = new Equipo();
+
+            NuevaLiga nuevaLiga = new NuevaLiga();
+
+            nuevaLiga.Nombre = "POP";
+            nuevaLiga.Correo = null;
+
+            bool resultado = NullValuesLogicFunctions.ValoresNulosNuevaLiga(nuevaLiga);
+
+            Assert.IsFalse(resultado);
+
+        }
+
     }
+
 }
