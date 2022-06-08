@@ -147,6 +147,64 @@ namespace XF1_Backend.Logic
 
         }
 
+        /*
+         * Descripcion: esta funcion verifica que el nombre sea de 5 a 30 caracteres
+         * Entradas: nombre
+         * Salida: booleano que indica si el nombre es de 5 a 30 caracteres o no
+         */
+        public static bool LongitudEscuderia(string escuderia)
+        {
+            if (escuderia.Length <= 30)
+            {
+
+                bool letras = false;
+                bool numeros = false;
+
+                foreach (char caracter in escuderia)
+                {
+                    if (Char.IsLetter(caracter))
+                    {
+                        letras = true;
+                    }
+
+                    if (Char.IsDigit(caracter))
+                    {
+                        numeros = true;
+                    }
+
+                }
+
+                if (letras == true && numeros == true)
+                {
+                    return true;
+                }
+
+            }
+
+            return false;
+
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     }
 
 }

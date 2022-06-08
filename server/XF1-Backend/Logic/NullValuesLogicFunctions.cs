@@ -75,6 +75,73 @@ namespace XF1_Backend.Logic
 
         }
 
+        /*
+         * Descripcion: esta funcion verifica que todos los datos del equipo no sean nulos
+         * Entradas: instancia de la clase Equipo
+         * Salida: booleano que indica si algún dato del equipo es nulo o no
+         */
+        public static bool ValoresNulosEquipo(Equipo equipo)
+        {
+            if (equipo.Id == 0 ||
+               equipo.MarcaEscuderia == null ||
+               equipo.NombrePiloto1 == null ||
+               equipo.NombrePiloto2 == null ||
+               equipo.NombrePiloto3 == null ||
+               equipo.NombrePiloto4 == null ||
+               equipo.NombrePiloto5 == null ||
+               equipo.PuntajePublica == 0 ||
+               equipo.Costo == 0)
+            {
+                return false;
+            }
+
+            return true;
+
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     }
 
 }
