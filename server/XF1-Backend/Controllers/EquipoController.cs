@@ -36,7 +36,7 @@ namespace XF1_Backend.Controllers
             if (permitido == false) return Conflict("Se requieren todos los datos del equipo");
 
             // revisión de la longitud del nombre de la escudería
-            permitido = StringLogicFunctions.LongitudEscuderia(equipo.MarcaEscuderia);
+            permitido = StringLogicFunctions.LongitudMarcaEscuderia(equipo.MarcaEscuderia);
             if (permitido == false) return Conflict("El nombre de la escudería debe ser de máximo 30 caracteres alfanuméricos");
 
             _context.Equipos.Add(equipo);

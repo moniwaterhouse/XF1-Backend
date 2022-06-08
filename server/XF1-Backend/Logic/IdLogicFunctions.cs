@@ -31,11 +31,10 @@ namespace XF1_Backend.Logic
 
         /*
          * Descripción: esta funcion genera una nueva llave de 6 caracteres alfanumericos
-         * para diferenciar las carreras entre sí. La idea es que este no se repita con
+         * para diferenciar los campeonatos entre sí. La idea es que este no se repita con
          * llaves ya existentes.
          */
-
-        public static string GenerarLlave(IEnumerable<Campeonato> campeonatos)
+        public static string GenerarLlaveCampeonato(IEnumerable<Campeonato> campeonatos)
         {
             Random rd = new Random();
             string possibleCharacters = "QWERTYUIOPASDFGHJKLZXCVBNM1234567890";
@@ -51,11 +50,63 @@ namespace XF1_Backend.Logic
 
             foreach (var campeonato in campeonatos)
             {
-                if (campeonato.Id == key) return GenerarLlave(campeonatos);
+                if (campeonato.Id == key) return GenerarLlaveCampeonato(campeonatos);
             }
 
             return key;
         }
+
+        /*
+         * Descripción: esta funcion genera una nueva llave de 6 caracteres alfanumericos
+         * para diferenciar las ligas privadas entre sí. La idea es que este no se repita
+         * con llaves ya existentes.
+         */
+        public static string GenerarLlaveLigaPrivada(CampeonatoActual llaveActual, IEnumerable<Liga> ligasPrivadas)
+        {
+            Random rd = new Random();
+            string possibleCharacters = "QWERTYUIOPASDFGHJKLZXCVBNM1234567890";
+
+            string idLigaPrivada = "";
+            int rand_num;
+
+            for (int i = 0; i < 6; i++)
+            {
+                rand_num = rd.Next(0, 35);
+                idLigaPrivada += possibleCharacters[rand_num];
+            }
+            
+            idLigaPrivada = llaveActual.IdActual + "-" + idLigaPrivada;
+
+            foreach (var liga in ligasPrivadas)
+            {
+                if (liga.IdLiga == idLigaPrivada) return GenerarLlaveLigaPrivada(llaveActual, ligasPrivadas);
+            }
+
+            return idLigaPrivada;
+
+        }
+
+        /*
+        * Descripcion: esta funcion verifica que el id pertenezca a una liga privada registrada
+        * Entradas:
+        * actualizarLiga -> instancia de la clase ActualizarLiga
+        * idPrivadas -> lista de los id registrados de ligas privadas
+        * Salida: booleano que indica si el id de la liga privada está registrado o no
+        */
+        public static bool RevisarIdLigaPrivada(ActualizarLiga actualizarLiga, IEnumerable<IdPrivadas> idPrivadas)
+        {
+            foreach (var id in idPrivadas)
+            {
+                if (actualizarLiga.Id.Equals(id))
+                {
+                    return true;
+                }
+            }
+
+            return false;
+
+        }
+
 
     }
 }

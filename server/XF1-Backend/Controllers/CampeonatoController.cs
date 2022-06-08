@@ -44,7 +44,7 @@ namespace XF1_Backend.Controllers
             // generar llave unica del campeonato
             IEnumerable<Campeonato> campeonatosAnteriores;
             campeonatosAnteriores = await _context.Campeonato.FromSqlRaw(CampeonatoRequests.getCampeonatos).ToListAsync();
-            campeonato.Id = IdLogicFunctions.GenerarLlave(campeonatosAnteriores);
+            campeonato.Id = IdLogicFunctions.GenerarLlaveCampeonato(campeonatosAnteriores);
 
             // revisión de traslape de fechas
             IEnumerable<Fechas> fechas;

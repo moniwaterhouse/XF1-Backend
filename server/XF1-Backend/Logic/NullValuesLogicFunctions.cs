@@ -35,7 +35,7 @@ namespace XF1_Backend.Logic
          */
         public static bool ValoresNulosCarrera(Carrera carrera)
         {
-            if(carrera.Id == null ||
+            if(carrera.Id == 0 ||
                carrera.IdCampeonato == null ||
                carrera.Nombre == null ||
                carrera.NombrePais == null ||
@@ -82,7 +82,7 @@ namespace XF1_Backend.Logic
          */
         public static bool ValoresNulosEquipo(Equipo equipo)
         {
-            if (equipo.Id == 0 ||
+            if(equipo.Id == 0 ||
                equipo.MarcaEscuderia == null ||
                equipo.NombrePiloto1 == null ||
                equipo.NombrePiloto2 == null ||
@@ -99,48 +99,22 @@ namespace XF1_Backend.Logic
 
         }
 
+        /*
+         * Descripcion: esta funcion verifica que todos los datos de la nueva liga no sean nulos
+         * Entradas: instancia de la clase NuevaLiga
+         * Salida: booleano que indica si algún dato dela nueva liga es nulo o no
+         */
+        public static bool ValoresNulosNuevaLiga(NuevaLiga nuevaLiga)
+        {
+            if(nuevaLiga.Nombre == null ||
+               nuevaLiga.Correo == null)
+            {
+                return false;
+            }
 
+            return true;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+        }
 
     }
 

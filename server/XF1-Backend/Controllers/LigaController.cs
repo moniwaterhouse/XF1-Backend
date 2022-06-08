@@ -81,34 +81,25 @@ namespace XF1_Backend.Controllers
         [HttpPost]
         public async Task<ActionResult<Liga>> PostLigaPrivada(NuevaLiga nuevaLiga)
         {
-            // revisar string del nombre de la liga
-            /*
-             * revisar que el nombre no sea nulo y que cumpla con la extensión y las restricciones de caracteres que se pide
-             */
+            
+            bool permitido;
+
+            // revisión de valores nulos         
+            permitido = NullValuesLogicFunctions.ValoresNulosNuevaLiga(nuevaLiga);
+            if (permitido == false) return Conflict("Se requieren todos los datos de la nueva liga");
+
+            // revisión de la longitud del nombre de la nueva liga
+            permitido = StringLogicFunctions.LongitudNombreNuevaLiga(nuevaLiga.Nombre);
+            if (permitido == false) return Conflict("El nombre de la nueva liga debe ser de máximo 30 caracteres alfanuméricos");
 
             // Tomar llave del campeonato actual
             CampeonatoActual llaveActual = await _context.CampeonatoActual.FromSqlRaw(LigaRequests.GetCampeonatoActual).FirstOrDefaultAsync();
 
             // Generar la nueva seccion de la llave
-
-            /*
-             * Mejorar esta parte del código, hacerle una funcion en la parte de logic functions
-             */
             IEnumerable<Liga> ligasPrivadas;
             ligasPrivadas = await _context.Liga.FromSqlRaw(LigaRequests.GetLigasPrivada).ToListAsync();
-            //string idLigaPrivada = IdLogicFunctions.GenerarLlave(ligasPrivadas);
-            Random rd = new Random();
-            string possibleCharacters = "QWERTYUIOPASDFGHJKLZXCVBNM1234567890";
 
-            string idLigaPrivada = "";
-            int rand_num;
-
-            for (int i = 0; i < 6; i++)
-            {
-                rand_num = rd.Next(0, 35);
-                idLigaPrivada += possibleCharacters[rand_num];
-            }
-            idLigaPrivada = llaveActual.IdActual + "-" + idLigaPrivada;
+            string idLigaPrivada = IdLogicFunctions.GenerarLlaveLigaPrivada(llaveActual, ligasPrivadas);
 
             // Añadir la nueva liga
             await _context.Database.ExecuteSqlInterpolatedAsync(LigaRequests.AnadirNuevaLiga(idLigaPrivada, llaveActual.IdActual, nuevaLiga.Nombre, nuevaLiga.Correo));
@@ -121,23 +112,26 @@ namespace XF1_Backend.Controllers
         [HttpPut]
         public async Task<ActionResult<Liga>> PutLigaPrivada(ActualizarLiga actualizarLiga)
         {
-            // revision de que la liga exista
-            /*
-             * esta revision es logica y se hace con el id de la liga que viene en el json
-             * si no está entonces se responde con un conflicto
-             */
+            bool permitido;
+
+            IEnumerable<IdPrivadas> idPrivadas;
+            idPrivadas = await _context.IdPrivadas.FromSqlRaw(LigaRequests.GetIdPrivadas).ToListAsync();
+            permitido = IdLogicFunctions.RevisarIdLigaPrivada(actualizarLiga, idPrivadas);
+            if (permitido == false) return Conflict("La llave insertada no pertenece a ninguna liga privada");
 
             // revision de que la liga privada existente tenga espacio
-            /*
-             * esta revisa que haya espacio disponible ( hay un máximo de 20 usuarios y 40 equipos)
-             */
+            CantidadJugador cantidadJugador = await _context.CantidadJugadores.FromSqlRaw(LigaRequests.GeCantidadLigaPrivada(actualizarLiga.Id)).FirstOrDefaultAsync();
+            permitido = IntLogicFunctions.CantidadJugadoresLigaPrivada(cantidadJugador);
+            if (permitido == false) return Conflict("La liga privada ya no tiene espacio disponible");
 
             // añadir el usuario a la liga privada
             await _context.Database.ExecuteSqlInterpolatedAsync(LigaRequests.ActualizarLigaPrivada(actualizarLiga.Id, actualizarLiga.Correo));
             await _context.SaveChangesAsync();
 
             return Ok();
+
         }
 
     }
+
 }

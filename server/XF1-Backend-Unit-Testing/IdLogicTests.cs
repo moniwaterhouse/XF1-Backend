@@ -84,7 +84,7 @@ namespace XF1_Backend_Unit_Testing
             campeonatosIds.Add(campeonato4);
             campeonatosIds.Add(campeonato5);
 
-            string resultado = IdLogicFunctions.GenerarLlave(campeonatosIds);
+            string resultado = IdLogicFunctions.GenerarLlaveCampeonato(campeonatosIds);
 
             Assert.IsNotNull(resultado);
 
@@ -121,7 +121,7 @@ namespace XF1_Backend_Unit_Testing
             campeonatosIds.Add(campeonato4);
             campeonatosIds.Add(campeonato5);
 
-            string resultado = IdLogicFunctions.GenerarLlave(campeonatosIds);
+            string resultado = IdLogicFunctions.GenerarLlaveCampeonato(campeonatosIds);
 
             Assert.AreEqual(resultado.Length, 6);
 
@@ -158,7 +158,7 @@ namespace XF1_Backend_Unit_Testing
             campeonatosIds.Add(campeonato4);
             campeonatosIds.Add(campeonato5);
 
-            string resultado = IdLogicFunctions.GenerarLlave(campeonatosIds);
+            string resultado = IdLogicFunctions.GenerarLlaveCampeonato(campeonatosIds);
 
             Assert.AreNotEqual(resultado, "23F6SH");
             Assert.AreNotEqual(resultado, "KL9HY6");
