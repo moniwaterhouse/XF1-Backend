@@ -61,6 +61,7 @@ namespace XF1_Backend.Logic
          * para diferenciar las ligas privadas entre sí. La idea es que este no se repita
          * con llaves ya existentes.
          */
+
         public static string GenerarLlaveLigaPrivada(CampeonatoActual llaveActual, IEnumerable<Liga> ligasPrivadas)
         {
             Random rd = new Random();
@@ -97,7 +98,7 @@ namespace XF1_Backend.Logic
         {
             foreach (var id in idPrivadas)
             {
-                if (actualizarLiga.Id.Equals(id))
+                if (actualizarLiga.Id.Equals(id.Id))
                 {
                     return true;
                 }
@@ -107,6 +108,6 @@ namespace XF1_Backend.Logic
 
         }
 
-
     }
+
 }
