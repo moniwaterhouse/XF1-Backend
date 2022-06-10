@@ -565,3 +565,5 @@ INSERT INTO USUARIOXLIGA	(CorreoUsuario, IdLiga)
 							('bot18@gmail.com', 'KL9HY6-BQV538'),
 							('bot19@gmail.com', 'KL9HY6-BQV538'),
 							('bot20@gmail.com', 'KL9HY6-BQV538');
+
+SELECT * FROM USUARIO

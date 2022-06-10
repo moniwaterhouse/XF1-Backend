@@ -35,8 +35,7 @@ namespace XF1_Backend.Logic
          */
         public static bool ValoresNulosCarrera(Carrera carrera)
         {
-            if(carrera.Id == 0 ||
-               carrera.IdCampeonato == null ||
+            if(carrera.IdCampeonato == null ||
                carrera.Nombre == null ||
                carrera.NombrePais == null ||
                carrera.NombrePista == null ||
@@ -64,9 +63,7 @@ namespace XF1_Backend.Logic
                usuario.Correo == null ||
                usuario.Pais == null ||
                usuario.Contrasena == null ||
-               usuario.NombreEscuderia == null ||
-               usuario.IdEquipo1 == 0 ||
-               usuario.IdEquipo2 == 0)
+               usuario.NombreEscuderia == null)
             {
                 return false;
             }
@@ -82,15 +79,12 @@ namespace XF1_Backend.Logic
          */
         public static bool ValoresNulosEquipo(Equipo equipo)
         {
-            if(equipo.Id == 0 ||
-               equipo.MarcaEscuderia == null ||
+            if(equipo.MarcaEscuderia == null ||
                equipo.NombrePiloto1 == null ||
                equipo.NombrePiloto2 == null ||
                equipo.NombrePiloto3 == null ||
                equipo.NombrePiloto4 == null ||
-               equipo.NombrePiloto5 == null ||
-               equipo.PuntajePublica == 0 ||
-               equipo.Costo == 0)
+               equipo.NombrePiloto5 == null)
             {
                 return false;
             }

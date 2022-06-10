@@ -41,7 +41,7 @@ namespace XF1_Backend.Logic
          */
         public static bool LongitudNombre(string nombre)
         {
-            if(nombre.Length >= 5 && nombre.Length <= 30)
+            if(nombre.Length >= 1 && nombre.Length <= 30)
             {
                 return true;
             }
@@ -148,45 +148,26 @@ namespace XF1_Backend.Logic
         }
 
         /*
-         * Descripcion: esta funcion verifica que el nombre de la escudería sea
-         * menor o igual a 30 caracteres alfanuméricos
-         * Entradas: nombre de la escudería
-         * Salida: booleano que indica si el nombre de la escudería es menor o
-         * igual a 30 caracteres alfanuméricos o no
-         */
+ * Descripcion: esta funcion verifica que el nombre de la escudería sea
+ * menor o igual a 30 caracteres
+ * Entradas: nombre de la escudería
+ * Salida: booleano que indica si el nombre de la escudería es menor o
+ * igual a 30 caracteres o no
+ */
         public static bool LongitudMarcaEscuderia(string marcaEscuderia)
         {
             if (marcaEscuderia.Length <= 30)
             {
-
-                bool letras = false;
-                bool numeros = false;
-
-                foreach (char caracter in marcaEscuderia)
-                {
-                    if (Char.IsLetter(caracter))
-                    {
-                        letras = true;
-                    }
-
-                    if (Char.IsDigit(caracter))
-                    {
-                        numeros = true;
-                    }
-
-                }
-
-                if (letras == true && numeros == true)
-                {
-                    return true;
-                }
-
+                return true;
             }
+
+
 
             return false;
 
-        }
 
+
+        }
 
 
 
