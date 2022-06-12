@@ -78,7 +78,7 @@ namespace XF1_Backend_Unit_Testing
         [TestMethod]
         public void LongitudNombre_LongitudIncorrectaMenor_Test()
         {            
-            string nombre = "abc";
+            string nombre = "";
 
             bool resultado = StringLogicFunctions.LongitudNombre(nombre);
 
@@ -488,38 +488,6 @@ namespace XF1_Backend_Unit_Testing
         public void LongitudMarcaEscuderia_LongitudIncorrectaMayor_Test()
         {
             string marcaEscuderia = "EscuderiaPOP2022TecnologicodeCostaRica";
-
-            bool resultado = StringLogicFunctions.LongitudMarcaEscuderia(marcaEscuderia);
-
-            Assert.IsFalse(resultado);
-
-        }
-
-        /*
-          * Descripción: esta prueba unitaria verifica que la salida de la función
-          * LongitudMarcaEscuderia retorne un valor booleano False si la marcaEscuderia
-          * es menor o igual de 30 letras.
-          */
-        [TestMethod]
-        public void LongitudMarcaEscuderia_CaracteresNoAlfanumericosLetras_Test()
-        {
-            string marcaEscuderia = "EscuderiaPOP";
-
-            bool resultado = StringLogicFunctions.LongitudMarcaEscuderia(marcaEscuderia);
-
-            Assert.IsFalse(resultado);
-
-        }
-
-        /*
-          * Descripción: esta prueba unitaria verifica que la salida de la función
-          * LongitudContrasena retorne un valor booleano False si la marcaEscuderia
-          * es menor o igual de 30 números.
-          */
-        [TestMethod]
-        public void LongitudMarcaEscuderia_CaracteresNoAlfanumericosNumeros_Test()
-        {
-            string marcaEscuderia = "2022";
 
             bool resultado = StringLogicFunctions.LongitudMarcaEscuderia(marcaEscuderia);
 
