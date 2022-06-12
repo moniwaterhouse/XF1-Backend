@@ -53,7 +53,28 @@ namespace XF1_Backend.Logic
                 if (campeonato.Id == key) return GenerarLlaveCampeonato(campeonatos);
             }
 
-            return key;
+            bool numero = false;
+
+            foreach (char caracter in key)
+            {
+                if (Char.IsDigit(caracter))
+                {
+                    numero = true;
+                }
+
+            }
+
+            if (numero == true)
+            {
+                return key;
+            }
+
+            else
+            {
+                return GenerarLlaveCampeonato(campeonatos);
+
+            }
+
         }
 
         /*
@@ -75,7 +96,23 @@ namespace XF1_Backend.Logic
                 rand_num = rd.Next(0, 35);
                 idLigaPrivada += possibleCharacters[rand_num];
             }
-            
+
+            bool numero = false;
+
+            foreach (char caracter in idLigaPrivada)
+            {
+                if (Char.IsDigit(caracter))
+                {
+                    numero = true;
+                }
+
+            }
+
+            if (numero == false)
+            {
+                return GenerarLlaveLigaPrivada(llaveActual, ligasPrivadas);
+            }
+
             idLigaPrivada = llaveActual.IdActual + "-" + idLigaPrivada;
 
             foreach (var liga in ligasPrivadas)
