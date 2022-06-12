@@ -21,19 +21,37 @@ namespace XF1_Backend.Controllers
             _context = context;
         }
 
-
         // POST:
         [HttpPost]
         public async Task<ActionResult<Carrera>> PostCarrera(Carrera carrera)
         {
+
+            bool permitido;
+
+            // revisión de valores nulos         
+            permitido = NullValuesLogicFunctions.ValoresNulosCarrera(carrera);
+            if (permitido == false) return Conflict("Se requieren todos los datos de la carrera");
+
+            // revisión de la longitud del nombre de la carrera
+            permitido = StringLogicFunctions.LongitudNombre(carrera.Nombre);
+            if (permitido == false) return Conflict("El nombre de la carrera debe ser de 5 a 30 caracteres");
+
+            // revisión de la longitud del nombre de la pista
+            permitido = StringLogicFunctions.LongitudNombre(carrera.NombrePista);
+            if (permitido == false) return Conflict("El nombre de la pista debe ser de 5 a 30 caracteres");
+
             // crear llave
             IEnumerable<Id> carreraIds = await _context.Ids.FromSqlInterpolated(CarreraRequests.getCarreraPorCampeonato(carrera.IdCampeonato)).ToListAsync();
-            carrera.Id = LogicFunctions.GenerarId(carreraIds);
+            carrera.Id = IdLogicFunctions.GenerarId(carreraIds);
 
-            // verificar fechas
+            // revisión de traslape de fechas
             IEnumerable<Fechas> fechas = await _context.FechasCarrera.FromSqlInterpolated(CarreraRequests.getFechasPorCampeonato(carrera.IdCampeonato)).ToListAsync();
-            bool permitido = LogicFunctions.RevisarFechas(carrera.FechaInicio, carrera.FechaFin, fechas);
+            permitido = DateLogicFunctions.RevisarTraslapeFechas(carrera.FechaInicio, carrera.FechaFin, fechas);
             if (permitido == false) return Conflict("Existe un conflicto de fechas con otra carrera");
+           
+            // revisión de fechas anteriores a la actual
+            permitido = DateLogicFunctions.RevisarFechasAnteriores(carrera.FechaInicio, carrera.FechaFin);
+            if (permitido == false) return Conflict("No se puede crear una carrera con una fecha menor a la actual");
 
             // definir estado por defecto
             carrera.Estado = "Pendiente";
@@ -65,5 +83,7 @@ namespace XF1_Backend.Controllers
         {
             return await _context.Nombre.FromSqlRaw(CarreraRequests.getCarrerasNombreCampeonato).ToListAsync();
         }
+
     }
+
 }

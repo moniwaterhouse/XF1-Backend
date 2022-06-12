@@ -27,11 +27,24 @@ namespace XF1_Backend.Controllers
         {
             // crear el equipo 1
             IEnumerable<Id> equipoIds = await _context.Ids.FromSqlRaw(EquipoRequests.GetIds).ToListAsync();
-            equipo.Id = LogicFunctions.GenerarId(equipoIds);
+            equipo.Id = IdLogicFunctions.GenerarId(equipoIds);
+
+            bool permitido;
+
+            // revisión de valores nulos         
+            permitido = NullValuesLogicFunctions.ValoresNulosEquipo(equipo);
+            if (permitido == false) return Conflict("Se requieren todos los datos del equipo");
+
+            // revisión de la longitud del nombre de la escudería
+            permitido = StringLogicFunctions.LongitudMarcaEscuderia(equipo.MarcaEscuderia);
+            if (permitido == false) return Conflict("El nombre de la escudería debe ser de máximo 30 caracteres alfanuméricos");
 
             _context.Equipos.Add(equipo);
             await _context.SaveChangesAsync();
             return Ok(equipo.Id);
+
         }
+
     }
+
 }

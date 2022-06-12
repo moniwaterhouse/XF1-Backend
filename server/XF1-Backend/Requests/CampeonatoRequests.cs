@@ -12,13 +12,13 @@ namespace XF1_Backend.Requests
     public class CampeonatoRequests
     {
         // obtener todos los campeonatos
-        public static string getCampeonatos = "SELECT * FROM CAMPEONATO ORDER BY FechaInicio DESC";
+        public static string getCampeonatos = "SELECT * FROM CAMPEONATO ORDER BY FechaInicio ASC";
 
         // obtener fechas de los campeonatos
         public static string getFechasCampeonatos = "SELECT CAMPEONATO.FechaInicio, CAMPEONATO.FechaFin FROM CAMPEONATO";
 
         // stored procedure para crear liga
-        public static System.FormattableString crearLiga(string id) { return $@"EXECUTE sp_crear_liga {id}"; }
+        public static System.FormattableString crearLiga(string id, int activa) { return $@"EXECUTE sp_crear_liga_publica {id}, {activa}"; }
 
         // obtener fechas de los campeonatos
         public static string getFechas =    "SELECT CAMPEONATO.FechaInicio, CAMPEONATO.FechaFin " +
@@ -28,7 +28,10 @@ namespace XF1_Backend.Requests
         public static string getNombres = "SELECT Id, Nombre, FechaInicio, FechaFin" +
                                           " FROM CAMPEONATO ORDER BY FechaInicio DESC";
 
-
+        // obtener presupuesto actual
+        public static string getPresupuestoActual = "SELECT Presupuesto " +
+                                                    "FROM CAMPEONATO " +
+                                                    "WHERE FechaInicio<GETDATE() AND FechaFin > GETDATE()";
     }
 
 }
