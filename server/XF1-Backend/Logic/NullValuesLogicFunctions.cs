@@ -13,8 +13,7 @@ namespace XF1_Backend.Logic
          */
         public static bool ValoresNulosCampeonato(Campeonato campeonato)
         {
-            if(campeonato.Id == null ||
-               campeonato.Nombre == null ||
+            if(campeonato.Nombre == null ||
                campeonato.Presupuesto == 0 ||
                campeonato.FechaInicio == DateTime.MinValue ||
                campeonato.HoraInicio == null ||

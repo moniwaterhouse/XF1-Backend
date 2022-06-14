@@ -13,14 +13,20 @@ using System.Linq;
 using System.Threading.Tasks;
 using XF1_Backend.Models;
 using Microsoft.EntityFrameworkCore;
+using XF1_Backend.Services;
 
 namespace XF1_Backend
 {
     public class Startup
     {
+        public static CampeonatoService campeonatoService = new CampeonatoService();
+
+        public static ServiceFacade facade = new ServiceFacade(campeonatoService);
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
+
         }
 
         public IConfiguration Configuration { get; }
@@ -43,6 +49,8 @@ namespace XF1_Backend
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "XF1_Backend", Version = "v1" });
             });
+
+            
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
