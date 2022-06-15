@@ -396,6 +396,26 @@ Url: `/api/Usuario/Perfil/{correo}` donde el `correo` corresponde al correo del 
 
 Observaciones: Note que el correo en la url del request debe venir encerrado por apóstrofes, si no se hace así entonces no funciona.
 
+### USU-5
+
+Tipo: POST
+
+Descipcion: Este hacer login al ingresar por medio de un Json el correo y contraseña del usuario. si los datos son correctos se obtendrá como respuesta un Code 200 (OK). Si el correo indicado no existe, se obtiene un Code 409 (Conflict) con el texto de que no existe y si la contraseña no es la correcta entonces se responde con un Code 401 (Unauthorized).
+
+La idea es que con base en estos códigos se dé un respuesta.
+
+Url: `/api/Usuario/Login`
+
+En el Json pide todos los detalles de un usuario, pero basta con indicar solo esto:
+```Json
+{
+  "correo": "juan@gmail.com",
+  "contrasena": "1234"
+}
+```
+
+Observaciones: Com
+
 ## Requests PILOTOS (PIL)
 
 ### PIL-1
