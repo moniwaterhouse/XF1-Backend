@@ -18,13 +18,15 @@ namespace XF1_Backend.Services
         protected CampeonatoService _campeonatoService;
         protected CarreraService _carreraService;
         protected EquipoService _equipoService;
+        protected UsuarioService _usuarioService;
 
         public ServiceFacade(CampeonatoService campeonatoService, CarreraService carreraService,
-                             EquipoService equipoService)
+                             EquipoService equipoService, UsuarioService usuarioService)
         {
             this._campeonatoService = campeonatoService;
             this._carreraService = carreraService;
             this._equipoService = equipoService;
+            this._usuarioService = usuarioService;
         }
 
         public ObjectResult CampeonatoValidations(Campeonato campeonato, CampeonatoRepository repo)
@@ -82,6 +84,29 @@ namespace XF1_Backend.Services
                 if (objectResult.StatusCode != 200) return objectResult;
 
                 objectResult = _equipoService.StringValidations(equipo);
+                if (objectResult.StatusCode != 200) return objectResult;
+
+                return StatusCode(200, "Ok");
+
+            }
+            catch
+            {
+                return StatusCode(400, "Bad request");
+            }
+        }
+
+        public ObjectResult UsuarioValidations(Usuario usuario, UsuarioRepository repo)
+        {
+            try
+            {
+                ObjectResult objectResult;
+                objectResult = _usuarioService.NullValidations(usuario);
+                if (objectResult.StatusCode != 200) return objectResult;
+
+                objectResult = _usuarioService.StringValidations(usuario);
+                if (objectResult.StatusCode != 200) return objectResult;
+
+                objectResult = _usuarioService.UniquenessValidations(usuario, repo);
                 if (objectResult.StatusCode != 200) return objectResult;
 
                 return StatusCode(200, "Ok");
