@@ -17,11 +17,14 @@ namespace XF1_Backend.Services
     {
         protected CampeonatoService _campeonatoService;
         protected CarreraService _carreraService;
+        protected EquipoService _equipoService;
 
-        public ServiceFacade(CampeonatoService campeonatoService, CarreraService carreraService)
+        public ServiceFacade(CampeonatoService campeonatoService, CarreraService carreraService,
+                             EquipoService equipoService)
         {
             this._campeonatoService = campeonatoService;
             this._carreraService = carreraService;
+            this._equipoService = equipoService;
         }
 
         public ObjectResult CampeonatoValidations(Campeonato campeonato, CampeonatoRepository repo)
@@ -70,6 +73,25 @@ namespace XF1_Backend.Services
             }
         }
 
+        public ObjectResult EquipoValidations(Equipo equipo)
+        {
+            try
+            {
+                ObjectResult objectResult;
+                objectResult = _equipoService.NullValidations(equipo);
+                if (objectResult.StatusCode != 200) return objectResult;
+
+                objectResult = _equipoService.StringValidations(equipo);
+                if (objectResult.StatusCode != 200) return objectResult;
+
+                return StatusCode(200, "Ok");
+
+            }
+            catch
+            {
+                return StatusCode(400, "Bad request");
+            }
+        }
 
     }
 }

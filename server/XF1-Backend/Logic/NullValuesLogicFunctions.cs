@@ -82,7 +82,8 @@ namespace XF1_Backend.Logic
                equipo.NombrePiloto2 == null ||
                equipo.NombrePiloto3 == null ||
                equipo.NombrePiloto4 == null ||
-               equipo.NombrePiloto5 == null)
+               equipo.NombrePiloto5 == null ||
+               equipo.Costo == 0)
             {
                 return false;
             }
