@@ -39,6 +39,11 @@ namespace XF1_Backend.Repositories
             return await _context.Carrera.FromSqlRaw(CarreraRequests.getCarreras).ToListAsync();
         }
 
+        public async Task<IEnumerable<Carrera>> GetAllCarrerasPorCampeonato(string idCampeonato)
+        {
+            return await _context.Carrera.FromSqlRaw(CarreraRequests.getAllCarrerasPorCampeonato("\'"+idCampeonato+"\'")).ToListAsync();
+        }
+
         public async Task<IEnumerable<Fechas>> GetAllFechas(string idCampeonato)
         {
             return await _context.FechasCarrera.FromSqlInterpolated(CarreraRequests.getFechasPorCampeonato(idCampeonato)).ToListAsync();

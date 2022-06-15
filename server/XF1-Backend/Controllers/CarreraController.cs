@@ -51,6 +51,13 @@ namespace XF1_Backend.Controllers
             return await repo.GetAllCarreras();
         }
 
+        // GET: api/Carrera/{idCampeonato}
+        [HttpGet("{idCampeonato}")]
+        public async Task<IEnumerable<Carrera>> GetAllCarrerasPorCampeontao(string idCampeonato)
+        {
+            return await repo.GetAllCarrerasPorCampeonato(idCampeonato);
+        }
+
         // GET: api/Carrera/Fechas
         [HttpGet("Fechas/{idCampeonato}")]
         public async Task<IEnumerable<Fechas>> GetAllFechas(string idCampeonato)

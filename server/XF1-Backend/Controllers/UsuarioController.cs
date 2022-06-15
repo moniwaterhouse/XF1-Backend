@@ -74,7 +74,7 @@ namespace XF1_Backend.Controllers
             return await repo.GetPerfilUsuario(correo);
         }
 
-        // PUT api/Liga/Abandonar
+        // PUT api/Usuario/Abandonar
         [HttpPut("Abandonar")]
         public async Task<ActionResult<Liga>> AbandonarLiga(Usuario usuario)
         {
