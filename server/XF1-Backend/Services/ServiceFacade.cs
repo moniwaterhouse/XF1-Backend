@@ -19,14 +19,17 @@ namespace XF1_Backend.Services
         protected CarreraService _carreraService;
         protected EquipoService _equipoService;
         protected UsuarioService _usuarioService;
+        protected LigaService _ligaService;
 
         public ServiceFacade(CampeonatoService campeonatoService, CarreraService carreraService,
-                             EquipoService equipoService, UsuarioService usuarioService)
+                             EquipoService equipoService, UsuarioService usuarioService,
+                             LigaService ligaService)
         {
             this._campeonatoService = campeonatoService;
             this._carreraService = carreraService;
             this._equipoService = equipoService;
             this._usuarioService = usuarioService;
+            this._ligaService = ligaService;
         }
 
         public ObjectResult CampeonatoValidations(Campeonato campeonato, CampeonatoRepository repo)
@@ -117,6 +120,47 @@ namespace XF1_Backend.Services
                 return StatusCode(400, "Bad request");
             }
         }
+
+        public ObjectResult CrearLigaValidations(NuevaLiga liga)
+        {
+            try
+            {
+                ObjectResult objectResult;
+                objectResult = _ligaService.NullValidations(liga);
+                if (objectResult.StatusCode != 200) return objectResult;
+
+                objectResult = _ligaService.StringValidations(liga);
+                if (objectResult.StatusCode != 200) return objectResult;
+
+                return StatusCode(200, "Ok");
+            }
+            catch
+            {
+                return StatusCode(400, "Bad request");
+            }
+
+        }
+
+        public ObjectResult ActualizarLigaValidations(ActualizarLiga liga, LigaRepository repo)
+        {
+            try
+            {
+                ObjectResult objectResult;
+                objectResult = _ligaService.IdLigaPrivadaValidation(liga, repo);
+                if (objectResult.StatusCode != 200) return objectResult;
+
+                objectResult = _ligaService.CantidadLigaValidations(liga, repo);
+                if (objectResult.StatusCode != 200) return objectResult;
+
+                return StatusCode(200, "Ok");
+            }
+            catch
+            {
+                return StatusCode(400, "Bad request");
+            }
+        }
+
+
 
     }
 }

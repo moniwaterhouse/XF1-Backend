@@ -31,21 +31,28 @@ namespace XF1_Backend.Controllers
         [HttpPost]
         public async Task<ActionResult<Campeonato>> PostCampeonatos(Campeonato campeonato)
         {
-            // validaciones campeonato
-            ObjectResult actionResult = Startup.facade.CampeonatoValidations(campeonato, repo);
-            if (actionResult.StatusCode != 200) return actionResult;
+            try
+            {
+                // validaciones campeonato
+                ObjectResult actionResult = Startup.facade.CampeonatoValidations(campeonato, repo);
+                if (actionResult.StatusCode != 200) return actionResult;
 
-            // generar llave unica del campeonato
-            IEnumerable<Campeonato> campeonatosAnteriores = repo.GetAllCampeonatos();
-            campeonato.Id = IdLogicFunctions.GenerarLlaveCampeonato(campeonatosAnteriores);
-          
-            // añadir campeonato
-            await repo.Complete(campeonato);
+                // generar llave unica del campeonato
+                IEnumerable<Campeonato> campeonatosAnteriores = repo.GetAllCampeonatos();
+                campeonato.Id = IdLogicFunctions.GenerarLlaveCampeonato(campeonatosAnteriores);
 
-            // crear liga publica y añadir los jugadoers ahí
-            await repo.PostLigaPublica(campeonato);
+                // añadir campeonato
+                await repo.Complete(campeonato);
 
-            return Ok();
+                // crear liga publica y añadir los jugadoers ahí
+                await repo.PostLigaPublica(campeonato);
+
+                return Ok();
+            }
+            catch
+            {
+                return StatusCode(400, "Bad request");
+            }
 
         }
 
