@@ -29,7 +29,7 @@ namespace XF1_Backend.Requests
         public string Estado { get; set; }
 
         // obtener las carreras que corresponden a un campeonato en esepecífico
-        public static System.FormattableString getCarreraPorCampeonato(string id) { return $@"SELECT Id AS IdNum FROM CARRERA WHERE IdCampeonato = {id}"; }
+        public static System.FormattableString getCarreraPorCampeonato(string id) { return $@"SELECT Id AS IdNum FROM CARRERA"; }
 
         // obtener las fechas de carreras que corresponden a un campeonato en específico
         public static System.FormattableString getFechasPorCampeonato(string id) { return $@"SELECT FechaInicio, FechaFin FROM CARRERA WHERE IdCampeonato = {id} ORDER BY FechaInicio DESC"; }

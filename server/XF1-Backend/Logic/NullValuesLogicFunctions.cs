@@ -41,8 +41,7 @@ namespace XF1_Backend.Logic
                carrera.FechaInicio == DateTime.MinValue ||
                carrera.HoraInicio == null ||
                carrera.FechaFin == DateTime.MinValue ||
-               carrera.HoraFin == null ||
-               carrera.Estado == null)
+               carrera.HoraFin == null)
             {
                 return false;
             }

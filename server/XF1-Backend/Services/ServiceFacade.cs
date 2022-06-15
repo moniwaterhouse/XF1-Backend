@@ -16,10 +16,12 @@ namespace XF1_Backend.Services
     public class ServiceFacade : ControllerBase
     {
         protected CampeonatoService _campeonatoService;
+        protected CarreraService _carreraService;
 
-        public ServiceFacade(CampeonatoService campeonatoService)
+        public ServiceFacade(CampeonatoService campeonatoService, CarreraService carreraService)
         {
             this._campeonatoService = campeonatoService;
+            this._carreraService = carreraService;
         }
 
         public ObjectResult CampeonatoValidations(Campeonato campeonato, CampeonatoRepository repo)
@@ -43,6 +45,29 @@ namespace XF1_Backend.Services
                 return StatusCode(400, "Bad request");
             }
 
+        }
+
+        public ObjectResult CarreraValidations(Carrera carrera, CarreraRepository repo)
+        {
+            try
+            {
+                ObjectResult objectResult;
+                objectResult = _carreraService.NullValidations(carrera);
+                if (objectResult.StatusCode != 200) return objectResult;
+
+                objectResult = _carreraService.StringValidations(carrera);
+                if (objectResult.StatusCode != 200) return objectResult;
+
+                objectResult = _carreraService.FechasValidations(carrera, repo);
+                if (objectResult.StatusCode != 200) return objectResult;
+
+                return StatusCode(200, "Ok");
+
+            }
+            catch
+            {
+                return StatusCode(400, "Bad request");
+            }
         }
 
 

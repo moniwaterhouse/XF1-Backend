@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using XF1_Backend.Models;
 using XF1_Backend.Logic;
 using XF1_Backend.Requests;
+using XF1_Backend.Repositories;
 
 namespace XF1_Backend.Controllers
 {
@@ -14,11 +15,11 @@ namespace XF1_Backend.Controllers
     [ApiController]
     public class CarreraController : ControllerBase
     {
-        private readonly CarreraDbContext _context;
+        private readonly CarreraRepository repo;
 
         public CarreraController(CarreraDbContext context)
         {
-            _context = context;
+            repo = new CarreraRepository(context);
         }
 
         // POST:
@@ -26,39 +27,19 @@ namespace XF1_Backend.Controllers
         public async Task<ActionResult<Carrera>> PostCarrera(Carrera carrera)
         {
 
-            bool permitido;
-
-            // revisión de valores nulos         
-            permitido = NullValuesLogicFunctions.ValoresNulosCarrera(carrera);
-            if (permitido == false) return Conflict("Se requieren todos los datos de la carrera");
-
-            // revisión de la longitud del nombre de la carrera
-            permitido = StringLogicFunctions.LongitudNombre(carrera.Nombre);
-            if (permitido == false) return Conflict("El nombre de la carrera debe ser de 5 a 30 caracteres");
-
-            // revisión de la longitud del nombre de la pista
-            permitido = StringLogicFunctions.LongitudNombre(carrera.NombrePista);
-            if (permitido == false) return Conflict("El nombre de la pista debe ser de 5 a 30 caracteres");
+            // validaciones carrera
+            ObjectResult objectResult = Startup.facade.CarreraValidations(carrera, repo);
+            if (objectResult.StatusCode != 200) return objectResult;
 
             // crear llave
-            IEnumerable<Id> carreraIds = await _context.Ids.FromSqlInterpolated(CarreraRequests.getCarreraPorCampeonato(carrera.IdCampeonato)).ToListAsync();
+            IEnumerable<Id> carreraIds = repo.GetCarrerasPorCampeontao(carrera);
             carrera.Id = IdLogicFunctions.GenerarId(carreraIds);
-
-            // revisión de traslape de fechas
-            IEnumerable<Fechas> fechas = await _context.FechasCarrera.FromSqlInterpolated(CarreraRequests.getFechasPorCampeonato(carrera.IdCampeonato)).ToListAsync();
-            permitido = DateLogicFunctions.RevisarTraslapeFechas(carrera.FechaInicio, carrera.FechaFin, fechas);
-            if (permitido == false) return Conflict("Existe un conflicto de fechas con otra carrera");
-           
-            // revisión de fechas anteriores a la actual
-            permitido = DateLogicFunctions.RevisarFechasAnteriores(carrera.FechaInicio, carrera.FechaFin);
-            if (permitido == false) return Conflict("No se puede crear una carrera con una fecha menor a la actual");
 
             // definir estado por defecto
             carrera.Estado = "Pendiente";
 
             // añadir la carrera
-            _context.Carrera.Add(carrera);
-            await _context.SaveChangesAsync();
+            await repo.Complete(carrera);
 
             return Ok();
         }
@@ -67,21 +48,21 @@ namespace XF1_Backend.Controllers
         [HttpGet]
         public async Task<IEnumerable<Carrera>> GetAllCarreras()
         {
-            return await _context.Carrera.FromSqlRaw(CarreraRequests.getCarreras).ToListAsync();
+            return await repo.GetAllCarreras();
         }
 
         // GET: api/Carrera/Fechas
         [HttpGet("Fechas/{idCampeonato}")]
         public async Task<IEnumerable<Fechas>> GetAllFechas(string idCampeonato)
         {
-            return await _context.FechasCarrera.FromSqlInterpolated(CarreraRequests.getFechasPorCampeonato(idCampeonato)).ToListAsync();
+            return await repo.GetAllFechas(idCampeonato);
         }
 
         // GET: api/Carrera/NombreCampeonato
         [HttpGet("NombreCampeonato")]
         public async Task<IEnumerable<CarreraNombre>> GetNombreCampeonato()
         {
-            return await _context.Nombre.FromSqlRaw(CarreraRequests.getCarrerasNombreCampeonato).ToListAsync();
+            return await repo.GetNombreCampeonato();
         }
 
     }

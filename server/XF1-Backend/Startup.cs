@@ -20,8 +20,9 @@ namespace XF1_Backend
     public class Startup
     {
         public static CampeonatoService campeonatoService = new CampeonatoService();
+        public static CarreraService carreraService = new CarreraService();
 
-        public static ServiceFacade facade = new ServiceFacade(campeonatoService);
+        public static ServiceFacade facade = new ServiceFacade(campeonatoService, carreraService);
 
         public Startup(IConfiguration configuration)
         {
