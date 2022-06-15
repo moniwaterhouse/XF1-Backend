@@ -40,6 +40,12 @@ namespace XF1_Backend.Repositories
             await _context.SaveChangesAsync();
         }
 
+        public async Task AbandonarLiga(Usuario usuario)
+        {
+            await _context.Database.ExecuteSqlInterpolatedAsync(UsuarioRequests.eliminarUsuarioLiga(usuario.Correo));
+            await _context.SaveChangesAsync();
+        }
+
         public async Task<IEnumerable<CorreoUsuario>> GetCorreoUsuarios()
         {
             return await _context.Correo.FromSqlRaw(UsuarioRequests.getCorreos).ToListAsync();

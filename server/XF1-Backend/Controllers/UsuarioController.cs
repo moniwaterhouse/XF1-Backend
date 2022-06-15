@@ -73,6 +73,29 @@ namespace XF1_Backend.Controllers
         {
             return await repo.GetPerfilUsuario(correo);
         }
+
+        // PUT api/Liga/Abandonar
+        [HttpPut("Abandonar")]
+        public async Task<ActionResult<Liga>> AbandonarLiga(Usuario usuario)
+        {
+            try
+            {
+                // validaciones abandonar liga
+                ObjectResult objectResult = Startup.facade.AbandonarLigaValidations(usuario, repo);
+                if (objectResult.StatusCode != 200) return objectResult;
+
+                // añadir el usuario a la liga privada
+                await repo.AbandonarLiga(usuario);
+
+                return Ok();
+
+            }
+            catch
+            {
+                return StatusCode(400, "Bad request abandonar liga privada");
+            }
+        }
     }
+
 
 }

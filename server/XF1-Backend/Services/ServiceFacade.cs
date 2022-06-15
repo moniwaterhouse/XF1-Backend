@@ -179,5 +179,20 @@ namespace XF1_Backend.Services
             }
         }
 
+        public ObjectResult AbandonarLigaValidations(Usuario usuario, UsuarioRepository repo)
+        {
+            try
+            {
+                ObjectResult objectResult;
+                objectResult = _usuarioService.EmailExistanceVerification(usuario, repo);
+                if (objectResult.StatusCode != 200) return objectResult;
+
+                return StatusCode(200, "Ok");
+            }
+            catch
+            {
+                return StatusCode(400, "Bad request inside");
+            }
+        }
     }
 }

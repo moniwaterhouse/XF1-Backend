@@ -372,8 +372,42 @@ BEGIN
 END
 GO
 
--- nombre: fc_validar_fechas_campeonato
--- descripcion: este sp valida que las fechas 
+-- nombre: sp_abandonar_liga_privada
+-- descripcion: este procedure elimina al usuario indicado de la liga
+-- privada.
+DROP PROCEDURE IF EXISTS sp_abandonar_liga_privada;
+GO
+CREATE PROCEDURE sp_abandonar_liga_privada(
+	@Correo			VARCHAR(100)
+)
+AS
+BEGIN
+
+	DECLARE @IdLigaPrivada VARCHAR(30);
+
+	SELECT @IdLigaPrivada = IdLigaPrivada
+	FROM USUARIO
+	WHERE Correo = @Correo;
+
+	DELETE FROM USUARIOXLIGA
+	WHERE CorreoUsuario = @Correo  AND IdLiga = @IdLigaPrivada;
+
+	UPDATE USUARIO
+	SET IdLigaPrivada = Null
+	WHERE Correo = @Correo;
+
+	DECLARE @cantidad INT;
+
+	SELECT @cantidad = COUNT(CorreoUsuario)
+	FROM USUARIOXLIGA
+	WHERE IdLiga = @IdLigaPrivada;
+
+	IF @cantidad < 5
+		UPDATE LIGA
+		SET Activa = 0
+		WHERE IdLiga = @IdLigaPrivada; 
+END
+GO
 
 -- POPULACION DE LAS TABLAS
 
