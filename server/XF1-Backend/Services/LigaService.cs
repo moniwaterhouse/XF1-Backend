@@ -31,11 +31,11 @@ namespace XF1_Backend.Services
 
         public ObjectResult IdLigaPrivadaValidation(ActualizarLiga actualizarLiga, LigaRepository repo)
         {
-            IEnumerable<IdPrivadas> idPrivadas = repo.GetIdPrivadas();
+            List<IdPrivadas> idPrivadas = repo.GetIdPrivadas();
             bool permitido = IdLogicFunctions.RevisarIdLigaPrivada(actualizarLiga, idPrivadas);
             if (permitido == false) return StatusCode(409, "La llave insertada no pertenece a ninguna liga privada");
 
-            return StatusCode(400, "Bad request");
+            return StatusCode(200, "ok");
         }
 
         public ObjectResult CantidadLigaValidations(ActualizarLiga actualizarLiga, LigaRepository repo)
@@ -44,7 +44,7 @@ namespace XF1_Backend.Services
             bool permitido = IntLogicFunctions.CantidadJugadoresLigaPrivada(cantidadJugador);
             if (permitido == false) return StatusCode(409, "La liga privada ya no tiene espacio disponible");
 
-            return StatusCode(400, "Bad request");
+            return StatusCode(200, "ok");
         }
 
     }

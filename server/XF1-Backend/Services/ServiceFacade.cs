@@ -156,7 +156,7 @@ namespace XF1_Backend.Services
             }
             catch
             {
-                return StatusCode(400, "Bad request");
+                return StatusCode(400, "Bad request inside");
             }
         }
 

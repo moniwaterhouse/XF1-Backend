@@ -55,7 +55,7 @@ namespace XF1_Backend.Repositories
 
         public CantidadJugador GeCantidadLigaPrivada(string idLiga)
         {
-            return _context.CantidadJugadores.FromSqlRaw(LigaRequests.GeCantidadLigaPrivada(idLiga)).FirstOrDefault();
+            return _context.CantidadJugadores.FromSqlRaw(LigaRequests.GeCantidadLigaPrivada("\'" + idLiga + "\'")).FirstOrDefault();
         }
 
         public CampeonatoActual GetLlaveCampeonatoActual()

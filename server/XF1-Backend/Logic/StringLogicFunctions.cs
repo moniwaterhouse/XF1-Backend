@@ -212,7 +212,7 @@ namespace XF1_Backend.Logic
 
                 }
 
-                if (letras == true && numeros == true)
+                if (letras == true || numeros == true)
                 {
                     return true;
                 }
