@@ -28,16 +28,16 @@ namespace XF1_Backend.Repositories
             return _context.Fechas.FromSqlRaw(CampeonatoRequests.getFechasCampeonatos).ToList();
         }
 
-        public async void Complete(Campeonato campeonato)
+        public async Task Complete(Campeonato campeonato)
         {
-            _context.Campeonato.Add(campeonato);
+            _context.Campeonato.AddAsync(campeonato);
             await _context.SaveChangesAsync();
         }
 
-        public void PostLigaPublica(Campeonato campeonato)
+        public async Task PostLigaPublica(Campeonato campeonato)
         {
-            _context.Database.ExecuteSqlInterpolatedAsync(CampeonatoRequests.crearLiga(campeonato.Id, 0));
-            _context.SaveChangesAsync();
+            await _context.Database.ExecuteSqlInterpolatedAsync(CampeonatoRequests.crearLiga(campeonato.Id, 0));
+            await _context.SaveChangesAsync();
         }
 
         public async Task<IEnumerable<Fechas>> GetFechas()

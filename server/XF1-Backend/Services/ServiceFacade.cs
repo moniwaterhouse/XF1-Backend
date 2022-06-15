@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using XF1_Backend.Logic;
 using XF1_Backend.Models;
+using XF1_Backend.Repositories;
 
 namespace XF1_Backend.Services
 {
@@ -21,13 +22,27 @@ namespace XF1_Backend.Services
             this._campeonatoService = campeonatoService;
         }
 
-        public ActionResult CampeonatoValidations(Campeonato campeonato)
+        public ObjectResult CampeonatoValidations(Campeonato campeonato, CampeonatoRepository repo)
         {
-            ActionResult actionResult;
-            actionResult = _campeonatoService.CampeonatoValidations(campeonato);
-            if (actionResult != Ok()) return actionResult;
+            try
+            {
+                ObjectResult objectResult;
+                objectResult = _campeonatoService.NullValidations(campeonato);
+                if (objectResult.StatusCode != 200) return objectResult;
 
-            else return Ok();
+                objectResult = _campeonatoService.StringValidations(campeonato);
+                if (objectResult.StatusCode != 200) return objectResult;
+
+                objectResult = _campeonatoService.FehcasValidations(campeonato, repo);
+                if (objectResult.StatusCode != 200) return objectResult;
+                
+                return StatusCode(200, "Ok");
+            }
+            catch
+            {
+                return StatusCode(400, "Bad request");
+            }
+
         }
 
 

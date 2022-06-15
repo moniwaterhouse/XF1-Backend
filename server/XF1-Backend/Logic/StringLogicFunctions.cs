@@ -41,7 +41,7 @@ namespace XF1_Backend.Logic
          */
         public static bool LongitudNombre(string nombre)
         {
-            if(nombre.Length >= 1 && nombre.Length <= 30)
+            if(nombre.Length >= 5 && nombre.Length <= 30)
             {
                 return true;
             }
