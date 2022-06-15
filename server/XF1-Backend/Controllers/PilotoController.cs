@@ -7,6 +7,7 @@ using XF1_Backend.Models;
 using XF1_Backend.Logic;
 using XF1_Backend.Requests;
 using Microsoft.AspNetCore.Mvc;
+using XF1_Backend.Repositories;
 
 
 namespace XF1_Backend.Controllers
@@ -15,18 +16,18 @@ namespace XF1_Backend.Controllers
     [ApiController]
     public class PilotoController : ControllerBase
     {
-        private readonly PilotoDbContext _context;
+        private readonly PilotoRepository repo;
 
         public PilotoController(PilotoDbContext context)
         {
-            _context = context;
+            repo = new PilotoRepository(context);
         }
 
         // GET api/Piloto
         [HttpGet]
         public async Task<IEnumerable<Piloto>> GetPilotos()
         {
-            return await _context.Pilotos.FromSqlRaw(PilotoRequests.GetPilotos).ToListAsync();
+            return await repo.GetPilotos();
         }
     }
 }

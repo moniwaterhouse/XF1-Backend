@@ -34,15 +34,6 @@ namespace XF1_Backend.Controllers
 
                 ObjectResult objectResult = Startup.facade.EquipoValidations(equipo);
                 if (objectResult.StatusCode != 200) return objectResult;
-                /*
-                // revisión de valores nulos         
-                permitido = NullValuesLogicFunctions.ValoresNulosEquipo(equipo);
-                if (permitido == false) return Conflict("Se requieren todos los datos del equipo");
-
-                // revisión de la longitud del nombre de la escudería
-                permitido = StringLogicFunctions.LongitudMarcaEscuderia(equipo.MarcaEscuderia);
-                if (permitido == false) return Conflict("El nombre de la escudería debe ser de máximo 30 caracteres alfanuméricos");
-                */
 
                 await repo.Complete(equipo);
 

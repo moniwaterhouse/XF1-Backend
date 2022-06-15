@@ -7,6 +7,7 @@ using XF1_Backend.Models;
 using XF1_Backend.Logic;
 using XF1_Backend.Requests;
 using Microsoft.AspNetCore.Mvc;
+using XF1_Backend.Repositories;
 
 namespace XF1_Backend.Controllers
 {
@@ -14,18 +15,18 @@ namespace XF1_Backend.Controllers
     [ApiController]
     public class EscuderiaController : ControllerBase
     {
-        private readonly EscuderiaDbContext _context;
+        private readonly EscuderiaRepository repo;
 
         public EscuderiaController(EscuderiaDbContext context)
         {
-            _context = context;
+            repo = new EscuderiaRepository(context);
         }
 
         // GET api/Escuderia
         [HttpGet]
         public async Task<IEnumerable<Escuderia>> GetEscuderias()
         {
-            return await _context.Escuderia.FromSqlRaw(EscuderiaRequests.GetEscuderias).ToListAsync();
+            return await repo.GetEscuderias();
         }
 
     }
