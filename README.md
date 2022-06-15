@@ -414,7 +414,27 @@ En el Json pide todos los detalles de un usuario, pero basta con indicar solo es
 }
 ```
 
-Observaciones: Com
+Observaciones: -
+
+
+### USU-6
+
+Tipo: PUT
+
+Descipcion: Este request permite que un jugador abandone la liga privada en la que se encuentra
+
+Si la respuesta del request es 200 (OK) entonces sí se realizó la actualización correctamente, si el correo no existe entonces se le indicará por medio de un 409 (conflict)
+
+Url: `/api/Usuario/Abandonar`
+
+En el Json pide todos los detalles de un usuario, pero basta con indicar solo el correo:
+```Json
+{
+  "correo": "juan@gmail.com"
+}
+```
+
+Observaciones: -
 
 ## Requests PILOTOS (PIL)
 
