@@ -13,6 +13,9 @@ namespace XF1_Backend.Requests
         // Obtener todos los correos
         public static string getCorreos = "SELECT Correo FROM USUARIO";
 
+        // Obtener usuario por correo
+        public static string getUsuarioPorCorreo(string correo) { return $@"SELECT * FROM USUARIO WHERE Correo = {correo}";  }
+
         // Obtener todos los nombres de escuderias
         public static string getEscuderias = "SELECT NombreEscuderia FROM USUARIO";
 

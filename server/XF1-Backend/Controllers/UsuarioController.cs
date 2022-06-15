@@ -42,6 +42,17 @@ namespace XF1_Backend.Controllers
             return Ok();
         }
 
+        // GET api/Usuario/login
+        [HttpPost("Login")]
+        public async Task<ActionResult<Usuario>> LoginUsuario(Usuario usuario)
+        {
+            // validaciones login
+            ObjectResult objectResult = Startup.facade.LoginValidations(usuario, repo);
+            if (objectResult.StatusCode != 200) return objectResult;
+
+            return Ok();
+        }
+
         // GET api/Usuario/Correos
         [HttpGet("Correos")]
         public async Task<IEnumerable<CorreoUsuario>> GetCorreoUsuarios()

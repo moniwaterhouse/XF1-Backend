@@ -23,6 +23,11 @@ namespace XF1_Backend.Repositories
             return _context.Correo.FromSqlRaw(UsuarioRequests.getCorreos).ToList();
         }
 
+        public Usuario GetUsuarioPorCorreo(string correo)
+        {
+            return _context.Usuario.FromSqlRaw(UsuarioRequests.getUsuarioPorCorreo(correo)).FirstOrDefault();
+        }
+
         public async Task Complete(Usuario usuario)
         {
             _context.Usuario.Add(usuario);

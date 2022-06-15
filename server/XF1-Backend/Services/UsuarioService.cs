@@ -40,5 +40,29 @@ namespace XF1_Backend.Services
 
             return StatusCode(200, "ok");
         }
+
+        public ObjectResult EmailExistanceVerification(Usuario usuario, UsuarioRepository repo)
+        {
+            // revisión de la repetición del correo
+            IEnumerable<CorreoUsuario> correos = repo.GetCorreos();
+            bool permitido = StringLogicFunctions.RevisarCorreo(usuario.Correo, correos);
+            if (permitido == true) return StatusCode(409, "El correo indicado no existe");
+
+            return StatusCode(200, "ok");
+        }
+
+        public ObjectResult ReviewPasswordVerification(Usuario usuario, UsuarioRepository repo)
+        {
+            // revision de que la contrasena sea la correcta
+            string contraEncriptada = StringLogicFunctions.EncriptarContrasena(usuario.Contrasena);
+            Usuario usuarioRevision = repo.GetUsuarioPorCorreo("\'"+usuario.Correo+"\'");
+
+            if (contraEncriptada != usuarioRevision.Contrasena)
+            {
+                return StatusCode(401, "Unauthorized");
+            }
+
+            return StatusCode(200, "ok");
+        }
     }
 }
