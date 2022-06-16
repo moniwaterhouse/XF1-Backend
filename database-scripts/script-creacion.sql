@@ -409,6 +409,23 @@ BEGIN
 END
 GO
 
+-- nombre: sp_actualizar_precio_piloto
+-- descripcion: este sp actualiza el precio de un piloto
+DROP PROCEDURE IF EXISTS sp_actualizar_precio_piloto;
+GO
+CREATE PROCEDURE sp_actualizar_precio_piloto(
+	@NombrePiloto		VARCHAR(100),
+	@Precio				INT
+)
+AS
+BEGIN
+	UPDATE Precio FROM PILOTO
+	SET Precio = @Precio
+	WHERE Nombre = @NombrePiloto;
+	
+END
+GO
+
 -- POPULACION DE LAS TABLAS
 
 INSERT INTO CAMPEONATO	(Id, Nombre, Presupuesto, FechaInicio, HoraInicio, FechaFin, HoraFin, ReglasPuntuacion)
