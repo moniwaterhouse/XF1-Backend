@@ -931,4 +931,4 @@ Json: Un ejemplo del Json a añadir es el siguiente (esta es una versión simpli
 
 ```
 
-Observaciones: Note que debe asegurarse que los nombres de las columnas del Json sean las mismas a las indicadas aquí, también es importante asegurarse que el tipo de dato sea el correcto, todos los datos son de tipo string a excepción del precio, posicionCalificacion y posicionCarrera.
+Observaciones: Note que debe asegurarse que los nombres de las columnas del Json sean las mismas a las indicadas aquí, también es importante asegurarse que el tipo de dato sea el correcto, todos los datos son de tipo string a excepción del precio, posicionCalificacion y posicionCarrera. Este request también edita los estados de las carreras de forma que ya no se puede subir otro archivo para actualizar.
