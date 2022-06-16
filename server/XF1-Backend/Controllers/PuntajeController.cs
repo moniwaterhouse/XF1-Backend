@@ -29,40 +29,10 @@ namespace XF1_Backend.Controllers
         [HttpPost]
         public async Task<ActionResult<Puntaje>> PostPuntajes(IEnumerable<Puntaje> puntajes)
         {
-            foreach (var puntaje in puntajes)
-            {
-                if(puntaje.Tipo == "Piloto")
-                {
-                    await repo.UpdatePrecioPiloto(puntaje.Nombre, puntaje.Precio);
-
-                    // definir puntaje a piloto
-                    int puntos = (17 - puntaje.PosicionCarrera) + (17 - puntaje.PosicionCalificacion);
-                    puntaje.nuevosPuntos = puntos;
-
-                    // deifinir puntaje a escuderia
-                    foreach (var puntaje_ in puntajes)
-                    {
-                        if(puntaje_.Tipo == "Constructor")
-                        {
-                            if (puntaje_.Constructor == puntaje.Constructor)
-                            {
-                                puntaje_.nuevosPuntos += puntos;
-                            }
-                        }
-                    }
-                }
-                
-                if(puntaje.Tipo == "Constructor")
-                {
-                    await repo.UpdatePrecioEscuderia(puntaje.Nombre, puntaje.Precio);
-                }
-
-            }
-
-            foreach (var puntaje in puntajes)
-            {
-                await repo.UpdatePuntajes(puntaje.nuevosPuntos, puntaje.Nombre, puntaje.Tipo);
-            }
+            // metodo encargado de la actualizacion
+            ObjectResult objectResult;
+            objectResult = await Startup.facade.ActualizarPuntajesPrecios(puntajes, repo);
+            if (objectResult.StatusCode != 200) return objectResult;
 
             return Ok();
         }

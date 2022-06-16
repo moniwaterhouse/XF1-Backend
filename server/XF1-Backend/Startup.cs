@@ -24,9 +24,11 @@ namespace XF1_Backend
         public static EquipoService equipoService = new EquipoService();
         public static UsuarioService usuarioService = new UsuarioService();
         public static LigaService ligaService = new LigaService();
+        public static PuntajeService puntajeService = new PuntajeService();
 
         public static ServiceFacade facade = new ServiceFacade(campeonatoService, carreraService,
-                                                                equipoService, usuarioService, ligaService);
+                                                                equipoService, usuarioService, ligaService,
+                                                                puntajeService);
 
         public Startup(IConfiguration configuration)
         {

@@ -20,16 +20,18 @@ namespace XF1_Backend.Services
         protected EquipoService _equipoService;
         protected UsuarioService _usuarioService;
         protected LigaService _ligaService;
+        protected PuntajeService _puntajeService;
 
         public ServiceFacade(CampeonatoService campeonatoService, CarreraService carreraService,
                              EquipoService equipoService, UsuarioService usuarioService,
-                             LigaService ligaService)
+                             LigaService ligaService, PuntajeService puntajeService)
         {
             this._campeonatoService = campeonatoService;
             this._carreraService = carreraService;
             this._equipoService = equipoService;
             this._usuarioService = usuarioService;
             this._ligaService = ligaService;
+            this._puntajeService = puntajeService;
         }
 
         public ObjectResult CampeonatoValidations(Campeonato campeonato, CampeonatoRepository repo)
@@ -193,6 +195,18 @@ namespace XF1_Backend.Services
             {
                 return StatusCode(400, "Bad request inside");
             }
+        }
+
+        public async Task<ObjectResult> ActualizarPuntajesPrecios(IEnumerable<Puntaje> puntajes, PuntajeRepository repo)
+        {
+            ObjectResult objectResult;
+            objectResult = await _puntajeService.UpdatePrecios(puntajes, repo);
+            if (objectResult.StatusCode != 200) return objectResult;
+
+            objectResult = await _puntajeService.UpdatePuntajes(puntajes, repo);
+            if (objectResult.StatusCode != 200) return objectResult;
+
+            return StatusCode(200, "Ok");
         }
     }
 }
