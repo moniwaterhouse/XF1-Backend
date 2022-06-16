@@ -9,5 +9,11 @@ namespace XF1_Backend.Requests
     {
         // actualizar precio de piloto
         public static System.FormattableString UpdatePrecioPiloto(string piloto, int precio) { return $@"EXECUTE sp_actualizar_precio_piloto {piloto}, {precio}"; }
+
+        // actualizar precio de escuderia
+        public static System.FormattableString UpdatePrecioEscuderia(string piloto, int precio) { return $@"EXECUTE sp_actualizar_precio_escuderia {piloto}, {precio}"; }
+
+        // actualizar puntos
+        public static System.FormattableString UpdatePuntajes(int nuevosPuntos, string nombre, string tipo) { return $@"EXECUTE sp_actualizar_puntajes {nuevosPuntos}, {nombre}, {tipo}"; }
     }
 }

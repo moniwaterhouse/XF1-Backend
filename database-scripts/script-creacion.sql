@@ -419,10 +419,84 @@ CREATE PROCEDURE sp_actualizar_precio_piloto(
 )
 AS
 BEGIN
-	UPDATE Precio FROM PILOTO
+	UPDATE PILOTO
 	SET Precio = @Precio
 	WHERE Nombre = @NombrePiloto;
 	
+END
+GO
+
+-- nombre: sp_actualizar_precio_escuderia
+-- descripcion: este sp actualiza el precio de un piloto
+DROP PROCEDURE IF EXISTS sp_actualizar_precio_escuderia;
+GO
+CREATE PROCEDURE sp_actualizar_precio_escuderia(
+	@NombreEscuderia	VARCHAR(100),
+	@Precio				INT
+)
+AS
+BEGIN
+	UPDATE ESCUDERIA
+	SET Precio = @Precio
+	WHERE Marca = @NombreEscuderia;
+	
+END
+GO
+
+-- nombre: sp_actualizar_puntajes
+-- descipcion: este sp actualiza los puntajes de todos los equipos
+DROP PROCEDURE IF EXISTS sp_actualizar_puntajes
+GO
+CREATE PROCEDURE sp_actualizar_puntajes(
+	@nuevosPuntos		INT,
+	@nombre				VARCHAR(100),
+	@tipo				VARCHAR(100)
+)
+AS
+BEGIN
+	IF @tipo = 'Piloto'
+		-- esto para actualizar el puntaje publico de un equipo
+		-- se da el nombre del piloto y los nuevos puntos
+		UPDATE EQUIPO
+		SET PuntajePublica += @nuevosPuntos
+		FROM EQUIPO AS EQU JOIN PILOTO AS PIL ON	EQU.NombrePiloto1 = PIL.Nombre OR
+													EQU.NombrePiloto2 = PIL.Nombre OR
+													EQU.NombrePiloto3 = PIL.Nombre OR
+													EQU.NombrePiloto4 = PIL.Nombre OR
+													EQU.NombrePiloto5 = PIL.Nombre
+		WHERE PIL.Nombre = @nombre
+
+		-- esto para actualizar el puntaje publico de un equipo
+		-- se da el nombre del piloto y los nuevos puntos
+		UPDATE EQUIPO
+		SET PuntajePrivada += @nuevosPuntos
+		FROM ((EQUIPO AS EQU JOIN PILOTO AS PIL ON	EQU.NombrePiloto1 = PIL.Nombre OR
+													EQU.NombrePiloto2 = PIL.Nombre OR
+													EQU.NombrePiloto3 = PIL.Nombre OR
+													EQU.NombrePiloto4 = PIL.Nombre OR
+													EQU.NombrePiloto5 = PIL.Nombre)
+			 JOIN USUARIO AS USU ON EQU.Id = USU.IdEquipo1 OR
+									EQU.Id = USU.IdEquipo2)
+			 JOIN LIGA AS LIG ON USU.IdLigaPrivada = LIG.IdLiga
+		WHERE PIL.Nombre = @nombre AND LIG.Activa = 1
+
+	IF @tipo = 'Constructor'
+		-- esto para actualizar el puntaje publico de un equipo
+		-- se da el nombre del piloto y los nuevos puntos
+		UPDATE EQUIPO
+		SET PuntajePublica += @nuevosPuntos
+		FROM EQUIPO AS EQU JOIN ESCUDERIA AS ESC ON	EQU.MarcaEscuderia = ESC.Marca
+		WHERE ESC.Marca = @nombre
+
+		-- esto para actualizar el puntaje publico de un equipo
+		-- se da el nombre del piloto y los nuevos puntos
+		UPDATE EQUIPO
+		SET PuntajePrivada += @nuevosPuntos
+		FROM ((EQUIPO AS EQU JOIN ESCUDERIA AS ESC ON	EQU.MarcaEscuderia = ESC.Marca)
+			 JOIN USUARIO AS USU ON EQU.Id = USU.IdEquipo1 OR
+									EQU.Id = USU.IdEquipo2)
+			 JOIN LIGA AS LIG ON USU.IdLigaPrivada = LIG.IdLiga
+		WHERE ESC.Marca = @nombre AND LIG.Activa = 1
 END
 GO
 

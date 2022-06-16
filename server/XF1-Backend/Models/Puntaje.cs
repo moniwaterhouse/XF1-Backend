@@ -23,7 +23,7 @@ namespace XF1_Backend.Models
         public string GanoACompaneroDeEquipo { get; set; }
         public string SinCalificarCarrera { get; set; }
         public string DescalificadoDeCarrera { get; set; }
-
+        public int nuevosPuntos { get; set; }
 
     }
 }

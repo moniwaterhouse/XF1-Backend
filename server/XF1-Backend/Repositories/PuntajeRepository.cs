@@ -23,5 +23,17 @@ namespace XF1_Backend.Repositories
         {
             await _context.Database.ExecuteSqlInterpolatedAsync(PuntajeRequests.UpdatePrecioPiloto(piloto,precio));
         }
+
+        // actualizar precio escuderia
+        public async Task UpdatePrecioEscuderia(string escuderia, int precio)
+        {
+            await _context.Database.ExecuteSqlInterpolatedAsync(PuntajeRequests.UpdatePrecioEscuderia(escuderia, precio));
+        }
+
+        // actualizar los puntos
+        public async Task UpdatePuntajes(int nuevosPuntos, string nombre, string tipo)
+        {
+            await _context.Database.ExecuteSqlInterpolatedAsync(PuntajeRequests.UpdatePuntajes(nuevosPuntos, nombre, tipo));
+        }
     }
 }
