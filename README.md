@@ -787,3 +787,95 @@ Json: El Json que se debe adjuntar necesita el siguiente formato
 ```
 
 Observaciones: -
+
+## Requests PUNTAJES (PUN)
+
+### PUN-1
+
+Tipo: POST
+
+Descripción: Este request permite enviar un los datos de los nuevos puntejes y precios en el formato Json definido abajo y actualiza los valores de los precios de las escuderías y pilotos. Además también se actualizan los puntajes de los jugadores en la liga publica y en la liga privada si esta liga está activa.
+
+Url: `/api/Puntaje`
+
+Json: Un ejemplo del Json a añadir es el siguiente (esta es una versión simplificada porque al considerarse todos los pilotos y los equipos entonces es muy largo.
+
+```Json
+[
+    {
+        "codigoXFIA": "XFIA-P-1099",
+        "constructor": "XFIA-C-0022",
+        "nombre": "Max Verstappen",
+        "tipo": "Piloto",
+        "precio": 30,
+        "posicionCalificacion": 1,
+        "q1": "Y",
+        "q2": "Y",
+        "q3": "Y",
+        "sinCalificarCalificacion": "N",
+        "descalificadoCalificacion": "N",
+        "posicionCarrera": 2,
+        "vueltaMasRapida": "N",
+        "ganoACompaneroDeEquipo": "Y",
+        "sinCalificarCarrera": "N",
+        "descalificadoDeCarrera": "N"
+    },
+    {
+        "codigoXFIA": "XFIA-P-1002",
+        "constructor": "XFIA-C-0004",
+        "nombre": "Charles Leclerc",
+        "tipo": "Piloto",
+        "precio": 22,
+        "posicionCalificacion": 2,
+        "q1": "Y",
+        "q2": "Y",
+        "q3": "Y",
+        "sinCalificarCalificacion": "N",
+        "descalificadoCalificacion": "N",
+        "posicionCarrera": 3,
+        "vueltaMasRapida": "N",
+        "ganoACompaneroDeEquipo": "Y",
+        "sinCalificarCarrera": "N",
+        "descalificadoDeCarrera": "N"
+    },
+    {
+        "codigoXFIA": "XFIA-C-0022",
+        "constructor": "XFIA-C-0022",
+        "nombre": "RED BULL",
+        "tipo": "Constructor",
+        "precio": 31,
+        "posicionCalificacion": 0,
+        "q1": "N/A",
+        "q2": "N/A",
+        "q3": "N/A",
+        "sinCalificarCalificacion": "N",
+        "descalificadoCalificacion": "N",
+        "posicionCarrera": 0,
+        "vueltaMasRapida": "N/A",
+        "ganoACompaneroDeEquipo": "N/A",
+        "sinCalificarCarrera": "N/A",
+        "descalificadoDeCarrera": "N/A"
+    },
+    {
+        "codigoXFIA": "XFIA-C-0004",
+        "constructor": "XFIA-C-0004",
+        "nombre": "FERRARI",
+        "tipo": "Constructor",
+        "precio": 29,
+        "posicionCalificacion": 0,
+        "q1": "N/A",
+        "q2": "N/A",
+        "q3": "N/A",
+        "sinCalificarCalificacion": "N",
+        "descalificadoCalificacion": "N",
+        "posicionCarrera": 0,
+        "vueltaMasRapida": "N/A",
+        "ganoACompaneroDeEquipo": "N/A",
+        "sinCalificarCarrera": "N/A",
+        "descalificadoDeCarrera": "N/A"
+    }
+]
+
+```
+
+Observaciones: Note que debe asegurarse que los nombres de las columnas del Json sean las mismas a las indicadas aquí, también es importante asegurarse que el tipo de dato sea el correcto, todos los datos son de tipo string a excepción del precio, posicionCalificacion y posicionCarrera.
