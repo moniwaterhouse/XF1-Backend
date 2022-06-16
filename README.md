@@ -286,6 +286,59 @@ Json: El resultado tiene este formato
 
 Observaciones: Note que el formato con el que se retornan las fechas es YYYY-MM-DD
 
+### CAR-5
+
+Tipo: GET
+
+Descripción: Este request da como resultado los datos de todas las carreras que pertenecen al campeonato especificado
+
+Url: `/api/Carrera/{idCampeonato}` donde idCampeonato es la llave del campeonato por el cual se va a filtrar
+
+Json: El resultado tiene este formato
+
+```Json
+[
+  {
+    "id": 1,
+    "idCampeonato": "KL9HY6",
+    "nombre": "Carrera marzo CRI",
+    "nombrePais": "Costa Rica",
+    "nombrePista": "Pista San Jose",
+    "fechaInicio": "2022-03-03T00:00:00",
+    "horaInicio": "1:00",
+    "fechaFin": "2022-03-06T00:00:00",
+    "horaFin": "13:00",
+    "estado": "Carrera Completada"
+  },
+  {
+    "id": 2,
+    "idCampeonato": "KL9HY6",
+    "nombre": "Carrera mayo ESP",
+    "nombrePais": "Espana",
+    "nombrePista": "Pista Madrid",
+    "fechaInicio": "2022-05-03T00:00:00",
+    "horaInicio": "14:00",
+    "fechaFin": "2022-05-06T00:00:00",
+    "horaFin": "15:00",
+    "estado": "Carrera Completada"
+  },
+  {
+    "id": 3,
+    "idCampeonato": "KL9HY6",
+    "nombre": "Carrera junio BEL",
+    "nombrePais": "Belgica",
+    "nombrePista": "Pista Bruselas",
+    "fechaInicio": "2022-06-21T00:00:00",
+    "horaInicio": "15:30",
+    "fechaFin": "2022-06-25T00:00:00",
+    "horaFin": "9:00",
+    "estado": "Pendiente"
+  }
+]
+```
+
+Observaciones: La información viene ordenada de la mayor a la menor fecha.
+
 ## Requests USUARIO (USU)
 
 ### USU-1
