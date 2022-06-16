@@ -15,5 +15,8 @@ namespace XF1_Backend.Requests
 
         // actualizar puntos
         public static System.FormattableString UpdatePuntajes(int nuevosPuntos, string nombre, string tipo) { return $@"EXECUTE sp_actualizar_puntajes {nuevosPuntos}, {nombre}, {tipo}"; }
+
+        // actualizar estado
+        public static System.FormattableString UpdateEstadoCarrera = $@"UPDATE CARRERA SET Estado = 'Carrera Completada' WHERE Estado = 'Calificacion Completada'";
     }
 }

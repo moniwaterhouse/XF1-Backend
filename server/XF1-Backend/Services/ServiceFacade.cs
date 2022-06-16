@@ -206,6 +206,9 @@ namespace XF1_Backend.Services
             objectResult = await _puntajeService.UpdatePuntajes(puntajes, repo);
             if (objectResult.StatusCode != 200) return objectResult;
 
+            objectResult = _puntajeService.UpdateEstadoCarrera(repo);
+            if (objectResult.StatusCode != 200) return objectResult;
+
             return StatusCode(200, "Ok");
         }
     }

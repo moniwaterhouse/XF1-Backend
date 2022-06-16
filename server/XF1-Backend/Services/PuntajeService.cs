@@ -72,6 +72,19 @@ namespace XF1_Backend.Services
             }
         }
 
+        public ObjectResult UpdateEstadoCarrera(PuntajeRepository repo)
+        {
+            try
+            {
+                repo.UpdateEstadoCarrera();
+                return StatusCode(200, "Ok");
+            }
+            catch
+            {
+                return StatusCode(400, "Bad request");
+            }
+        }
+
 
     }
 }

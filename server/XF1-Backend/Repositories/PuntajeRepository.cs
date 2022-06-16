@@ -35,5 +35,11 @@ namespace XF1_Backend.Repositories
         {
             await _context.Database.ExecuteSqlInterpolatedAsync(PuntajeRequests.UpdatePuntajes(nuevosPuntos, nombre, tipo));
         }
+
+        // actualizr estado carrera
+        public void UpdateEstadoCarrera()
+        {
+            _context.Database.ExecuteSqlInterpolated(PuntajeRequests.UpdateEstadoCarrera);
+        }
     }
 }
