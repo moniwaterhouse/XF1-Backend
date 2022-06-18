@@ -8,7 +8,7 @@ namespace XF1_Backend.Models
     public class Puntaje
     {
         public string CodigoXFIA { get; set; }
-        public string Constructor { get; set; }
+        public string Constructor_NaN { get; set; }
         public string Nombre { get; set; }
         public string Tipo { get; set; }
         public int Precio { get; set; }

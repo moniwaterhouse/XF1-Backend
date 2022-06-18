@@ -29,9 +29,11 @@ namespace XF1_Backend.Services
                         // deifinir puntaje a escuderia
                         foreach (var puntaje_ in puntajes)
                         {
+                            System.Console.WriteLine(puntaje.Constructor_NaN);
+                            System.Console.WriteLine(puntaje_.Constructor_NaN);
                             if (puntaje_.Tipo == "Constructor")
                             {
-                                if (puntaje_.Constructor == puntaje.Constructor)
+                                if (puntaje_.Constructor_NaN == puntaje.Constructor_NaN)
                                 {
                                     puntaje_.nuevosPuntos += puntos;
                                 }
@@ -61,6 +63,7 @@ namespace XF1_Backend.Services
                 // por cada piloto o escuderia se actualiza el puntaje de los equipos
                 foreach (var puntaje in puntajes)
                 {
+
                     await repo.UpdatePuntajes(puntaje.nuevosPuntos, puntaje.Nombre, puntaje.Tipo);
                 }
 
