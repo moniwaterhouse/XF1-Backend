@@ -148,12 +148,12 @@ namespace XF1_Backend.Logic
         }
 
         /*
- * Descripcion: esta funcion verifica que el nombre de la escudería sea
- * menor o igual a 30 caracteres
- * Entradas: nombre de la escudería
- * Salida: booleano que indica si el nombre de la escudería es menor o
- * igual a 30 caracteres o no
- */
+         * Descripcion: esta funcion verifica que el nombre de la escudería sea
+         * menor o igual a 30 caracteres
+         * Entradas: nombre de la escudería
+         * Salida: booleano que indica si el nombre de la escudería es menor o
+         * igual a 30 caracteres o no
+         */
         public static bool LongitudMarcaEscuderia(string marcaEscuderia)
         {
             if (marcaEscuderia.Length <= 30)
@@ -161,27 +161,9 @@ namespace XF1_Backend.Logic
                 return true;
             }
 
-
-
             return false;
 
-
-
         }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
         /*
          * Descripcion: esta funcion verifica que el nombre de la nueva liga sea
@@ -212,7 +194,7 @@ namespace XF1_Backend.Logic
 
                 }
 
-                if (letras == true || numeros == true)
+                if (letras == true && numeros == true)
                 {
                     return true;
                 }
