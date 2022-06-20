@@ -35,6 +35,10 @@ namespace XF1_Backend.Controllers
                 ObjectResult objectResult = Startup.facade.EquipoValidations(equipo);
                 if (objectResult.StatusCode != 200) return objectResult;
 
+                // definir puntajes iniciales de las ligas
+                equipo.PuntajePrivada = 0;
+                equipo.PuntajePublica = 0;
+
                 await repo.Complete(equipo);
 
                 return Ok(equipo.Id);
