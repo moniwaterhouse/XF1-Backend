@@ -13,7 +13,7 @@ namespace XF1_Backend.Logic
          */
         public static bool CantidadJugadoresLigaPrivada(CantidadJugador cantidadJugador)
         {
-            if (cantidadJugador.Cantidad <= 20)
+            if (cantidadJugador.Cantidad <= 38)
             {
                 return true;
             }
