@@ -8,6 +8,8 @@ using Microsoft.EntityFrameworkCore;
 using XF1_Backend.Models;
 using XF1_Backend.Logic;
 using XF1_Backend.Requests;
+using XF1_Backend.Repositories;
+using XF1_Backend.Services;
 
 namespace XF1_Backend.Controllers
 {
@@ -15,56 +17,42 @@ namespace XF1_Backend.Controllers
     [ApiController]
     public class CampeonatoController : ControllerBase
     {
-        private readonly CampeonatoDbContext _context;
+        //private readonly CampeonatoDbContext _context;
+        private readonly CampeonatoRepository repo;
 
         public CampeonatoController(CampeonatoDbContext context)
         {
-            _context = context;
+            //_context = context;
+            repo = new CampeonatoRepository(context);
+
         }
 
         // POST: api/Campeonato
         [HttpPost]
         public async Task<ActionResult<Campeonato>> PostCampeonatos(Campeonato campeonato)
         {
+            try
+            {
+                // validaciones campeonato
+                ObjectResult actionResult = Startup.facade.CampeonatoValidations(campeonato, repo);
+                if (actionResult.StatusCode != 200) return actionResult;
 
-            bool permitido;
+                // generar llave unica del campeonato
+                IEnumerable<Campeonato> campeonatosAnteriores = repo.GetAllCampeonatos();
+                campeonato.Id = IdLogicFunctions.GenerarLlaveCampeonato(campeonatosAnteriores);
 
-            // revisión de valores nulos           
-            permitido = NullValuesLogicFunctions.ValoresNulosCampeonato(campeonato);
-            if (permitido == false) return Conflict("Se requieren todos los datos del campeonato");
+                // añadir campeonato
+                await repo.Complete(campeonato);
 
-            // revisión de la longitud del nombre del campeonato
-            permitido = StringLogicFunctions.LongitudNombre(campeonato.Nombre);
-            if (permitido == false) return Conflict("El nombre del campeonato debe ser de 5 a 30 caracteres");
+                // crear liga publica y añadir los jugadoers ahí
+                await repo.PostLigaPublica(campeonato);
 
-            // revisión de la longitud de la descripción del campeonato
-            permitido = StringLogicFunctions.LongitudDescripcionCampeonato(campeonato.ReglasPuntuacion);
-            if (permitido == false) return Conflict("La descripción del campeonato debe ser de máximo 1000 caracteres");
-            
-            // generar llave unica del campeonato
-            IEnumerable<Campeonato> campeonatosAnteriores;
-            campeonatosAnteriores = await _context.Campeonato.FromSqlRaw(CampeonatoRequests.getCampeonatos).ToListAsync();
-            campeonato.Id = IdLogicFunctions.GenerarLlaveCampeonato(campeonatosAnteriores);
-
-            // revisión de traslape de fechas
-            IEnumerable<Fechas> fechas;
-            fechas = await _context.Fechas.FromSqlRaw(CampeonatoRequests.getFechasCampeonatos).ToListAsync();
-            permitido = DateLogicFunctions.RevisarTraslapeFechas(campeonato.FechaInicio, campeonato.FechaFin, fechas);
-            if (permitido == false) return Conflict("Existe un conflicto de fechas con otro campeonato");
-
-            // revisión de fechas anteriores a la actual
-            permitido = DateLogicFunctions.RevisarFechasAnteriores(campeonato.FechaInicio, campeonato.FechaFin);
-            if (permitido == false) return Conflict("No se puede crear un campeonato con una fecha menor a la actual");
-
-            // añadir campeonato
-            _context.Campeonato.Add(campeonato);
-            await _context.SaveChangesAsync();
-
-            // crear liga publica y añadir los jugadoers ahí
-            await _context.Database.ExecuteSqlInterpolatedAsync(CampeonatoRequests.crearLiga(campeonato.Id, 0));
-            await _context.SaveChangesAsync();
-
-            return Ok();
+                return Ok();
+            }
+            catch
+            {
+                return StatusCode(400, "Bad request");
+            }
 
         }
 
@@ -72,28 +60,28 @@ namespace XF1_Backend.Controllers
         [HttpGet]
         public async Task<IEnumerable<Campeonato>> GetCampeonatos()
         {
-            return await _context.Campeonato.FromSqlRaw(CampeonatoRequests.getCampeonatos).ToListAsync();
+            return repo.GetAllCampeonatos();
         }
 
         // GET api/Campeonato/Fechas
         [HttpGet("Fechas")]
         public async Task<IEnumerable<Fechas>> GetFechas()
         {
-            return await _context.Fechas.FromSqlRaw(CampeonatoRequests.getFechas).ToListAsync();
+            return await repo.GetFechas();
         }
 
         // GET api/Campeonato/Nombres
         [HttpGet("Nombres")]
         public async Task<IEnumerable<Nombres>> GetNombres()
         {
-            return await _context.Nombres.FromSqlRaw(CampeonatoRequests.getNombres).ToListAsync();
+            return await repo.GetNombres();
         }
 
         // GET api/Campeonato/Presupuesto
         [HttpGet("Presupuesto")]
         public async Task<CampeonatoPresupuesto> GetPresupuesto()
         {
-            return await _context.CampeonatoPresupuesto.FromSqlRaw(CampeonatoRequests.getPresupuestoActual).FirstOrDefaultAsync();
+            return await repo.GetPresupuesto();
         }
 
     }

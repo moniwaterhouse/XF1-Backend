@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using XF1_Backend.Models;
 using XF1_Backend.Logic;
 using XF1_Backend.Requests;
+using XF1_Backend.Repositories;
 
 namespace XF1_Backend.Controllers
 {
@@ -14,123 +15,120 @@ namespace XF1_Backend.Controllers
     [ApiController]
     public class LigaController : ControllerBase
     {
-        private readonly LigaDbContext _context;
+        private readonly LigaRepository repo;
 
         public LigaController(LigaDbContext context)
         {
-            _context = context;
+            repo = new LigaRepository(context);
         }
 
         // GET api/Liga/PuntajesPublica
         [HttpGet("PuntajesPublica")]
         public async Task<IEnumerable<PuntajesPublica>> GetPuntajesPublica()
         {
-            return await _context.PuntajesPublicas.FromSqlRaw(LigaRequests.getPuntajesPublica).ToListAsync();
+            return await repo.GetPuntajesPublica();
         }
 
         // GET api/Liga/PuntajesPublica/{Correo}
         [HttpGet("PuntajesPublica/{correo}")]
         public async Task<IEnumerable<PuntajesPublica>> GetPuntajesPublica(string correo)
         {
-            return await _context.PuntajesPublicas.FromSqlRaw(LigaRequests.getPuntajePublicaPorUsuario(correo)).ToListAsync();
+            return await repo.GetPuntajesPublica(correo);
         }
 
         // GET api/Liga/PuntajesPrivada/{Correo}
         [HttpGet("PuntajesPrivada/{correo}")]
         public async Task<IEnumerable<PuntajesPublica>> GetPuntajesPrivada(string correo)
         {
-            return await _context.PuntajesPublicas.FromSqlRaw(LigaRequests.getPuntajePrivadaPorUsuario(correo)).ToListAsync();
+            return await repo.GetPuntajesPrivada(correo);
         }
 
         // GET api/Liga/InfoPrivada
         [HttpGet("InfoPrivada/{correo}")]
         public async Task<InfoLigaPrivada> GetInfoLigaPrivada(string correo)
         {
-            return await _context.InfoLigaPrivadas.FromSqlRaw(LigaRequests.getInfoLigaPrivada(correo)).FirstOrDefaultAsync();
+            return await repo.GetInfoLigaPrivada(correo);
         }
 
         // GET api/Liga/UsuariosLiga
         [HttpGet("UsuariosLiga/{correo}")]
         public async Task<IEnumerable<UsuariosLiga>> GetUsuariosLiga(string correo)
         {
-            return await _context.UsuariosLigas.FromSqlRaw(LigaRequests.getUsuariosLiga(correo)).ToListAsync();
+            return await repo.GetUsuariosLiga(correo);
         }
 
         // GET api/Liga/CantidadJugador/{correo}
         [HttpGet("CantidadJugador/{correo}")]
         public async Task<CantidadJugador> GetDisponibilidaLigaPrivada(string correo)
         {
-            return await _context.CantidadJugadores.FromSqlRaw(LigaRequests.GetDisponibilidaLigaPrivada(correo)).FirstOrDefaultAsync();
+            return await repo.GetDisponibilidaLigaPrivada(correo);
         }
 
         // GET api/Liga/IdPrivadas
         [HttpGet("IdPrivadas")]
-        public async Task<IEnumerable<IdPrivadas>> GetIdPrivadas()
+        public IEnumerable<IdPrivadas> GetIdPrivadas()
         {
-            return await _context.IdPrivadas.FromSqlRaw(LigaRequests.GetIdPrivadas).ToListAsync();
+            return repo.GetIdPrivadas();
         }
 
         // GET api/Liga/CantidadJugadorPorId/{idLiga}
         [HttpGet("CantidadJugadorPorId/{idLiga}")]
-        public async Task<CantidadJugador> GeCantidadLigaPrivada(string idLiga)
+        public CantidadJugador GeCantidadLigaPrivada(string idLiga)
         {
-            return await _context.CantidadJugadores.FromSqlRaw(LigaRequests.GeCantidadLigaPrivada(idLiga)).FirstOrDefaultAsync();
+            return repo.GeCantidadLigaPrivada(idLiga);
         }
 
         // POST api/Liga
         [HttpPost]
         public async Task<ActionResult<Liga>> PostLigaPrivada(NuevaLiga nuevaLiga)
         {
-            
-            bool permitido;
+            try
+            {
+                // validaciones añadir una liga
+                ObjectResult objectResult = Startup.facade.CrearLigaValidations(nuevaLiga);
+                if (objectResult.StatusCode != 200) return objectResult;
 
-            // revisión de valores nulos         
-            permitido = NullValuesLogicFunctions.ValoresNulosNuevaLiga(nuevaLiga);
-            if (permitido == false) return Conflict("Se requieren todos los datos de la nueva liga");
+                // Tomar llave del campeonato actual
+                CampeonatoActual llaveActual = repo.GetLlaveCampeonatoActual();
 
-            // revisión de la longitud del nombre de la nueva liga
-            permitido = StringLogicFunctions.LongitudNombreNuevaLiga(nuevaLiga.Nombre);
-            if (permitido == false) return Conflict("El nombre de la nueva liga debe ser de máximo 30 caracteres alfanuméricos");
+                // Generar la nueva seccion de la llave
+                IEnumerable<Liga> ligasPrivadas = repo.GetLigasPrivada();
+                string idLigaPrivada = IdLogicFunctions.GenerarLlaveLigaPrivada(llaveActual, ligasPrivadas);
 
-            // Tomar llave del campeonato actual
-            CampeonatoActual llaveActual = await _context.CampeonatoActual.FromSqlRaw(LigaRequests.GetCampeonatoActual).FirstOrDefaultAsync();
+                // Añadir la nueva liga
+                await repo.AnadirNuevaLiga(idLigaPrivada, llaveActual, nuevaLiga);
 
-            // Generar la nueva seccion de la llave
-            IEnumerable<Liga> ligasPrivadas;
-            ligasPrivadas = await _context.Liga.FromSqlRaw(LigaRequests.GetLigasPrivada).ToListAsync();
-
-            string idLigaPrivada = IdLogicFunctions.GenerarLlaveLigaPrivada(llaveActual, ligasPrivadas);
-
-            // Añadir la nueva liga
-            await _context.Database.ExecuteSqlInterpolatedAsync(LigaRequests.AnadirNuevaLiga(idLigaPrivada, llaveActual.IdActual, nuevaLiga.Nombre, nuevaLiga.Correo));
-            await _context.SaveChangesAsync();
-
-            return Ok();
+                return Ok();
+            }
+            catch
+            {
+                return StatusCode(400, "Bad request");
+            }
         }
 
         // PUT api/Liga
         [HttpPut]
         public async Task<ActionResult<Liga>> PutLigaPrivada(ActualizarLiga actualizarLiga)
         {
-            bool permitido;
+            try
+            {
+                // validaciones actualizar liga
+                ObjectResult objectResult = Startup.facade.ActualizarLigaValidations(actualizarLiga, repo);
+                if (objectResult.StatusCode != 200) return objectResult;
 
-            IEnumerable<IdPrivadas> idPrivadas;
-            idPrivadas = await _context.IdPrivadas.FromSqlRaw(LigaRequests.GetIdPrivadas).ToListAsync();
-            permitido = IdLogicFunctions.RevisarIdLigaPrivada(actualizarLiga, idPrivadas);
-            if (permitido == false) return Conflict("La llave insertada no pertenece a ninguna liga privada");
+                // añadir el usuario a la liga privada
+                await repo.ActualizarLigaPrivada(actualizarLiga);
 
-            // revision de que la liga privada existente tenga espacio
-            CantidadJugador cantidadJugador = await _context.CantidadJugadores.FromSqlRaw(LigaRequests.GeCantidadLigaPrivada(actualizarLiga.Id)).FirstOrDefaultAsync();
-            permitido = IntLogicFunctions.CantidadJugadoresLigaPrivada(cantidadJugador);
-            if (permitido == false) return Conflict("La liga privada ya no tiene espacio disponible");
-
-            // añadir el usuario a la liga privada
-            await _context.Database.ExecuteSqlInterpolatedAsync(LigaRequests.ActualizarLigaPrivada(actualizarLiga.Id, actualizarLiga.Correo));
-            await _context.SaveChangesAsync();
-
-            return Ok();
-
+                return Ok();
+            }
+            catch
+            {
+                return StatusCode(400, "Bad request actualizar");
+            }
         }
+
+        
+
 
     }
 

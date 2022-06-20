@@ -13,8 +13,7 @@ namespace XF1_Backend.Logic
          */
         public static bool ValoresNulosCampeonato(Campeonato campeonato)
         {
-            if(campeonato.Id == null ||
-               campeonato.Nombre == null ||
+            if(campeonato.Nombre == null ||
                campeonato.Presupuesto == 0 ||
                campeonato.FechaInicio == DateTime.MinValue ||
                campeonato.HoraInicio == null ||
@@ -42,8 +41,7 @@ namespace XF1_Backend.Logic
                carrera.FechaInicio == DateTime.MinValue ||
                carrera.HoraInicio == null ||
                carrera.FechaFin == DateTime.MinValue ||
-               carrera.HoraFin == null ||
-               carrera.Estado == null)
+               carrera.HoraFin == null)
             {
                 return false;
             }
@@ -84,7 +82,8 @@ namespace XF1_Backend.Logic
                equipo.NombrePiloto2 == null ||
                equipo.NombrePiloto3 == null ||
                equipo.NombrePiloto4 == null ||
-               equipo.NombrePiloto5 == null)
+               equipo.NombrePiloto5 == null ||
+               equipo.Costo == 0)
             {
                 return false;
             }

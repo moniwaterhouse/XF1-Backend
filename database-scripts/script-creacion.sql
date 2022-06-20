@@ -372,8 +372,133 @@ BEGIN
 END
 GO
 
--- nombre: fc_validar_fechas_campeonato
--- descripcion: este sp valida que las fechas 
+-- nombre: sp_abandonar_liga_privada
+-- descripcion: este procedure elimina al usuario indicado de la liga
+-- privada.
+DROP PROCEDURE IF EXISTS sp_abandonar_liga_privada;
+GO
+CREATE PROCEDURE sp_abandonar_liga_privada(
+	@Correo			VARCHAR(100)
+)
+AS
+BEGIN
+
+	DECLARE @IdLigaPrivada VARCHAR(30);
+
+	SELECT @IdLigaPrivada = IdLigaPrivada
+	FROM USUARIO
+	WHERE Correo = @Correo;
+
+	DELETE FROM USUARIOXLIGA
+	WHERE CorreoUsuario = @Correo  AND IdLiga = @IdLigaPrivada;
+
+	UPDATE USUARIO
+	SET IdLigaPrivada = Null
+	WHERE Correo = @Correo;
+
+	DECLARE @cantidad INT;
+
+	SELECT @cantidad = COUNT(CorreoUsuario)
+	FROM USUARIOXLIGA
+	WHERE IdLiga = @IdLigaPrivada;
+
+	IF @cantidad < 5
+		UPDATE LIGA
+		SET Activa = 0
+		WHERE IdLiga = @IdLigaPrivada; 
+END
+GO
+
+-- nombre: sp_actualizar_precio_piloto
+-- descripcion: este sp actualiza el precio de un piloto
+DROP PROCEDURE IF EXISTS sp_actualizar_precio_piloto;
+GO
+CREATE PROCEDURE sp_actualizar_precio_piloto(
+	@NombrePiloto		VARCHAR(100),
+	@Precio				INT
+)
+AS
+BEGIN
+	UPDATE PILOTO
+	SET Precio = @Precio
+	WHERE Nombre = @NombrePiloto;
+	
+END
+GO
+
+-- nombre: sp_actualizar_precio_escuderia
+-- descripcion: este sp actualiza el precio de un piloto
+DROP PROCEDURE IF EXISTS sp_actualizar_precio_escuderia;
+GO
+CREATE PROCEDURE sp_actualizar_precio_escuderia(
+	@NombreEscuderia	VARCHAR(100),
+	@Precio				INT
+)
+AS
+BEGIN
+	UPDATE ESCUDERIA
+	SET Precio = @Precio
+	WHERE Marca = @NombreEscuderia;
+	
+END
+GO
+
+-- nombre: sp_actualizar_puntajes
+-- descipcion: este sp actualiza los puntajes de todos los equipos
+DROP PROCEDURE IF EXISTS sp_actualizar_puntajes
+GO
+CREATE PROCEDURE sp_actualizar_puntajes(
+	@nuevosPuntos		INT,
+	@nombre				VARCHAR(100),
+	@tipo				VARCHAR(100)
+)
+AS
+BEGIN
+	IF @tipo = 'Piloto'
+		-- esto para actualizar el puntaje publico de un equipo
+		-- se da el nombre del piloto y los nuevos puntos
+		UPDATE EQUIPO
+		SET PuntajePublica += @nuevosPuntos
+		FROM EQUIPO AS EQU JOIN PILOTO AS PIL ON	EQU.NombrePiloto1 = PIL.Nombre OR
+													EQU.NombrePiloto2 = PIL.Nombre OR
+													EQU.NombrePiloto3 = PIL.Nombre OR
+													EQU.NombrePiloto4 = PIL.Nombre OR
+													EQU.NombrePiloto5 = PIL.Nombre
+		WHERE PIL.Nombre = @nombre
+
+		-- esto para actualizar el puntaje publico de un equipo
+		-- se da el nombre del piloto y los nuevos puntos
+		UPDATE EQUIPO
+		SET PuntajePrivada += @nuevosPuntos
+		FROM ((EQUIPO AS EQU JOIN PILOTO AS PIL ON	EQU.NombrePiloto1 = PIL.Nombre OR
+													EQU.NombrePiloto2 = PIL.Nombre OR
+													EQU.NombrePiloto3 = PIL.Nombre OR
+													EQU.NombrePiloto4 = PIL.Nombre OR
+													EQU.NombrePiloto5 = PIL.Nombre)
+			 JOIN USUARIO AS USU ON EQU.Id = USU.IdEquipo1 OR
+									EQU.Id = USU.IdEquipo2)
+			 JOIN LIGA AS LIG ON USU.IdLigaPrivada = LIG.IdLiga
+		WHERE PIL.Nombre = @nombre AND LIG.Activa = 1
+
+	IF @tipo = 'Constructor'
+		-- esto para actualizar el puntaje publico de un equipo
+		-- se da el nombre del piloto y los nuevos puntos
+		UPDATE EQUIPO
+		SET PuntajePublica += @nuevosPuntos
+		FROM EQUIPO AS EQU JOIN ESCUDERIA AS ESC ON	EQU.MarcaEscuderia = ESC.Marca
+		WHERE ESC.Marca = @nombre
+
+		-- esto para actualizar el puntaje publico de un equipo
+		-- se da el nombre del piloto y los nuevos puntos
+		UPDATE EQUIPO
+		SET PuntajePrivada += @nuevosPuntos
+		FROM ((EQUIPO AS EQU JOIN ESCUDERIA AS ESC ON	EQU.MarcaEscuderia = ESC.Marca)
+			 JOIN USUARIO AS USU ON EQU.Id = USU.IdEquipo1 OR
+									EQU.Id = USU.IdEquipo2)
+			 JOIN LIGA AS LIG ON USU.IdLigaPrivada = LIG.IdLiga
+		WHERE ESC.Marca = @nombre AND LIG.Activa = 1
+END
+GO
 
 -- POPULACION DE LAS TABLAS
 
@@ -384,7 +509,7 @@ INSERT INTO CAMPEONATO	(Id, Nombre, Presupuesto, FechaInicio, HoraInicio, FechaF
 INSERT INTO CARRERA		(Id, IdCampeonato, Nombre, NombrePais, NombrePista, FechaInicio, HoraInicio, FechaFin, HoraFin, Estado)
 			VALUES		(1, 'KL9HY6', 'Carrera marzo CRI', 'Costa Rica', 'Pista San Jose', '03-03-2022', '1:00', '03-06-2022', '13:00', 'Carrera Completada'),
 						(2, 'KL9HY6', 'Carrera mayo ESP', 'Espana', 'Pista Madrid', '05-03-2022', '14:00', '05-06-2022', '15:00', 'Carrera Completada'),
-						(3, 'KL9HY6', 'Carrera junio BEL', 'Belgica', 'Pista Bruselas', '06-21-2022', '15:30', '06-25-2022', '9:00', 'Pendiente'),
+						(3, 'KL9HY6', 'Carrera junio BEL', 'Belgica', 'Pista Bruselas', '06-10-2022', '15:30', '06-16-2022', '9:00', 'Calificacion Completada'),
 						(4, 'KL9HY6', 'Carrera agosto FRA', 'Francia', 'Pista Paris', '08-14-2022', '15:00', '08-19-2022', '10:00', 'Pendiente');
 
 
@@ -483,33 +608,33 @@ INSERT INTO EQUIPO  (Id, Nombre, MarcaEscuderia,	NombrePiloto1,	NombrePiloto2,	N
 
 
 INSERT INTO USUARIO (NombreUsuario, Correo, Pais, Contrasena, NombreEscuderia, IdEquipo1, IdEquipo2, IdLigaPrivada)
-			VALUES	('NachoNavarro', 'juan@gmail.com', 'Costa Rica', '81dc9bdb52d04dc20036dbd8313ed055', 'RayoF1', 1, 2, 'KL9HY6-WEF567'),
-					('MoniWaterhouse', 'monica@gmail.com', 'Costa Rica', '81dc9bdb52d04dc20036dbd8313ed055', 'ganadoresCR', 3, 4, 'KL9HY6-WEF567'),
-					('NachoGranados', 'jose@gmail.com', 'Costa Rica', '81dc9bdb52d04dc20036dbd8313ed055', 'EscuderiaTOP', 5, 6, null),
-					('Mariana', 'mariana@gmail.com', 'Costa Rica', '81dc9bdb52d04dc20036dbd8313ed055', 'Vikingos', 53, 54, null),
-					('Steven', 'steven@gmail.com', 'Costa Rica', '81dc9bdb52d04dc20036dbd8313ed055', 'super-escuderia', 7, 8, null),
-					('Selena', 'selena@gmail.com', 'Costa Rica', '81dc9bdb52d04dc20036dbd8313ed055', 'Waterhouse', 49, 50, 'KL9HY6-WEF567'),
-					('Jason', 'jason@gmail.com', 'Costa Rica', '81dc9bdb52d04dc20036dbd8313ed055', 'SuperCampeon', 51, 52, 'KL9HY6-WEF567'),
-					('Bot1', 'bot1@gmail.com', 'Costa Rica', '81dc9bdb52d04dc20036dbd8313ed055', 'EscuderiaBot1', 9, 10, 'KL9HY6-BQV538'),
-					('Bot2', 'bot2@gmail.com', 'Costa Rica', '81dc9bdb52d04dc20036dbd8313ed055', 'EscuderiaBot1', 11, 12, 'KL9HY6-BQV538'),
-					('Bot3', 'bot3@gmail.com', 'Costa Rica', '81dc9bdb52d04dc20036dbd8313ed055', 'EscuderiaBot1', 13, 14, 'KL9HY6-BQV538'),
-					('Bot4', 'bot4@gmail.com', 'Costa Rica', '81dc9bdb52d04dc20036dbd8313ed055', 'EscuderiaBot1', 15, 16, 'KL9HY6-BQV538'),
-					('Bot5', 'bot5@gmail.com', 'Costa Rica', '81dc9bdb52d04dc20036dbd8313ed055', 'EscuderiaBot1', 17, 18, 'KL9HY6-BQV538'),
-					('Bot6', 'bot6@gmail.com', 'Costa Rica', '81dc9bdb52d04dc20036dbd8313ed055', 'EscuderiaBot1', 19, 20, 'KL9HY6-BQV538'),
-					('Bot7', 'bot7@gmail.com', 'Costa Rica', '81dc9bdb52d04dc20036dbd8313ed055', 'EscuderiaBot1', 21, 22, 'KL9HY6-BQV538'),
-					('Bot8', 'bot8@gmail.com', 'Costa Rica', '81dc9bdb52d04dc20036dbd8313ed055', 'EscuderiaBot1', 23, 24, 'KL9HY6-BQV538'),
-					('Bot9', 'bot9@gmail.com', 'Costa Rica', '81dc9bdb52d04dc20036dbd8313ed055', 'EscuderiaBot1', 25, 26, 'KL9HY6-BQV538'),
-					('Bot10', 'bot10@gmail.com', 'Costa Rica', '81dc9bdb52d04dc20036dbd8313ed055', 'EscuderiaBot1', 27, 28, 'KL9HY6-BQV538'),
-					('Bot11', 'bot11@gmail.com', 'Costa Rica', '81dc9bdb52d04dc20036dbd8313ed055', 'EscuderiaBot1', 29, 30, 'KL9HY6-BQV538'),
-					('Bot12', 'bot12@gmail.com', 'Costa Rica', '81dc9bdb52d04dc20036dbd8313ed055', 'EscuderiaBot1', 31, 32, 'KL9HY6-BQV538'),
-					('Bot13', 'bot13@gmail.com', 'Costa Rica', '81dc9bdb52d04dc20036dbd8313ed055', 'EscuderiaBot1', 33, 34, 'KL9HY6-BQV538'),
-					('Bot14', 'bot14@gmail.com', 'Costa Rica', '81dc9bdb52d04dc20036dbd8313ed055', 'EscuderiaBot1', 35, 36, 'KL9HY6-BQV538'),
-					('Bot15', 'bot15@gmail.com', 'Costa Rica', '81dc9bdb52d04dc20036dbd8313ed055', 'EscuderiaBot1', 37, 38, 'KL9HY6-BQV538'),
-					('Bot16', 'bot16@gmail.com', 'Costa Rica', '81dc9bdb52d04dc20036dbd8313ed055', 'EscuderiaBot1', 39, 40, 'KL9HY6-BQV538'),
-					('Bot17', 'bot17@gmail.com', 'Costa Rica', '81dc9bdb52d04dc20036dbd8313ed055', 'EscuderiaBot1', 41, 42, 'KL9HY6-BQV538'),
-					('Bot18', 'bot18@gmail.com', 'Costa Rica', '81dc9bdb52d04dc20036dbd8313ed055', 'EscuderiaBot1', 43, 44, 'KL9HY6-BQV538'),
-					('Bot19', 'bot19@gmail.com', 'Costa Rica', '81dc9bdb52d04dc20036dbd8313ed055', 'EscuderiaBot1', 45, 46, 'KL9HY6-BQV538'),
-					('Bot20', 'bot20@gmail.com', 'Costa Rica', '81dc9bdb52d04dc20036dbd8313ed055', 'EscuderiaBot1', 47, 48, 'KL9HY6-BQV538');
+			VALUES	('NachoNavarro', 'juan@gmail.com', 'Costa Rica', 'ccee5504c9d889922b101124e9e43b71', 'RayoF1', 1, 2, 'KL9HY6-WEF567'),
+					('MoniWaterhouse', 'monica@gmail.com', 'Costa Rica', 'ccee5504c9d889922b101124e9e43b71', 'ganadoresCR', 3, 4, 'KL9HY6-WEF567'),
+					('NachoGranados', 'jose@gmail.com', 'Costa Rica', 'ccee5504c9d889922b101124e9e43b71', 'EscuderiaTOP', 5, 6, null),
+					('Mariana', 'mariana@gmail.com', 'Costa Rica', 'ccee5504c9d889922b101124e9e43b71', 'Vikingos', 53, 54, null),
+					('Steven', 'steven@gmail.com', 'Costa Rica', 'ccee5504c9d889922b101124e9e43b71', 'super-escuderia', 7, 8, null),
+					('Selena', 'selena@gmail.com', 'Costa Rica', 'ccee5504c9d889922b101124e9e43b71', 'Waterhouse', 49, 50, 'KL9HY6-WEF567'),
+					('Jason', 'jason@gmail.com', 'Costa Rica', 'ccee5504c9d889922b101124e9e43b71', 'SuperCampeon', 51, 52, 'KL9HY6-WEF567'),
+					('Bot1', 'bot1@gmail.com', 'Costa Rica', 'ccee5504c9d889922b101124e9e43b71', 'EscuderiaBot1', 9, 10, 'KL9HY6-BQV538'),
+					('Bot2', 'bot2@gmail.com', 'Costa Rica', 'ccee5504c9d889922b101124e9e43b71', 'EscuderiaBot1', 11, 12, 'KL9HY6-BQV538'),
+					('Bot3', 'bot3@gmail.com', 'Costa Rica', 'ccee5504c9d889922b101124e9e43b71', 'EscuderiaBot1', 13, 14, 'KL9HY6-BQV538'),
+					('Bot4', 'bot4@gmail.com', 'Costa Rica', 'ccee5504c9d889922b101124e9e43b71', 'EscuderiaBot1', 15, 16, 'KL9HY6-BQV538'),
+					('Bot5', 'bot5@gmail.com', 'Costa Rica', 'ccee5504c9d889922b101124e9e43b71', 'EscuderiaBot1', 17, 18, 'KL9HY6-BQV538'),
+					('Bot6', 'bot6@gmail.com', 'Costa Rica', 'ccee5504c9d889922b101124e9e43b71', 'EscuderiaBot1', 19, 20, 'KL9HY6-BQV538'),
+					('Bot7', 'bot7@gmail.com', 'Costa Rica', 'ccee5504c9d889922b101124e9e43b71', 'EscuderiaBot1', 21, 22, 'KL9HY6-BQV538'),
+					('Bot8', 'bot8@gmail.com', 'Costa Rica', 'ccee5504c9d889922b101124e9e43b71', 'EscuderiaBot1', 23, 24, 'KL9HY6-BQV538'),
+					('Bot9', 'bot9@gmail.com', 'Costa Rica', 'ccee5504c9d889922b101124e9e43b71', 'EscuderiaBot1', 25, 26, 'KL9HY6-BQV538'),
+					('Bot10', 'bot10@gmail.com', 'Costa Rica', 'ccee5504c9d889922b101124e9e43b71', 'EscuderiaBot1', 27, 28, 'KL9HY6-BQV538'),
+					('Bot11', 'bot11@gmail.com', 'Costa Rica', 'ccee5504c9d889922b101124e9e43b71', 'EscuderiaBot1', 29, 30, 'KL9HY6-BQV538'),
+					('Bot12', 'bot12@gmail.com', 'Costa Rica', 'ccee5504c9d889922b101124e9e43b71', 'EscuderiaBot1', 31, 32, 'KL9HY6-BQV538'),
+					('Bot13', 'bot13@gmail.com', 'Costa Rica', 'ccee5504c9d889922b101124e9e43b71', 'EscuderiaBot1', 33, 34, 'KL9HY6-BQV538'),
+					('Bot14', 'bot14@gmail.com', 'Costa Rica', 'ccee5504c9d889922b101124e9e43b71', 'EscuderiaBot1', 35, 36, 'KL9HY6-BQV538'),
+					('Bot15', 'bot15@gmail.com', 'Costa Rica', 'ccee5504c9d889922b101124e9e43b71', 'EscuderiaBot1', 37, 38, 'KL9HY6-BQV538'),
+					('Bot16', 'bot16@gmail.com', 'Costa Rica', 'ccee5504c9d889922b101124e9e43b71', 'EscuderiaBot1', 39, 40, 'KL9HY6-BQV538'),
+					('Bot17', 'bot17@gmail.com', 'Costa Rica', 'ccee5504c9d889922b101124e9e43b71', 'EscuderiaBot1', 41, 42, 'KL9HY6-BQV538'),
+					('Bot18', 'bot18@gmail.com', 'Costa Rica', 'ccee5504c9d889922b101124e9e43b71', 'EscuderiaBot1', 43, 44, 'KL9HY6-BQV538'),
+					('Bot19', 'bot19@gmail.com', 'Costa Rica', 'ccee5504c9d889922b101124e9e43b71', 'EscuderiaBot1', 45, 46, 'KL9HY6-BQV538'),
+					('Bot20', 'bot20@gmail.com', 'Costa Rica', 'ccee5504c9d889922b101124e9e43b71', 'EscuderiaBot1', 47, 48, 'KL9HY6-BQV538');
 
 
 
@@ -566,4 +691,4 @@ INSERT INTO USUARIOXLIGA	(CorreoUsuario, IdLiga)
 							('bot19@gmail.com', 'KL9HY6-BQV538'),
 							('bot20@gmail.com', 'KL9HY6-BQV538');
 
-SELECT * FROM USUARIO
+--UPDATE CARRERA SET ESTADO = 'Calificacion Completada' WHERE Id = 3;
