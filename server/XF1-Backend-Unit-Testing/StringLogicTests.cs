@@ -542,38 +542,6 @@ namespace XF1_Backend_Unit_Testing
 
         }
 
-        /*
-          * Descripción: esta prueba unitaria verifica que la salida de la función
-          * LongitudNombreNuevaLiga retorne un valor booleano False si el nombre es
-          * menor o igual de 30 letras.
-          */
-        [TestMethod]
-        public void LongitudNombreNuevaLiga_CaracteresNoAlfanumericosLetras_Test()
-        {
-            string nombre = "NuevaLigaPOP";
-
-            bool resultado = StringLogicFunctions.LongitudNombreNuevaLiga(nombre);
-
-            Assert.IsFalse(resultado);
-
-        }
-
-        /*
-          * Descripción: esta prueba unitaria verifica que la salida de la función
-          * LongitudNombreNuevaLiga retorne un valor booleano False si el nombre es
-          * menor o igual de 30 números.
-          */
-        [TestMethod]
-        public void LongitudNombreNuevaLiga_CaracteresNoAlfanumericosNumeros_Test()
-        {
-            string nombre = "2022";
-
-            bool resultado = StringLogicFunctions.LongitudNombreNuevaLiga(nombre);
-
-            Assert.IsFalse(resultado);
-
-        }
-
     }
 
 }
